@@ -1,6 +1,6 @@
 appId: com.theloudproject.client
 productName: LOUD Client
-copyRight: Copyright © 2020 Roy Derks
+copyright: Copyright © 2020 Roy Derks
 directories:
   output: out
 
