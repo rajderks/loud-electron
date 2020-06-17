@@ -22,6 +22,7 @@ const themeLight = createMuiTheme({
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const themeDark = createMuiTheme({
   palette: {
     type: 'dark',
