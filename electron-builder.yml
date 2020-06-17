@@ -4,12 +4,12 @@ copyright: Copyright © 2020 Roy Derks
 directories:
   output: out
 
-mac:
-  category: public.app-category.utilities
-  target:
-    - dmg
-    - mas
-  icon: public/favicon.icns
+# mac:
+#   category: public.app-category.utilities
+#   target:
+#     - dmg
+#     - mas
+#   icon: public/favicon.icns
 
 win:
   icon: public/favicon.ico
