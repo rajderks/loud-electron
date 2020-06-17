@@ -10,8 +10,10 @@ coverage
 
 # production
 build
+dist
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
