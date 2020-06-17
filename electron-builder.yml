@@ -1,0 +1,27 @@
+appId: com.theloudproject.client
+productName: LOUD Client
+copyRight: Copyright © 2020 Roy Derks
+directories:
+  output: out
+
+mac:
+  category: public.app-category.utilities
+  target:
+    - dmg
+    - mas
+  icon: public/favicon.icns
+
+win:
+  icon: public/favicon.ico
+  target:
+    - portable
+
+linux:
+  target:
+    - snap
+    - deb
+    - rpm
+    - pacman
+  icon: favicon.png
+  synopsis: The LOUD Project client
+  category: Game

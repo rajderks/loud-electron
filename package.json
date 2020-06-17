@@ -49,12 +49,11 @@
     "react-eject": "react-scripts eject",
     "react-start": "react-scripts start",
     "electron-build": "electron-builder",
-    "release": "npm run react-build && electron-builder --publish=always",
-    "build": "npm run react-build && npm run electron-build",
-    "electron-dev": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "yarn react-build",
+    "electron-dev": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "build -c.extraMetadata.main=build/electron.js",
-    "preelectron-pack": "npm build",
-    "dist": "build"
+    "preelectron-pack": "yarn build",
+    "clean": "rimraf build && rimraf dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,12 +70,12 @@
       "last 1 safari version"
     ]
   },
-  "build": {
+  "______build": {
     "appId": "com.loud.client",
     "productName": "LOUD Client",
-    "copyright": "Copyright © 2020 ${author}",
+    "copyright": "",
     "mac": {
-      "category": "public.app-category.utilities"
+      "category": ""
     },
     "files": [
       "build/**/*",
@@ -84,9 +83,6 @@
     ],
     "directories": {
       "buildResources": "assets"
-    },
-    "win": {
-      "target": "portable"
     }
   }
 }
