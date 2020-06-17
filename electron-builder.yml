@@ -18,10 +18,7 @@ win:
 
 linux:
   target:
-    - snap
     - deb
-    - rpm
-    - pacman
   icon: favicon.png
   synopsis: The LOUD Project client
   category: Game
