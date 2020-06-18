@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { MapAttr } from '../../types';
+import { MapAttr } from './types';
 import {
   Grid,
   useTheme,

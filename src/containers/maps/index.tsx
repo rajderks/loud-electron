@@ -4,13 +4,12 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import { MapAttr } from '../../types';
 import api from '../../api/api';
 import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
 import { makeStyles, Typography } from '@material-ui/core';
-import { MapsFilter } from './types';
+import { MapsFilter, MapAttr } from './types';
 import MapsAddDialog from './MapsAddDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
-  const [maps, setMaps] = useState<MapAttr[] | null>(null);
+  const [maps, setMaps] = useState<MapAttrtr[] | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(false);
   const [addOpen, setAddOpen] = useState(true);

@@ -1,6 +1,6 @@
 {
   "name": "loud-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "loud client description",
   "homepage": "./",
   "author": {
@@ -17,13 +17,18 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/crc": "^3.4.0",
     "@types/jest": "^24.9.1",
+    "@types/jsftp": "^2.1.0",
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "basic-ftp": "^4.6.1",
+    "crc": "^3.8.0",
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.2.0",
+    "jsftp": "^2.1.3",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -34,9 +39,9 @@
     "typescript": "^3.7.5"
   },
   "devDependencies": {
-    "electron": "^9.0.4",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
+    "electron": "^9.0.4",
     "electron-builder": "^22.7.0",
     "electron-debug": "^3.1.0",
     "electron-devtools-installer": "^3.0.0",
@@ -44,15 +49,18 @@
     "wait-on": "^5.0.1"
   },
   "scripts": {
-    "react-build": "react-scripts build",
-    "react-test": "react-scripts test",
-    "react-eject": "react-scripts eject",
-    "react-start": "react-scripts start",
+    "react-build": "craco build",
+    "react-test": "craco test",
+    "react-eject": "craco eject",
+    "react-start": "craco start",
     "electron-build": "electron-builder",
+    "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "yarn react-build",
     "postinstall": "electron-builder install-app-deps",
-    "release": "electron-builder --mac --windows --linux --publish always",
-    "clean": "rimraf build && rimraf dist"
+    "release": "electron-builder --windows --publish never",
+    "clean": "rimraf build && rimraf dist",
+    "start": "yarn react-start",
+    "test": "yarn react-test"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -6,13 +6,23 @@ const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 
+let blankWindow;
 let mainWindow;
+
+function createBlank() {
+  blankWindow = new BrowserWindow({ width: 1, height: 1 });
+  createWindow();
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 960,
+    height: 544,
     // icon: path.join(__dirname, 'icon.png'),
+    frame: false,
+    fullscreenable: false,
+    maximizable: false,
+    fullscreen: false,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -23,10 +33,14 @@ function createWindow() {
       ? 'http://localhost:3000/index.tsx'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
+  mainWindow.on('show', () => {
+    blankWindow.close();
+  });
   mainWindow.on('closed', () => (mainWindow = null));
 }
 
-app.on('ready', createWindow);
+app.allowRendererProcessReuse = false;
+app.on('ready', createBlank);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -36,6 +50,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow();
+    createBlank();
   }
 });
