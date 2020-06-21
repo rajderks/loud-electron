@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import MainButtons from './MainButtons';
 
 const Main: FunctionComponent = () => {
   return (
@@ -10,7 +11,7 @@ const Main: FunctionComponent = () => {
         backgroundSize: 'cover',
       }}
     >
-      Test
+      <MainButtons />
     </div>
   );
 };

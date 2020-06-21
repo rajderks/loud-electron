@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
     background: theme.palette.background.default,
+    position: 'relative',
   },
 }));
 

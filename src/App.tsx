@@ -4,14 +4,13 @@ import {
   ThemeProvider,
   createMuiTheme,
   CssBaseline,
-  useMediaQuery,
   colors,
 } from '@material-ui/core';
 import MapsLoadable from './containers/maps/loadable';
 import Menu from './containers/menu';
 import MainLoadable from './containers/main/loadable';
 
-const themeLight = createMuiTheme({
+const theme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
@@ -20,29 +19,13 @@ const themeLight = createMuiTheme({
     secondary: {
       main: colors.yellow[700],
     },
-  },
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const themeDark = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: colors.blue[700],
-    },
-    secondary: {
-      main: colors.yellow[700],
+    background: {
+      default: '#2A2A2A',
     },
   },
 });
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const theme = React.useMemo(
-    () => (!prefersDarkMode ? themeLight : themeLight),
-    [prefersDarkMode]
-  );
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
@@ -56,7 +39,6 @@ function App() {
         >
           <>
             <Menu />
-            {/* <PageHeader /> */}
             <Router>
               <Switch>
                 <Route path="/">

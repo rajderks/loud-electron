@@ -13,12 +13,27 @@ const Menu: FunctionComponent = () => {
   return (
     <>
       <TitleBar
-        // iconSrc={icon} // app icon
+        // icon={
+        //   <div
+        //     style={{
+        //       backgroundImage: `url('${require('../../assets/logo512.png')}')`,
+        //     }}
+        //   />
+        // } // app icon
+        iconSrc={require('../../assets/loud.ico')}
         currentWindow={currentWindow} // electron window instance
         platform={process.platform as any} // win32, darwin, linux
         menu={[
           {
-            label: 'File',
+            label: 'Game',
+            click: clicky,
+          },
+          {
+            label: 'Tools',
+            click: clicky,
+          },
+          {
+            label: 'Help',
             click: clicky,
           },
         ]}
@@ -28,10 +43,10 @@ const Menu: FunctionComponent = () => {
             // to your application :)
           }
         }
-        title="LOUD"
+        title="LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version 5.00"
         onClose={() => currentWindow.close()}
         onMinimize={() => currentWindow.minimize()}
-        onMaximize={() => currentWindow.maximize()}
+        onMaximize={() => currentWindow.setSize(960, 544)}
         // when the titlebar is double clicked
         onDoubleClick={() => currentWindow.maximize()}
       >
