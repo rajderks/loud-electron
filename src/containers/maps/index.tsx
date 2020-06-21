@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
-  const [maps, setMaps] = useState<MapAttrtr[] | null>(null);
+  const [maps, setMaps] = useState<MapAttr[] | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(false);
   const [addOpen, setAddOpen] = useState(true);

@@ -3,14 +3,14 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
-const url = require('url');
+// const url = require('url');
 const isDev = require('electron-is-dev');
 
-let blankWindow;
+// let blankWindow;
 let mainWindow;
 
 function createBlank() {
-  blankWindow = new BrowserWindow({ width: 1, height: 1 });
+  // blankWindow = new BrowserWindow({ width: 1, height: 1 });
   createWindow();
 }
 
@@ -33,9 +33,6 @@ function createWindow() {
       ? 'http://localhost:3000/index.tsx'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
-  mainWindow.on('show', () => {
-    blankWindow.close();
-  });
   mainWindow.on('closed', () => (mainWindow = null));
 }
 
