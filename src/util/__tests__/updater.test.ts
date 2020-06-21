@@ -6,16 +6,17 @@ import {
   updaterLocalFileData$,
 } from '../updater';
 import { map } from 'rxjs/operators';
-import testCrcFileinfos from './test-crc-fileinfo.json';
 import { RemoteFileInfo } from '../types';
-import { fstat } from 'fs';
 
 const BASE_URI = './src/util/__tests__/';
 
 describe('Updater', () => {
+  let infos: RemoteFileInfo[] = [];
   it('can retrieve the files CRC from the FTP', (done) => {
     updaterGetCRCInfo$().subscribe(
       (n) => {
+        // console.log(JSON.stringify(n));
+        fs.writeFileSync(`${BASE_URI}test-crc.txt`, n);
         done();
       },
       (e) => {
@@ -30,13 +31,19 @@ describe('Updater', () => {
       .subscribe(
         (n) => {
           if (n.length > 0) {
-            const result = n.every(
-              (fi) =>
-                fi.hash.length > 0 &&
-                fi.path.length > 0 &&
-                typeof fi.size === 'number'
-            );
+            const result =
+              n.every(
+                (fi) =>
+                  fi.hash.length > 0 &&
+                  fi.path.length > 0 &&
+                  typeof fi.size === 'number'
+              ) && n.every((fi) => !fi.path.includes('\\'));
             if (result) {
+              fs.writeFileSync(
+                `${BASE_URI}test-crc-fileinfo.json`,
+                JSON.stringify(n, null, 2)
+              );
+              infos = n;
               done();
             } else {
               done(
@@ -58,11 +65,10 @@ describe('Updater', () => {
   });
   it('can identify which local items are out of sync', (done) => {
     updateCollectOutOfSyncFiles$(
-      testCrcFileinfos as RemoteFileInfo[],
+      infos as RemoteFileInfo[],
       `${BASE_URI}/LOUD`
     ).subscribe(
       (n) => {
-        console.warn('LEN', n.length);
         expect(n.length).toBe(379);
         done();
       },

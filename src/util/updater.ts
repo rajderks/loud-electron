@@ -9,7 +9,7 @@ import {
   catchError,
   toArray,
   mergeMap,
-  buffer,
+  concatMap,
 } from 'rxjs/operators';
 
 interface FTP extends ftp {
@@ -25,6 +25,24 @@ const connection = {
   user: process.env.REACT_APP_FTP_USER,
   pass: process.env.REACT_APP_FTP_PASS,
 };
+
+const updaterConnectFTP$ = () =>
+  from<Promise<FTP>>(
+    new Promise((res, rej) => {
+      const client: FTP = new ftp(connection) as FTP;
+      client.on('connect', (err) => {
+        if (err) {
+          throw err;
+        }
+        client.auth(connection.user!, connection.pass!, (errAuth) => {
+          if (errAuth) {
+            throw errAuth;
+          }
+          res(client);
+        });
+      });
+    })
+  );
 
 const updaterGetCRCInfo$ = () =>
   from<Promise<string>>(
@@ -60,10 +78,124 @@ const updaterGetCRCInfo$ = () =>
     })
   );
 
+const updaterGetRemoteFile$ = (fileInfo: RemoteFileInfo, client: FTP) => {
+  // console.log('updaterGetRemoteFile$', fileInfo);
+  return from<Promise<Buffer>>(
+    new Promise((res, rej) => {
+      client.get(`LOUD/${fileInfo.path}`, (err, socket) => {
+        if (err) {
+          console.error('updaterGetRemoteFile$', fileInfo);
+          console.error(err);
+          throw err;
+        }
+        let buffer = Buffer.from('');
+        socket.on('data', (d) => {
+          buffer = Buffer.concat([buffer, d]);
+        });
+
+        socket.on('close', (errClose) => {
+          if (errClose) {
+            throw errClose;
+          }
+          res(buffer);
+        });
+        socket.resume();
+      });
+    })
+  );
+};
+
+const updateGetAndWriteRemoteFiles$ = (
+  baseURI: string,
+  fileInfos: RemoteFileInfo[]
+) => {
+  return new Observable((subscriber) => {
+    const filesSucceeded: RemoteFileInfo[] = [];
+    const filesFailed: RemoteFileInfo[] = [];
+    return updaterConnectFTP$().subscribe(
+      (c) => {
+        from(fileInfos)
+          .pipe(
+            concatMap((fileInfo) =>
+              updaterGetRemoteFile$(fileInfo as RemoteFileInfo, c).pipe(
+                mergeMap((buffer, i) =>
+                  updaterWriteBufferToLocalFile$(
+                    baseURI + '/LOUD',
+                    fileInfo,
+                    buffer
+                  ).pipe(
+                    map((fi) => {
+                      return [fi, true] as [RemoteFileInfo, boolean];
+                    })
+                  )
+                ),
+                catchError((e) => {
+                  console.error(e);
+                  return of([fileInfo, false] as [RemoteFileInfo, boolean]);
+                })
+              )
+            )
+          )
+          .subscribe(
+            ([fileInfo, success]) => {
+              if (success) {
+                filesSucceeded.push(fileInfo);
+              } else {
+                filesFailed.push(fileInfo);
+              }
+            },
+            (e) => {
+              console.error(e);
+            },
+            () => {
+              subscriber.next([filesSucceeded, filesFailed]);
+              subscriber.complete();
+            }
+          );
+      },
+      (e) => {
+        console.error(e);
+        subscriber.error(e);
+      }
+    );
+  });
+};
+
+const updaterWriteBufferToLocalFile$ = (
+  baseURI: string,
+  fileInfo: RemoteFileInfo,
+  buffer: Buffer
+) => {
+  return from(
+    new Promise<RemoteFileInfo>((res, rej) => {
+      const path = updaterCreateLocalFileURI(baseURI, fileInfo.path);
+      const dir = updateCreateLocalFileDirURI(path);
+      fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+          console.error(
+            'updaterWriteBufferToLocalFile$',
+            fileInfo,
+            buffer.length
+          );
+          console.error(err);
+          throw err;
+        }
+        fs.writeFile(path, buffer, (errWrite) => {
+          if (errWrite) {
+            throw errWrite;
+          }
+          res(fileInfo);
+        });
+      });
+    })
+  );
+};
+
 const updaterParseRemoteFileContent = (
   remoteFileContent: string
 ): RemoteFileInfo[] =>
   remoteFileContent
+    .replace(/\\+/gi, '/')
     .replace(/^\s+|\s+$/g, '')
     .split(/\r?\n/)
     .map((line) => updaterStringToRemoteFileInfo(line));
@@ -93,6 +225,15 @@ const updaterLocalFileData$ = (path: string): Observable<Buffer> =>
     )
   );
 
+const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
+  `${baseURI}/${path}`.replace('\\', '/').replace('//', '/').trim();
+
+const updateCreateLocalFileDirURI = (fileURI: string) => {
+  const chunks = fileURI.split('/');
+  chunks.pop();
+  return chunks.join('/');
+};
+
 /**
  * Compare given [[RemoteFileInfo]] to local counterpart
  * @param fileInfo
@@ -103,7 +244,7 @@ const updaterCompareRemoteFileInfo$ = (
 ): Observable<[RemoteFileInfo, boolean]> =>
   of(fileInfo).pipe(
     switchMap((info) =>
-      updaterLocalFileData$(`${baseURI}/${info.path}`).pipe(
+      updaterLocalFileData$(updaterCreateLocalFileURI(baseURI, info.path)).pipe(
         map((data) => {
           const shacrypto = crypto.createHash('sha1');
           shacrypto.update(data);
@@ -124,28 +265,21 @@ const updateCollectOutOfSyncFiles$ = (
   from(fileInfos).pipe(
     mergeMap((info) =>
       updaterCompareRemoteFileInfo$(info, baseURI).pipe(
-        switchMap(([info, result]) =>
-          iif(
-            () => {
-              if (result) {
-                console.warn('res', result);
-              }
-              return !!result;
-            },
-            EMPTY,
-            of(info)
-          )
-        )
+        switchMap(([info, result]) => iif(() => !!result, EMPTY, of(info)))
       )
     ),
     toArray()
   );
 
 export {
+  updaterConnectFTP$,
   updaterGetCRCInfo$,
   updaterParseRemoteFileContent,
   updaterCompareRemoteFileInfo$,
   updaterStringToRemoteFileInfo,
   updaterLocalFileData$,
   updateCollectOutOfSyncFiles$,
+  updaterGetRemoteFile$,
+  updaterWriteBufferToLocalFile$,
+  updateGetAndWriteRemoteFiles$,
 };

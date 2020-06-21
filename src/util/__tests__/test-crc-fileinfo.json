@@ -80,1657 +80,1657 @@
     "size": 9977196
   },
   {
-    "path": "sounds/voice\\US\\ayv_vo.xsb",
+    "path": "sounds/voice/US/ayv_vo.xsb",
     "hash": "DDCE541E94C195F264199686B4B68D324340C279",
     "size": 695
   },
   {
-    "path": "sounds/voice\\US\\ayv_vo.xwb",
+    "path": "sounds/voice/US/ayv_vo.xwb",
     "hash": "A034BDC707C2340E02ADB912DE07EFCF96E8EB28",
     "size": 2284036
   },
   {
-    "path": "maps/World\\World.scmap",
+    "path": "maps/World/World.scmap",
     "hash": "8B696534DF6C50AFA98C5DF63B5F7B55B649D0A1",
     "size": 130628362
   },
   {
-    "path": "maps/World\\World_save.lua",
+    "path": "maps/World/World_save.lua",
     "hash": "F2967DFD25F975744F9358EEA723033BD1749617",
     "size": 647417
   },
   {
-    "path": "maps/World\\World_scenario.lua",
+    "path": "maps/World/World_scenario.lua",
     "hash": "6BB30EE03E0A4B472A164B67ADE90DD7AAC7F179",
     "size": 955
   },
   {
-    "path": "maps/World\\World_script.lua",
+    "path": "maps/World/World_script.lua",
     "hash": "BD08D4118FBCB306E36C0BA01728885917EFAA37",
     "size": 247
   },
   {
-    "path": "maps/Voodoo Bridge\\voodoo bridge.dds",
+    "path": "maps/Voodoo Bridge/voodoo bridge.dds",
     "hash": "BCDD4C55F894049E212FBE665D6A01A85D619957",
     "size": 262272
   },
   {
-    "path": "maps/Voodoo Bridge\\Voodoo Bridge.scmap",
+    "path": "maps/Voodoo Bridge/Voodoo Bridge.scmap",
     "hash": "A42BE43263231601E378EE4D08F8EBB8D16B2A65",
     "size": 7718525
   },
   {
-    "path": "maps/Voodoo Bridge\\Voodoo Bridge_save.lua",
+    "path": "maps/Voodoo Bridge/Voodoo Bridge_save.lua",
     "hash": "EA37A05FC0098FA892ADBC55294286C34C9D6606",
     "size": 125814
   },
   {
-    "path": "maps/Voodoo Bridge\\Voodoo Bridge_scenario.lua",
+    "path": "maps/Voodoo Bridge/Voodoo Bridge_scenario.lua",
     "hash": "4EEB1076025018A362C0635293232FCFC4102CCA",
     "size": 794
   },
   {
-    "path": "maps/Voodoo Bridge\\Voodoo Bridge_script.lua",
+    "path": "maps/Voodoo Bridge/Voodoo Bridge_script.lua",
     "hash": "17B24F2ECE25E5F801AEE66918A9C659613A54FD",
     "size": 410
   },
   {
-    "path": "maps/Varga\\Varga.scmap",
+    "path": "maps/Varga/Varga.scmap",
     "hash": "F3405BB05FBF5BC9A0F5AF75660190D6D88962AF",
     "size": 2451240
   },
   {
-    "path": "maps/Varga\\Varga_save.lua",
+    "path": "maps/Varga/Varga_save.lua",
     "hash": "F567C6D13C3C45F92977711E4789731DA5D238E2",
     "size": 203664
   },
   {
-    "path": "maps/Varga\\Varga_scenario.lua",
+    "path": "maps/Varga/Varga_scenario.lua",
     "hash": "49DBF1817D53F3E0CF0DEF12C24399B8A85CB7EC",
     "size": 953
   },
   {
-    "path": "maps/Varga\\Varga_script.lua",
+    "path": "maps/Varga/Varga_script.lua",
     "hash": "7CF583368E69A6D7B135DACA2FE84DAFF3EE6122",
     "size": 298
   },
   {
-    "path": "maps/ValleyPassage\\valleypassage.scmap",
+    "path": "maps/ValleyPassage/valleypassage.scmap",
     "hash": "6C443EFE51C671514F6E7E6FB84FCFE80C96F772",
     "size": 7736453
   },
   {
-    "path": "maps/ValleyPassage\\valleypassage_save.lua",
+    "path": "maps/ValleyPassage/valleypassage_save.lua",
     "hash": "5C452C178C2115AB99B40CD61BE9D1B8EBDA7CB7",
     "size": 320263
   },
   {
-    "path": "maps/ValleyPassage\\valleypassage_scenario.lua",
+    "path": "maps/ValleyPassage/valleypassage_scenario.lua",
     "hash": "5AC94C39D140B3BC80EABB37FEC030C4D1B57524",
     "size": 895
   },
   {
-    "path": "maps/ValleyPassage\\valleypassage_script.lua",
+    "path": "maps/ValleyPassage/valleypassage_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers 12 player_save.lua",
+    "path": "maps/Twin Rivers/twin rivers 12 player_save.lua",
     "hash": "5FA79FACC5964D4C00D56167347DE5BA3C4EB80A",
     "size": 349221
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers 12 player_scenario.lua",
+    "path": "maps/Twin Rivers/twin rivers 12 player_scenario.lua",
     "hash": "389DF86938ACD966DBB1A28197A95AF1971A2B0D",
     "size": 950
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers.scmap",
+    "path": "maps/Twin Rivers/twin rivers.scmap",
     "hash": "FFFE425DF7AE5434CC1BAA20A8712635D1EB5A74",
     "size": 8262235
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers_8 player_save.lua",
+    "path": "maps/Twin Rivers/twin rivers_8 player_save.lua",
     "hash": "1E32E246C27B0276A5AA6F75240AB6CA630F36C3",
     "size": 274423
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers_8 player_scenario.lua",
+    "path": "maps/Twin Rivers/twin rivers_8 player_scenario.lua",
     "hash": "1C3019DF7EF3894D51E0887FAC16AB1D75DD656F",
     "size": 1279
   },
   {
-    "path": "maps/Twin Rivers\\twin rivers_script.lua",
+    "path": "maps/Twin Rivers/twin rivers_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Tribal Lands\\Tribal Lands.scmap",
+    "path": "maps/Tribal Lands/Tribal Lands.scmap",
     "hash": "6AF7B5DFFA30A7670DFD21FCED13E02459C32D4A",
     "size": 7608154
   },
   {
-    "path": "maps/Tribal Lands\\Tribal Lands_save.lua",
+    "path": "maps/Tribal Lands/Tribal Lands_save.lua",
     "hash": "752BA2EF30453FF8F5852507AA67810F24A166F4",
     "size": 387461
   },
   {
-    "path": "maps/Tribal Lands\\Tribal Lands_scenario.lua",
+    "path": "maps/Tribal Lands/Tribal Lands_scenario.lua",
     "hash": "42D98231F4F38DBC4C068A0C6BB1DB2CBCEDBEC0",
     "size": 820
   },
   {
-    "path": "maps/Tribal Lands\\Tribal Lands_script.lua",
+    "path": "maps/Tribal Lands/Tribal Lands_script.lua",
     "hash": "410AC5253709FACC96B75FBD182B100D1AD10303",
     "size": 166
   },
   {
-    "path": "maps/The Wilderness 40\\The Wilderness 40.scmap",
+    "path": "maps/The Wilderness 40/The Wilderness 40.scmap",
     "hash": "D4114A8686123F0B4F77E49C3097316E0C6CE17D",
     "size": 30741581
   },
   {
-    "path": "maps/The Wilderness 40\\The Wilderness 40_save.lua",
+    "path": "maps/The Wilderness 40/The Wilderness 40_save.lua",
     "hash": "29FF548E74DEFCFD6F4E90240A2AE58AD114C70B",
     "size": 737697
   },
   {
-    "path": "maps/The Wilderness 40\\The Wilderness 40_scenario.lua",
+    "path": "maps/The Wilderness 40/The Wilderness 40_scenario.lua",
     "hash": "622AF8862EDCA4E2CCC6AEFC5FD2D35A86A930A9",
     "size": 1158
   },
   {
-    "path": "maps/The Wilderness 40\\The Wilderness 40_script.lua",
+    "path": "maps/The Wilderness 40/The Wilderness 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/The Pass\\The Pass 1v1_save.lua",
+    "path": "maps/The Pass/The Pass 1v1_save.lua",
     "hash": "D2441015479F5E66384A063D43A7A3B4E98E89BA",
     "size": 98719
   },
   {
-    "path": "maps/The Pass\\The Pass 1v1_scenario.lua",
+    "path": "maps/The Pass/The Pass 1v1_scenario.lua",
     "hash": "FBF3A7503E7F1A62296844F93CD4C417001E81A6",
     "size": 740
   },
   {
-    "path": "maps/The Pass\\The Pass 3v1_save.lua",
+    "path": "maps/The Pass/The Pass 3v1_save.lua",
     "hash": "531421DE910CE53763D56C5A6F33059F852FB8DF",
     "size": 103967
   },
   {
-    "path": "maps/The Pass\\The Pass 3v1_scenario.lua",
+    "path": "maps/The Pass/The Pass 3v1_scenario.lua",
     "hash": "C6259083B3C26ECCDDAABFC93B02D2B14231FAD4",
     "size": 872
   },
   {
-    "path": "maps/The Pass\\The Pass 4v1_save.lua",
+    "path": "maps/The Pass/The Pass 4v1_save.lua",
     "hash": "856808FAE924038BA4411E370C60E8F852C09273",
     "size": 108367
   },
   {
-    "path": "maps/The Pass\\The Pass 4v1_scenario.lua",
+    "path": "maps/The Pass/The Pass 4v1_scenario.lua",
     "hash": "6A4CCDB3A593E20C59135A8FC52188678CC63761",
     "size": 815
   },
   {
-    "path": "maps/The Pass\\The Pass.scmap",
+    "path": "maps/The Pass/The Pass.scmap",
     "hash": "034AC313E1A92C9BDA095B027A4061426CB6B375",
     "size": 2101369
   },
   {
-    "path": "maps/The Pass\\The Pass_script.lua",
+    "path": "maps/The Pass/The Pass_script.lua",
     "hash": "9B1D00B22881BA327DCB89E73745F9D0FC65E99C",
     "size": 405
   },
   {
-    "path": "maps/The Great 2-0\\The Great 2-0.scmap",
+    "path": "maps/The Great 2-0/The Great 2-0.scmap",
     "hash": "E6C300CCB9F8486E41A1E8C6F4F872A3561EEB20",
     "size": 17500584
   },
   {
-    "path": "maps/The Great 2-0\\The Great 2-0_save.lua",
+    "path": "maps/The Great 2-0/The Great 2-0_save.lua",
     "hash": "E08D6B141377A7F4230FE84B581B9236CB2DB689",
     "size": 362936
   },
   {
-    "path": "maps/The Great 2-0\\The Great 2-0_scenario.lua",
+    "path": "maps/The Great 2-0/The Great 2-0_scenario.lua",
     "hash": "475B8A66BBB1D8FA629CFDA3DEA28A28BE2C93EE",
     "size": 966
   },
   {
-    "path": "maps/The Great 2-0\\The Great 2-0_script.lua",
+    "path": "maps/The Great 2-0/The Great 2-0_script.lua",
     "hash": "0B179317857ECA20886F892669A3E62D67A9DC98",
     "size": 286
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40.raw",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40.raw",
     "hash": "453E92393C74DF6F34596EDF8542A153D327A6A2",
     "size": 8396802
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40.scmap",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40.scmap",
     "hash": "2D2652E33EE095381F0CDE9148E628B731449F58",
     "size": 32019765
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 3_save.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 3_save.lua",
     "hash": "A1D96EC859FEFE3A88CCAE5FB4D302E1AC90ACD2",
     "size": 590365
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 3_scenario.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 3_scenario.lua",
     "hash": "6A2C54AD06939CAADDFA79D7BAECD2EC414EC9F8",
     "size": 1075
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 6_low mass_save.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 6_low mass_save.lua",
     "hash": "95F82A4448E41350FB86DBA9697487D9025413CF",
     "size": 613575
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 6_low mass_scenario.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 6_low mass_scenario.lua",
     "hash": "F90FEE00DC2DDEDE0D237692E71E3D5345E40183",
     "size": 1019
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 6_save.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 6_save.lua",
     "hash": "BC7E71AEB9C7E33114D812C01FBED787B2F6F016",
     "size": 643530
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_6 on 6_scenario.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_6 on 6_scenario.lua",
     "hash": "9C1F3E534E50D6378315370B4F30CA3FA749E040",
     "size": 998
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_8 on 4_save.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_8 on 4_save.lua",
     "hash": "69CB306E4CA89D23042BEBB61568FF4BF45880F1",
     "size": 523715
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_8 on 4_scenario.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_8 on 4_scenario.lua",
     "hash": "E3CBAA39C858F9D38DCE42C525DFFB9E0E6973F1",
     "size": 1025
   },
   {
-    "path": "maps/Thawing Glacier 40\\thawing glacier 40_script.lua",
+    "path": "maps/Thawing Glacier 40/thawing glacier 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Thawing Glacier 20\\thawing glacier.scmap",
+    "path": "maps/Thawing Glacier 20/thawing glacier.scmap",
     "hash": "E95CAD45265378420FF470073A810D1A411A3DF9",
     "size": 9050100
   },
   {
-    "path": "maps/Thawing Glacier 20\\thawing glacier_20_save.lua",
+    "path": "maps/Thawing Glacier 20/thawing glacier_20_save.lua",
     "hash": "8AC88CBC950E614FD01A703BCAB5DB1BA5B9263D",
     "size": 552709
   },
   {
-    "path": "maps/Thawing Glacier 20\\thawing glacier_20_scenario.lua",
+    "path": "maps/Thawing Glacier 20/thawing glacier_20_scenario.lua",
     "hash": "64901D4B4F7D40DCC03EAFD7279F9C8657F99981",
     "size": 904
   },
   {
-    "path": "maps/Thawing Glacier 20\\thawing glacier_script.lua",
+    "path": "maps/Thawing Glacier 20/thawing glacier_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/SpineofZeus\\spineofzeus.scmap",
+    "path": "maps/SpineofZeus/spineofzeus.scmap",
     "hash": "E4BAEA5469BF1B41CD76891147427FC6651209B7",
     "size": 11885721
   },
   {
-    "path": "maps/SpineofZeus\\spineofzeus_save.lua",
+    "path": "maps/SpineofZeus/spineofzeus_save.lua",
     "hash": "A56578A47FDB9D53E6CE687D018A69BA249CA5CD",
     "size": 375214
   },
   {
-    "path": "maps/SpineofZeus\\spineofzeus_scenario.lua",
+    "path": "maps/SpineofZeus/spineofzeus_scenario.lua",
     "hash": "436BC57E14023DDEED144E20F0172B26AE0DF260",
     "size": 1301
   },
   {
-    "path": "maps/SpineofZeus\\spineofzeus_script.lua",
+    "path": "maps/SpineofZeus/spineofzeus_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Shards 80\\shards 80.scmap",
+    "path": "maps/Shards 80/shards 80.scmap",
     "hash": "416533E87549698E40796BAA2DBA6F896E11C884",
     "size": 107436724
   },
   {
-    "path": "maps/Shards 80\\shards 80_save.lua",
+    "path": "maps/Shards 80/shards 80_save.lua",
     "hash": "F4504251725C6F275FE5254C8BDF051023D14C6B",
     "size": 688322
   },
   {
-    "path": "maps/Shards 80\\shards 80_scenario.lua",
+    "path": "maps/Shards 80/shards 80_scenario.lua",
     "hash": "83A16B781E57BC87C4BACC6DD2248B6EB7792FF7",
     "size": 863
   },
   {
-    "path": "maps/Shards 80\\shards 80_script.lua",
+    "path": "maps/Shards 80/shards 80_script.lua",
     "hash": "8E099403B7D2FFC0B75151F740B76A5265DC7039",
     "size": 184
   },
   {
-    "path": "maps/Shards\\shards.scmap",
+    "path": "maps/Shards/shards.scmap",
     "hash": "A1A5714920CAB596C8B70526FB76D47BDD75E986",
     "size": 34112509
   },
   {
-    "path": "maps/Shards\\shards_balanced_save.lua",
+    "path": "maps/Shards/shards_balanced_save.lua",
     "hash": "9024C289D1E0D4C80A1601E96380AB09A510D7F8",
     "size": 669166
   },
   {
-    "path": "maps/Shards\\shards_balanced_scenario.lua",
+    "path": "maps/Shards/shards_balanced_scenario.lua",
     "hash": "8A5F5AE41B78447B9728667607B5998DF3867211",
     "size": 1086
   },
   {
-    "path": "maps/Shards\\shards_save.lua",
+    "path": "maps/Shards/shards_save.lua",
     "hash": "42CCB7EE081539546612768E2673650BB3C2C918",
     "size": 699498
   },
   {
-    "path": "maps/Shards\\shards_scenario.lua",
+    "path": "maps/Shards/shards_scenario.lua",
     "hash": "85948A86175326506B97E66A6B5F6047F17EC619",
     "size": 1068
   },
   {
-    "path": "maps/Shards\\shards_script.lua",
+    "path": "maps/Shards/shards_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Setons Clutch 40\\setons clutch 40.scmap",
+    "path": "maps/Setons Clutch 40/setons clutch 40.scmap",
     "hash": "43FAED46A89BAB4153C784924ED515B0CB2B0FAB",
     "size": 29897046
   },
   {
-    "path": "maps/Setons Clutch 40\\setons clutch 40_save.lua",
+    "path": "maps/Setons Clutch 40/setons clutch 40_save.lua",
     "hash": "A9F1FC319861581F37334D96103797E744ABD083",
     "size": 453073
   },
   {
-    "path": "maps/Setons Clutch 40\\setons clutch 40_scenario.lua",
+    "path": "maps/Setons Clutch 40/setons clutch 40_scenario.lua",
     "hash": "7E5D206F7BDCA5EC18D8F4D3D9E89D8004278379",
     "size": 955
   },
   {
-    "path": "maps/Setons Clutch 40\\setons clutch 40_script.lua",
+    "path": "maps/Setons Clutch 40/setons clutch 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Setons Clutch\\setons clutch.scmap",
+    "path": "maps/Setons Clutch/setons clutch.scmap",
     "hash": "36E234E9919518FFAD1231DFA3E456C2C9AC217D",
     "size": 9636487
   },
   {
-    "path": "maps/Setons Clutch\\setons clutch_save.lua",
+    "path": "maps/Setons Clutch/setons clutch_save.lua",
     "hash": "6C2CE914B5B7832E9F8DCC11182238421DE6CB16",
     "size": 394410
   },
   {
-    "path": "maps/Setons Clutch\\setons clutch_scenario.lua",
+    "path": "maps/Setons Clutch/setons clutch_scenario.lua",
     "hash": "D898A36861ED87E48E56F08ECA7CE3801EA8EA17",
     "size": 1028
   },
   {
-    "path": "maps/Setons Clutch\\setons clutch_script.lua",
+    "path": "maps/Setons Clutch/setons clutch_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Seraphim Planet\\seraphim planet.scmap",
+    "path": "maps/Seraphim Planet/seraphim planet.scmap",
     "hash": "B198292EC7A8EF900E321ED969B8974E6D35FB66",
     "size": 30308029
   },
   {
-    "path": "maps/Seraphim Planet\\seraphim planet_save.lua",
+    "path": "maps/Seraphim Planet/seraphim planet_save.lua",
     "hash": "8AD36161F1E04CEDEB40F14C58A30AC60E9435CC",
     "size": 621177
   },
   {
-    "path": "maps/Seraphim Planet\\seraphim planet_scenario.lua",
+    "path": "maps/Seraphim Planet/seraphim planet_scenario.lua",
     "hash": "FB162B42CE6228CFD09E71EF824B9492D02C7B3E",
     "size": 815
   },
   {
-    "path": "maps/Seraphim Planet\\seraphim planet_script.lua",
+    "path": "maps/Seraphim Planet/seraphim planet_script.lua",
     "hash": "94D580E89972F5308FE094D6FDCABF42B267D220",
     "size": 186
   },
   {
-    "path": "maps/Painted Desert 40\\painted desert 40.scmap",
+    "path": "maps/Painted Desert 40/painted desert 40.scmap",
     "hash": "1553198858E1B27BE9EE55D2614CCE7F60C3C7C7",
     "size": 31491338
   },
   {
-    "path": "maps/Painted Desert 40\\painted desert 40_save.lua",
+    "path": "maps/Painted Desert 40/painted desert 40_save.lua",
     "hash": "BC5324654E823D6A3364887BD862452A5988774E",
     "size": 490946
   },
   {
-    "path": "maps/Painted Desert 40\\painted desert 40_scenario.lua",
+    "path": "maps/Painted Desert 40/painted desert 40_scenario.lua",
     "hash": "4F64049F40F7442945A66ABEC334C8C723EB3E4E",
     "size": 1006
   },
   {
-    "path": "maps/Painted Desert 40\\painted desert 40_script.lua",
+    "path": "maps/Painted Desert 40/painted desert 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Painted Desert\\painted desert.scmap",
+    "path": "maps/Painted Desert/painted desert.scmap",
     "hash": "AB82F83350E5282E69D56BA21E60EFB2B8DF78E3",
     "size": 8692176
   },
   {
-    "path": "maps/Painted Desert\\painted desert_save.lua",
+    "path": "maps/Painted Desert/painted desert_save.lua",
     "hash": "C646BCCAE4AA8AE5DC1EFBBE1F65139C3F955AE1",
     "size": 388695
   },
   {
-    "path": "maps/Painted Desert\\painted desert_scenario.lua",
+    "path": "maps/Painted Desert/painted desert_scenario.lua",
     "hash": "E16348F1EF9B1D2D50AC3EEBDDE2FD02D13237BE",
     "size": 983
   },
   {
-    "path": "maps/Painted Desert\\painted desert_script.lua",
+    "path": "maps/Painted Desert/painted desert_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Ocean Scamps\\Ocean Scamps.scmap",
+    "path": "maps/Ocean Scamps/Ocean Scamps.scmap",
     "hash": "17663F9995AC6AC4BA58600907613713503EC435",
     "size": 8785778
   },
   {
-    "path": "maps/Ocean Scamps\\Ocean Scamps_save.lua",
+    "path": "maps/Ocean Scamps/Ocean Scamps_save.lua",
     "hash": "B503A04D9BADDF7FAA5F51ADDD820F91CB2FA501",
     "size": 327609
   },
   {
-    "path": "maps/Ocean Scamps\\Ocean Scamps_scenario.lua",
+    "path": "maps/Ocean Scamps/Ocean Scamps_scenario.lua",
     "hash": "926A33369E79BF1633B531BA0C48C6F7B04F87C7",
     "size": 835
   },
   {
-    "path": "maps/Ocean Scamps\\Ocean Scamps_script.lua",
+    "path": "maps/Ocean Scamps/Ocean Scamps_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/LostTemple\\losttemple.scmap",
+    "path": "maps/LostTemple/losttemple.scmap",
     "hash": "816606FDAD6AE53438AC18D45697B239B9808C1C",
     "size": 8950658
   },
   {
-    "path": "maps/LostTemple\\losttemple_save.lua",
+    "path": "maps/LostTemple/losttemple_save.lua",
     "hash": "D64A7EF24BDBDA778B4982F98D0F7196D5EC7174",
     "size": 405994
   },
   {
-    "path": "maps/LostTemple\\losttemple_scenario.lua",
+    "path": "maps/LostTemple/losttemple_scenario.lua",
     "hash": "613A1F38347083406C4CEB4B78AE8923D197C16A",
     "size": 869
   },
   {
-    "path": "maps/LostTemple\\losttemple_script.lua",
+    "path": "maps/LostTemple/losttemple_script.lua",
     "hash": "F3637CF0057FD1FF0C1F0CC0BF36C231B81CB668",
     "size": 236
   },
   {
-    "path": "maps/Lost Paradise ii\\lost paradise ii.scmap",
+    "path": "maps/Lost Paradise ii/lost paradise ii.scmap",
     "hash": "0F80EF3350D76512C1DB6A470B854F7E0BE917D3",
     "size": 9289555
   },
   {
-    "path": "maps/Lost Paradise ii\\lost paradise ii_save.lua",
+    "path": "maps/Lost Paradise ii/lost paradise ii_save.lua",
     "hash": "F57030FCEA663EE749B84A0D4DAEC6499D7F9D56",
     "size": 297601
   },
   {
-    "path": "maps/Lost Paradise ii\\lost paradise ii_scenario.lua",
+    "path": "maps/Lost Paradise ii/lost paradise ii_scenario.lua",
     "hash": "C2E35C7A9C41D9C0DC0AADAC8F3CCBCAB861E6E6",
     "size": 839
   },
   {
-    "path": "maps/Lost Paradise ii\\lost paradise ii_script.lua",
+    "path": "maps/Lost Paradise ii/lost paradise ii_script.lua",
     "hash": "8E099403B7D2FFC0B75151F740B76A5265DC7039",
     "size": 184
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon.dds",
+    "path": "maps/Lagoon_xl/lagoon.dds",
     "hash": "3EDC42AC758CC1804EA29E8C8149B579DCCA3153",
     "size": 262272
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_low_tide.dds",
+    "path": "maps/Lagoon_xl/lagoon_low_tide.dds",
     "hash": "D4C10615D527B6BC7E7C3EB5FCC09B81B7C798CA",
     "size": 262272
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl.dds",
+    "path": "maps/Lagoon_xl/lagoon_xl.dds",
     "hash": "CDC99A45E6B1EFB6C6AB5FCD4178721FCCB0284A",
     "size": 262272
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl.large.png",
+    "path": "maps/Lagoon_xl/lagoon_xl.large.png",
     "hash": "EC7D48D1E986D0A939A7E2BD6FABFA5951F2DEE9",
     "size": 118017
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl.scmap",
+    "path": "maps/Lagoon_xl/lagoon_xl.scmap",
     "hash": "2C22D197B46F29A95042ADCE2E80667B7961B404",
     "size": 30599763
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl.small.png",
+    "path": "maps/Lagoon_xl/lagoon_xl.small.png",
     "hash": "076CDD93194539107F20D5BB9808B55E97257061",
     "size": 20228
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl_old.scmap",
+    "path": "maps/Lagoon_xl/lagoon_xl_old.scmap",
     "hash": "85780D8CAD534C50FBD186EDCCB09BA9C3D337D9",
     "size": 26929311
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl_save.lua",
+    "path": "maps/Lagoon_xl/lagoon_xl_save.lua",
     "hash": "85D3B482C10637C34B081F2E4EBB8EAD70B77ECC",
     "size": 745823
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl_scenario.lua",
+    "path": "maps/Lagoon_xl/lagoon_xl_scenario.lua",
     "hash": "EC3AA58AAEA0DD368297F1EC39DDD3E470C4913C",
     "size": 914
   },
   {
-    "path": "maps/Lagoon_xl\\lagoon_xl_script.lua",
+    "path": "maps/Lagoon_xl/lagoon_xl_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Kazam_40\\Kazam_40.scmap",
+    "path": "maps/Kazam_40/Kazam_40.scmap",
     "hash": "2184EBDDE00491BC3CB3BA16524D313CBDBC33D9",
     "size": 29632383
   },
   {
-    "path": "maps/Kazam_40\\Kazam_40_save.lua",
+    "path": "maps/Kazam_40/Kazam_40_save.lua",
     "hash": "77AA9BFF06C6BFFF29A6E0576F711D8BF3EC1CFF",
     "size": 619656
   },
   {
-    "path": "maps/Kazam_40\\Kazam_40_scenario.lua",
+    "path": "maps/Kazam_40/Kazam_40_scenario.lua",
     "hash": "A5569A381753D7A0E4743BD8711A25D1B36E5B97",
     "size": 845
   },
   {
-    "path": "maps/Kazam_40\\Kazam_40_script.lua",
+    "path": "maps/Kazam_40/Kazam_40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Iced Mountains\\iced mountains low_scenario.lua",
+    "path": "maps/Iced Mountains/iced mountains low_scenario.lua",
     "hash": "F12B33C1002184A4DE5818623AFD7F9B03063C02",
     "size": 918
   },
   {
-    "path": "maps/Iced Mountains\\Iced Mountains.scmap",
+    "path": "maps/Iced Mountains/Iced Mountains.scmap",
     "hash": "3F7834A78A86C6FCA815DCD136666B32B3368728",
     "size": 30241307
   },
   {
-    "path": "maps/Iced Mountains\\Iced Mountains_Low_save.lua",
+    "path": "maps/Iced Mountains/Iced Mountains_Low_save.lua",
     "hash": "0E6ED3FFC4E88E8FF8AC5CA176C4E929D78F8468",
     "size": 635048
   },
   {
-    "path": "maps/Iced Mountains\\Iced Mountains_save.lua",
+    "path": "maps/Iced Mountains/Iced Mountains_save.lua",
     "hash": "4231BE0A02A47744CA08DBFB0228234A8BB020B4",
     "size": 631817
   },
   {
-    "path": "maps/Iced Mountains\\iced mountains_scenario.lua",
+    "path": "maps/Iced Mountains/iced mountains_scenario.lua",
     "hash": "B38F98A6D8D45755C539E63F7F61D560680D3AD8",
     "size": 903
   },
   {
-    "path": "maps/Iced Mountains\\iced mountains_script.lua",
+    "path": "maps/Iced Mountains/iced mountains_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Ians Cross\\Ians Cross.scmap",
+    "path": "maps/Ians Cross/Ians Cross.scmap",
     "hash": "6FCDAD0A42B662D73F09E937D4C9D2470D564E44",
     "size": 10810196
   },
   {
-    "path": "maps/Ians Cross\\Ians Cross_save.lua",
+    "path": "maps/Ians Cross/Ians Cross_save.lua",
     "hash": "5B9B6C4859106431DC473781CB54BE4F6B8401C4",
     "size": 380669
   },
   {
-    "path": "maps/Ians Cross\\ians cross_scenario.lua",
+    "path": "maps/Ians Cross/ians cross_scenario.lua",
     "hash": "F861A3AE8766F8B72E0430E7013C19B251729FC1",
     "size": 1029
   },
   {
-    "path": "maps/Ians Cross\\ians cross_script.lua",
+    "path": "maps/Ians Cross/ians cross_script.lua",
     "hash": "CED589D123CC8F61264524CB57CE62EB3D5C9A83",
     "size": 261
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland.scmap",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland.scmap",
     "hash": "7F6DFC62E3DC8D50823EA8F49AB40A77A7CC407C",
     "size": 33399443
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland.v0001.large.png",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland.v0001.large.png",
     "hash": "03DC0CF58AE228C1F736DF77FC1AC5BE6F37A831",
     "size": 133084
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland.v0001.small.png",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland.v0001.small.png",
     "hash": "CABAD2652E1EBA1F5F717926FD5362480A8554EA",
     "size": 18273
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland_save.lua",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland_save.lua",
     "hash": "272C49B73568CE03950EAA62AE772E7DF5C4AC05",
     "size": 556652
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland_scenario.lua",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland_scenario.lua",
     "hash": "113B8BD3F1D9D1841EFFC7B70B79041BE994C0EE",
     "size": 960
   },
   {
-    "path": "maps/Hrungdaks Dryland\\hrungdaks dryland_script.lua",
+    "path": "maps/Hrungdaks Dryland/hrungdaks dryland_script.lua",
     "hash": "8889F7105324BA63897243D19076663DF0236307",
     "size": 163
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet 7v4_save.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet 7v4_save.lua",
     "hash": "E324875AA18ADE6953A1C1EBBA2A6C25336D0C55",
     "size": 555215
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet 7v4_scenario.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet 7v4_scenario.lua",
     "hash": "4030726A288D5579CCBDDF4BAC81A2764785EFF6",
     "size": 917
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet AD2_save.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet AD2_save.lua",
     "hash": "7144D2DCBA176C70A5B07EF4639A75E6E0B092A7",
     "size": 561539
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet AD2_scenario.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet AD2_scenario.lua",
     "hash": "0C28DC3212A5B73EB4B33E2E89F114E7FBA429F9",
     "size": 953
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet AD2_script.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet AD2_script.lua",
     "hash": "EB5C677894ACB3A29FA4A7CEA3117C6F0C5EDF09",
     "size": 225
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet.scmap",
+    "path": "maps/hills of havoc wet/hills of havoc wet.scmap",
     "hash": "82F6BD509E7BB125752DAB92E33E00E92C508632",
     "size": 29798058
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet_save.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet_save.lua",
     "hash": "E5CFBC71A9F5128AFF535C107111C540E2A95999",
     "size": 538014
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet_scenario.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet_scenario.lua",
     "hash": "DFB065C79F69987B8BFC4DF0502A09C0D91CF1DE",
     "size": 852
   },
   {
-    "path": "maps/hills of havoc wet\\hills of havoc wet_script.lua",
+    "path": "maps/hills of havoc wet/hills of havoc wet_script.lua",
     "hash": "EB5C677894ACB3A29FA4A7CEA3117C6F0C5EDF09",
     "size": 225
   },
   {
-    "path": "maps/Hills of Havoc\\hills of havoc.scmap",
+    "path": "maps/Hills of Havoc/hills of havoc.scmap",
     "hash": "62AAEAD1923C4D970582DDF256564EC358D4689A",
     "size": 29798058
   },
   {
-    "path": "maps/Hills of Havoc\\hills of havoc_save.lua",
+    "path": "maps/Hills of Havoc/hills of havoc_save.lua",
     "hash": "6048124E5671E78DDB7BDDB4AB76145C718230C9",
     "size": 591965
   },
   {
-    "path": "maps/Hills of Havoc\\hills of havoc_scenario.lua",
+    "path": "maps/Hills of Havoc/hills of havoc_scenario.lua",
     "hash": "A397499E14ECEC597F9A73133B1B7C7E6C4DD2E9",
     "size": 825
   },
   {
-    "path": "maps/Hills of Havoc\\hills of havoc_script.lua",
+    "path": "maps/Hills of Havoc/hills of havoc_script.lua",
     "hash": "EB5C677894ACB3A29FA4A7CEA3117C6F0C5EDF09",
     "size": 225
   },
   {
-    "path": "maps/Hellgate_LowTide\\Hellgate_LowTide.scmap",
+    "path": "maps/Hellgate_LowTide/Hellgate_LowTide.scmap",
     "hash": "D598E11396F0B525A6862D820C0268652625AC5D",
     "size": 33353755
   },
   {
-    "path": "maps/Hellgate_LowTide\\Hellgate_LowTide_save.lua",
+    "path": "maps/Hellgate_LowTide/Hellgate_LowTide_save.lua",
     "hash": "36C171FE240225FB918D2DAA7BE24D3C3B4F4622",
     "size": 613681
   },
   {
-    "path": "maps/Hellgate_LowTide\\Hellgate_LowTide_scenario.lua",
+    "path": "maps/Hellgate_LowTide/Hellgate_LowTide_scenario.lua",
     "hash": "89474F23ACADA499B48E2E377BBCB0A3F0E960F8",
     "size": 981
   },
   {
-    "path": "maps/Hellgate_LowTide\\Hellgate_LowTide_script.lua",
+    "path": "maps/Hellgate_LowTide/Hellgate_LowTide_script.lua",
     "hash": "4E3C99D9E9B893B2A05FC60C99D5CCB35EB38E27",
     "size": 446
   },
   {
-    "path": "maps/Hellgate\\hellgate.scmap",
+    "path": "maps/Hellgate/hellgate.scmap",
     "hash": "4A73A5E6EE8286E480CB67EC96880054F8603D94",
     "size": 33353088
   },
   {
-    "path": "maps/Hellgate\\hellgate_4 on 4_save.lua",
+    "path": "maps/Hellgate/hellgate_4 on 4_save.lua",
     "hash": "B20F94A92F246CF0E04079DFA9E323BBF968B6EA",
     "size": 537211
   },
   {
-    "path": "maps/Hellgate\\hellgate_4 on 4_scenario.lua",
+    "path": "maps/Hellgate/hellgate_4 on 4_scenario.lua",
     "hash": "D0EC8EBBDA4D015373D989115FA791106205D2D2",
     "size": 1154
   },
   {
-    "path": "maps/Hellgate\\hellgate_7 on 4_save.lua",
+    "path": "maps/Hellgate/hellgate_7 on 4_save.lua",
     "hash": "E1230C905518227DEDD2E2BDE5C9817B02D244A6",
     "size": 724362
   },
   {
-    "path": "maps/Hellgate\\hellgate_7 on 4_scenario.lua",
+    "path": "maps/Hellgate/hellgate_7 on 4_scenario.lua",
     "hash": "FB970A2D1738907972FA899CA1A424D94484F214",
     "size": 831
   },
   {
-    "path": "maps/Hellgate\\hellgate_script.lua",
+    "path": "maps/Hellgate/hellgate_script.lua",
     "hash": "4E3C99D9E9B893B2A05FC60C99D5CCB35EB38E27",
     "size": 446
   },
   {
-    "path": "maps/Gentlemans Reef 80\\gentlemans reef 80.scmap",
+    "path": "maps/Gentlemans Reef 80/gentlemans reef 80.scmap",
     "hash": "679BCF20AB8F3143D19A5A52D7A5BC9F20E70378",
     "size": 109385737
   },
   {
-    "path": "maps/Gentlemans Reef 80\\gentlemans reef 80_save.lua",
+    "path": "maps/Gentlemans Reef 80/gentlemans reef 80_save.lua",
     "hash": "3C7982F32010A4149D6D2940AB5A1145D8AE0995",
     "size": 1361633
   },
   {
-    "path": "maps/Gentlemans Reef 80\\gentlemans reef 80_scenario.lua",
+    "path": "maps/Gentlemans Reef 80/gentlemans reef 80_scenario.lua",
     "hash": "A390F68C3053661543D11B14294C3E6C3FB59B00",
     "size": 1137
   },
   {
-    "path": "maps/Gentlemans Reef 80\\gentlemans reef 80_script.lua",
+    "path": "maps/Gentlemans Reef 80/gentlemans reef 80_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Gentlemans Reef\\Gentlemans Reef AD.scmap",
+    "path": "maps/Gentlemans Reef/Gentlemans Reef AD.scmap",
     "hash": "5632E66DEC19A601695E79E65D8F0AAE134DC032",
     "size": 37906811
   },
   {
-    "path": "maps/Gentlemans Reef\\Gentlemans Reef AD_save.lua",
+    "path": "maps/Gentlemans Reef/Gentlemans Reef AD_save.lua",
     "hash": "72EFD456AC667265A8F8F0CFC2094F51AB8AC259",
     "size": 410416
   },
   {
-    "path": "maps/Gentlemans Reef\\Gentlemans Reef AD_scenario.lua",
+    "path": "maps/Gentlemans Reef/Gentlemans Reef AD_scenario.lua",
     "hash": "671066C29205128BA618C19097EE67E2D25FB5A7",
     "size": 1091
   },
   {
-    "path": "maps/Gentlemans Reef\\gentlemans reef.scmap",
+    "path": "maps/Gentlemans Reef/gentlemans reef.scmap",
     "hash": "A8F1CF6E6E00B5C9DEDAA1943D570D7C958462A9",
     "size": 37917381
   },
   {
-    "path": "maps/Gentlemans Reef\\gentlemans reef_script.lua",
+    "path": "maps/Gentlemans Reef/gentlemans reef_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Gentlemans Reef\\gentlemans reef_standard_save.lua",
+    "path": "maps/Gentlemans Reef/gentlemans reef_standard_save.lua",
     "hash": "326BE612F6F765B97571517FA8057875A0C60374",
     "size": 549612
   },
   {
-    "path": "maps/Gentlemans Reef\\gentlemans reef_standard_scenario.lua",
+    "path": "maps/Gentlemans Reef/gentlemans reef_standard_scenario.lua",
     "hash": "D4F67785AA6DCB2134B09D6263755DA802F84F19",
     "size": 1126
   },
   {
-    "path": "maps/Gap of Rohan\\gap of rohan.scmap",
+    "path": "maps/Gap of Rohan/gap of rohan.scmap",
     "hash": "9FB997BE805FBED29B0E335A5BA011327AFB99A4",
     "size": 12091854
   },
   {
-    "path": "maps/Gap of Rohan\\gap of rohan_save.lua",
+    "path": "maps/Gap of Rohan/gap of rohan_save.lua",
     "hash": "4A97901BBA6438E7AD5C6CDA349B8C38773CB1A5",
     "size": 363160
   },
   {
-    "path": "maps/Gap of Rohan\\gap of rohan_scenario.lua",
+    "path": "maps/Gap of Rohan/gap of rohan_scenario.lua",
     "hash": "ACBA83B0C0CB8417E900959520D0F3D33C32A7E7",
     "size": 794
   },
   {
-    "path": "maps/Gap of Rohan\\gap of rohan_script.lua",
+    "path": "maps/Gap of Rohan/gap of rohan_script.lua",
     "hash": "94D580E89972F5308FE094D6FDCABF42B267D220",
     "size": 186
   },
   {
-    "path": "maps/Flooded Strip Mine 40\\Flooded Strip Mine 40.scmap",
+    "path": "maps/Flooded Strip Mine 40/Flooded Strip Mine 40.scmap",
     "hash": "B8C78DC8B14916BC63CAB7F62BE440AC412C4D31",
     "size": 30812505
   },
   {
-    "path": "maps/Flooded Strip Mine 40\\Flooded Strip Mine 40_save.lua",
+    "path": "maps/Flooded Strip Mine 40/Flooded Strip Mine 40_save.lua",
     "hash": "03162C1CB3C88F80F921B19E605012D2DADBEE00",
     "size": 681020
   },
   {
-    "path": "maps/Flooded Strip Mine 40\\flooded strip mine 40_scenario.lua",
+    "path": "maps/Flooded Strip Mine 40/flooded strip mine 40_scenario.lua",
     "hash": "BFF858B912F8608403423108627CE82A9D84A53F",
     "size": 1188
   },
   {
-    "path": "maps/Flooded Strip Mine 40\\flooded strip mine 40_script.lua",
+    "path": "maps/Flooded Strip Mine 40/flooded strip mine 40_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40 7 on 4(v2)_save.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40 7 on 4(v2)_save.lua",
     "hash": "C5AA10B8162F59979423B7FE4DB75A796165C5CE",
     "size": 473241
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40 7 on 4(v2)_scenario.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40 7 on 4(v2)_scenario.lua",
     "hash": "BAA04E21D4FAA96028B84A1F49A29FF45662BA9F",
     "size": 1413
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40 7 on 4_save.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40 7 on 4_save.lua",
     "hash": "920DC061AAE1B17B9923AC6242438D99E6ECDF16",
     "size": 544722
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40 7 on 4_scenario.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40 7 on 4_scenario.lua",
     "hash": "13E48221559E969F80378353E1D7C3BEEC061671",
     "size": 935
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40 7 on 4_script.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40 7 on 4_script.lua",
     "hash": "750565F11B748C11A8C028F007AC06DE9F155552",
     "size": 380
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40.scmap",
+    "path": "maps/Fields of Isis 40/fields of isis 40.scmap",
     "hash": "A04D1C49944418B1DFDF491B5E20FED2182578EF",
     "size": 27528733
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40_save.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40_save.lua",
     "hash": "444C43D52E83979F36CEB6190B433CBD899FF66D",
     "size": 571305
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40_scenario.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40_scenario.lua",
     "hash": "5982F048BA96CBEA6DB02CFC4B85ABA4FBC5DD2E",
     "size": 1090
   },
   {
-    "path": "maps/Fields of Isis 40\\fields of isis 40_script.lua",
+    "path": "maps/Fields of Isis 40/fields of isis 40_script.lua",
     "hash": "750565F11B748C11A8C028F007AC06DE9F155552",
     "size": 380
   },
   {
-    "path": "maps/Fields of Isis 20\\fields of isis 20.scmap",
+    "path": "maps/Fields of Isis 20/fields of isis 20.scmap",
     "hash": "204DB3FE0C6A6C72638DA8CAE8DFA5F16B008C34",
     "size": 8650269
   },
   {
-    "path": "maps/Fields of Isis 20\\fields of isis 20_save.lua",
+    "path": "maps/Fields of Isis 20/fields of isis 20_save.lua",
     "hash": "B44ED70AB8E6A734F102DE8FA63DBA8AB66D1ECF",
     "size": 392264
   },
   {
-    "path": "maps/Fields of Isis 20\\fields of isis 20_scenario.lua",
+    "path": "maps/Fields of Isis 20/fields of isis 20_scenario.lua",
     "hash": "120BE543F03913A2B760C1189898023EEF1822D9",
     "size": 1043
   },
   {
-    "path": "maps/Fields of Isis 20\\fields of isis 20_script.lua",
+    "path": "maps/Fields of Isis 20/fields of isis 20_script.lua",
     "hash": "750565F11B748C11A8C028F007AC06DE9F155552",
     "size": 380
   },
   {
-    "path": "maps/Emerald Crater 40\\emerald crater 40.scmap",
+    "path": "maps/Emerald Crater 40/emerald crater 40.scmap",
     "hash": "A1969856A83CEC01C7819690CF78B11B0A124CD3",
     "size": 29624408
   },
   {
-    "path": "maps/Emerald Crater 40\\emerald crater 40_save.lua",
+    "path": "maps/Emerald Crater 40/emerald crater 40_save.lua",
     "hash": "E1963D0EFFC7B2034C06B32F7BEC586C90B20CC8",
     "size": 630077
   },
   {
-    "path": "maps/Emerald Crater 40\\emerald crater 40_scenario.lua",
+    "path": "maps/Emerald Crater 40/emerald crater 40_scenario.lua",
     "hash": "AC19BAA78F62EF556AE0F0E25E6180E951B297AB",
     "size": 1158
   },
   {
-    "path": "maps/Emerald Crater 40\\emerald crater 40_script.lua",
+    "path": "maps/Emerald Crater 40/emerald crater 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Element of Threat\\element of threat.scmap",
+    "path": "maps/Element of Threat/element of threat.scmap",
     "hash": "CD3213B6E57E8E3B7BA62FCCC011331CD20A0A8A",
     "size": 31816861
   },
   {
-    "path": "maps/Element of Threat\\element of threat_save.lua",
+    "path": "maps/Element of Threat/element of threat_save.lua",
     "hash": "488333590F54EA1804CE14D02F27101C62EFB99B",
     "size": 452128
   },
   {
-    "path": "maps/Element of Threat\\element of threat_scenario.lua",
+    "path": "maps/Element of Threat/element of threat_scenario.lua",
     "hash": "D03A2D0121C8D7997A27C2F652159622B60B76C8",
     "size": 1088
   },
   {
-    "path": "maps/Element of Threat\\element of threat_script.lua",
+    "path": "maps/Element of Threat/element of threat_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Diezle Dune 40\\Diezle Dune 40.scmap",
+    "path": "maps/Diezle Dune 40/Diezle Dune 40.scmap",
     "hash": "7E56C08331ADDDBC36AE53BED63B6D2935F3EE02",
     "size": 57944710
   },
   {
-    "path": "maps/Diezle Dune 40\\Diezle Dune 40_save.lua",
+    "path": "maps/Diezle Dune 40/Diezle Dune 40_save.lua",
     "hash": "67D4FED06EAC5D0959131E656C480C21069B1B7D",
     "size": 655081
   },
   {
-    "path": "maps/Diezle Dune 40\\Diezle Dune 40_scenario.lua",
+    "path": "maps/Diezle Dune 40/Diezle Dune 40_scenario.lua",
     "hash": "6AA111A53615047E7B64098DF666224B3C9F1BE1",
     "size": 904
   },
   {
-    "path": "maps/Diezle Dune 40\\Diezle Dune 40_script.lua",
+    "path": "maps/Diezle Dune 40/Diezle Dune 40_script.lua",
     "hash": "0B179317857ECA20886F892669A3E62D67A9DC98",
     "size": 286
   },
   {
-    "path": "maps/Desert Island 40\\Desert Island 40 6on6_save.lua",
+    "path": "maps/Desert Island 40/Desert Island 40 6on6_save.lua",
     "hash": "455568D232ADD7434458046950DF009F0AA45F33",
     "size": 724748
   },
   {
-    "path": "maps/Desert Island 40\\desert island 40 6on6_scenario.lua",
+    "path": "maps/Desert Island 40/desert island 40 6on6_scenario.lua",
     "hash": "B4AA6A558D4981BB8231881F033D0E53DE4B3640",
     "size": 982
   },
   {
-    "path": "maps/Desert Island 40\\desert island 40 7on4_save.lua",
+    "path": "maps/Desert Island 40/desert island 40 7on4_save.lua",
     "hash": "B5C6AF6F9D5F84DC3934E7F413214EF4C882A438",
     "size": 725171
   },
   {
-    "path": "maps/Desert Island 40\\desert island 40 7on4_scenario.lua",
+    "path": "maps/Desert Island 40/desert island 40 7on4_scenario.lua",
     "hash": "779BADC209779FA74AA3EB88A77F8E2CC22E6A7E",
     "size": 947
   },
   {
-    "path": "maps/Desert Island 40\\Desert Island 40.scmap",
+    "path": "maps/Desert Island 40/Desert Island 40.scmap",
     "hash": "C7EFE08EA12D9B280B962F6D0BDE4E961FAEAE67",
     "size": 36476516
   },
   {
-    "path": "maps/Desert Island 40\\Desert Island 40_save.lua",
+    "path": "maps/Desert Island 40/Desert Island 40_save.lua",
     "hash": "43EEFE251C4F6CD7463BAF8F34F7A79750436960",
     "size": 626998
   },
   {
-    "path": "maps/Desert Island 40\\desert island 40_scenario.lua",
+    "path": "maps/Desert Island 40/desert island 40_scenario.lua",
     "hash": "FB5C0527DCD17077D7EFC47FC74E5EF273941328",
     "size": 1159
   },
   {
-    "path": "maps/Desert Island 40\\desert island 40_script.lua",
+    "path": "maps/Desert Island 40/desert island 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Cold Valley\\cold valley.scmap",
+    "path": "maps/Cold Valley/cold valley.scmap",
     "hash": "659D681FCD37B63B65C66CD74173A2437CAFC71A",
     "size": 7731739
   },
   {
-    "path": "maps/Cold Valley\\cold valley_3 on 3_save.lua",
+    "path": "maps/Cold Valley/cold valley_3 on 3_save.lua",
     "hash": "EC4797943AABBD4FE3098E361DA4728AD747D46F",
     "size": 281539
   },
   {
-    "path": "maps/Cold Valley\\cold valley_3 on 3_scenario.lua",
+    "path": "maps/Cold Valley/cold valley_3 on 3_scenario.lua",
     "hash": "9563EE15675801AF873C9352701E17EEFA336CB7",
     "size": 886
   },
   {
-    "path": "maps/Cold Valley\\cold valley_4 on 4_save.lua",
+    "path": "maps/Cold Valley/cold valley_4 on 4_save.lua",
     "hash": "4D9E3CBE4733C73D477E2D7771DF94DA5E83CEF1",
     "size": 305809
   },
   {
-    "path": "maps/Cold Valley\\cold valley_4 on 4_scenario.lua",
+    "path": "maps/Cold Valley/cold valley_4 on 4_scenario.lua",
     "hash": "628FDDC906FE5A3DBB6768E01C614C44E0FE2372",
     "size": 921
   },
   {
-    "path": "maps/Cold Valley\\cold valley_script.lua",
+    "path": "maps/Cold Valley/cold valley_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Cold Valley\\kitty.raw",
+    "path": "maps/Cold Valley/kitty.raw",
     "hash": "4764A3F3CEB4A29BF0BE3C661EA0B746449BF868",
     "size": 526338
   },
   {
-    "path": "maps/Coastal Conflict\\coastal conflict.scmap",
+    "path": "maps/Coastal Conflict/coastal conflict.scmap",
     "hash": "B0D9BFD7BC5DE417E3327515F893D2C94C02B6FA",
     "size": 21530272
   },
   {
-    "path": "maps/Coastal Conflict\\coastal conflict_save.lua",
+    "path": "maps/Coastal Conflict/coastal conflict_save.lua",
     "hash": "7C840DB2EC7915CDDE96A976D33F40512424E39B",
     "size": 501722
   },
   {
-    "path": "maps/Coastal Conflict\\coastal conflict_scenario.lua",
+    "path": "maps/Coastal Conflict/coastal conflict_scenario.lua",
     "hash": "4FB3BD743AE16BEE4BF53F987AD0051DA7D80BBB",
     "size": 1262
   },
   {
-    "path": "maps/Coastal Conflict\\coastal conflict_script.lua",
+    "path": "maps/Coastal Conflict/coastal conflict_script.lua",
     "hash": "9B096FFD415DFC91C1786A2E054A57EB10F8D4A7",
     "size": 161
   },
   {
-    "path": "maps/CityWarsIII.v0001\\00_Stratum.dds",
+    "path": "maps/CityWarsIII.v0001/00_Stratum.dds",
     "hash": "5605D42E84A48938660778718B7089DD867DB153",
     "size": 262272
   },
   {
-    "path": "maps/CityWarsIII.v0001\\01_Stratum.dds",
+    "path": "maps/CityWarsIII.v0001/01_Stratum.dds",
     "hash": "391E58835A821B17238E8C8A908BEC731722F419",
     "size": 262272
   },
   {
-    "path": "maps/CityWarsIII.v0001\\02_Stratum.dds",
+    "path": "maps/CityWarsIII.v0001/02_Stratum.dds",
     "hash": "671E13E6EB955FF78046F8082BF9BF5988844F58",
     "size": 262272
   },
   {
-    "path": "maps/CityWarsIII.v0001\\03_Stratum.dds",
+    "path": "maps/CityWarsIII.v0001/03_Stratum.dds",
     "hash": "BB10CAD5B23066B97E2B6326963644DC1F34EF0E",
     "size": 262272
   },
   {
-    "path": "maps/CityWarsIII.v0001\\04_Stratum.dds",
+    "path": "maps/CityWarsIII.v0001/04_Stratum.dds",
     "hash": "1FEC42B65FF54AEDDC8231ADF46A486A9FE27F63",
     "size": 262272
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII 4 v 8_save.lua",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII 4 v 8_save.lua",
     "hash": "D12E491466E72D1FDF4E04762747BC22572E03FD",
     "size": 715182
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII 4 v 8_scenario.lua",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII 4 v 8_scenario.lua",
     "hash": "7B2CE41BF11D26253F192AA8A50C98C1D04BF780",
     "size": 1004
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII.scmap",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII.scmap",
     "hash": "61B322E2B81376A95477C54A900606A17C34F271",
     "size": 30860830
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII_save.lua",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII_save.lua",
     "hash": "A5EED1BA37BE34A0A8A09B162B569977DAC18A4C",
     "size": 649907
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII_scenario.lua",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII_scenario.lua",
     "hash": "FD4B77340F7E4224B14F952E2B343E0FEC598F9C",
     "size": 972
   },
   {
-    "path": "maps/CityWarsIII.v0001\\CityWarsIII_script.lua",
+    "path": "maps/CityWarsIII.v0001/CityWarsIII_script.lua",
     "hash": "ECB48E930AA6287B85A7D51AC0D944FADFF8BFD1",
     "size": 1098
   },
   {
-    "path": "maps/CityWarsIII.v0001\\heightmap.raw",
+    "path": "maps/CityWarsIII.v0001/heightmap.raw",
     "hash": "1F67FA6EC76E4AD00A50BB7F48466CEA0F69FCAA",
     "size": 8396802
   },
   {
-    "path": "maps/CityWarsIII.v0001\\heightmap_40k_75.raw",
+    "path": "maps/CityWarsIII.v0001/heightmap_40k_75.raw",
     "hash": "9191E2540AA6DC2653D2918F13C6F1D51962B483",
     "size": 8396802
   },
   {
-    "path": "maps/CityWarsIII.v0001\\None_Normal.dds",
+    "path": "maps/CityWarsIII.v0001/None_Normal.dds",
     "hash": "FCE22667FBECDB5A1D2375631C5AA1D1F8535860",
     "size": 174904
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_01_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_01_decal.dds",
     "hash": "18E2C43640AB533CFF9D75DF8103D0A5342FE647",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_02_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_02_decal.dds",
     "hash": "7C1AF4FBB3D7998988C547F1EE18BC21081449B9",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_03_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_03_decal.dds",
     "hash": "665E81A3E0C7864B9BF182D8E727901DB9BEBE97",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_04_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_04_decal.dds",
     "hash": "33D558BD3133EE2EC5C2332A227C8D19A0CE46B6",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_05_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_05_decal.dds",
     "hash": "D0BE611FAE5401795F2DDDAFE1FB16EF90D3295B",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_06_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_06_decal.dds",
     "hash": "F56B8897D5B1F9CBBEF73920394358D264F349A3",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_07_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_07_decal.dds",
     "hash": "587E4671CF020F2FDC9612AFE7E9EF5935DFEE89",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_08_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_08_decal.dds",
     "hash": "9C385765A49A9992268148BA5C7CA56C720B87C8",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_09_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_09_decal.dds",
     "hash": "D38C58F3352316F21315AF55E9C845D340CB9572",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_10_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_10_decal.dds",
     "hash": "6FD340816E4907DED742ABA74F0D760EF37B3A23",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_11_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_11_decal.dds",
     "hash": "2E29AEE2050D810D11CF936CEA04EAC5DC6CADCF",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_12_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_12_decal.dds",
     "hash": "D8188389B97BD35513E13A6ACD72874817E61E58",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_13_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_13_decal.dds",
     "hash": "BCA8BBAF6065FEB2163FDE95CBF811B1A0705CCD",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_14_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_14_decal.dds",
     "hash": "E6C4B8ED380321CB3B1CD86A1F712D419CEE8132",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_15_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_15_decal.dds",
     "hash": "FBB04C653C712B956FE6E08E280BD8D5B8B4F22E",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_16_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_16_decal.dds",
     "hash": "3AF4EC4068251B26D312D2C0BEEBCE7D7CEBCDD2",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_17_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_17_decal.dds",
     "hash": "7CA1DFD72804DC77754A2AB0D379559037D87EC7",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_18_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_18_decal.dds",
     "hash": "44CBE36C334276A7031D4AEA17F7A8BDEE64FE62",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_19_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_19_decal.dds",
     "hash": "39950BE4352499B23CEB987E1871B507DABF2112",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_20_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_20_decal.dds",
     "hash": "47B1488A21AEA341290238D66B61BD9AF22688F1",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_21_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_21_decal.dds",
     "hash": "5E69888C33A59E007EE09DEFE1CE8DCCF1AB79F4",
     "size": 1048704
   },
   {
-    "path": "maps/CityWarsIII.v0001\\_22_decal.dds",
+    "path": "maps/CityWarsIII.v0001/_22_decal.dds",
     "hash": "AC7D50695C384A1AE45A101EE4D7830F5417E79E",
     "size": 1048704
   },
   {
-    "path": "maps/Central Mound\\Central Mound.scmap",
+    "path": "maps/Central Mound/Central Mound.scmap",
     "hash": "CDEF9482453633D9DE9901A41D6A25B8E2D3E637",
     "size": 9928040
   },
   {
-    "path": "maps/Central Mound\\central mound_save.lua",
+    "path": "maps/Central Mound/central mound_save.lua",
     "hash": "26663F361F18E32D0C1116FC47DFBFE3694C4A9A",
     "size": 367433
   },
   {
-    "path": "maps/Central Mound\\central mound_scenario.lua",
+    "path": "maps/Central Mound/central mound_scenario.lua",
     "hash": "301E7FB3CA78C0917D34CF98FA9A3D968E43CDDD",
     "size": 874
   },
   {
-    "path": "maps/Central Mound\\central mound_script.lua",
+    "path": "maps/Central Mound/central mound_script.lua",
     "hash": "8889F7105324BA63897243D19076663DF0236307",
     "size": 163
   },
   {
-    "path": "maps/Burial Mounds 80\\Burial Mounds 80.scmap",
+    "path": "maps/Burial Mounds 80/Burial Mounds 80.scmap",
     "hash": "27BB742685BA56E2B1D11F881E4BE54E5917D7E5",
     "size": 107028693
   },
   {
-    "path": "maps/Burial Mounds 80\\Burial Mounds 80_save.lua",
+    "path": "maps/Burial Mounds 80/Burial Mounds 80_save.lua",
     "hash": "D76BA352974D103FBA95D84ED1C1189E2B169DD3",
     "size": 805394
   },
   {
-    "path": "maps/Burial Mounds 80\\Burial Mounds 80_scenario.lua",
+    "path": "maps/Burial Mounds 80/Burial Mounds 80_scenario.lua",
     "hash": "544A0E34E1DB92AAEC1B0F90E5E079603FDC56E1",
     "size": 1008
   },
   {
-    "path": "maps/Burial Mounds 80\\Burial Mounds 80_script.lua",
+    "path": "maps/Burial Mounds 80/Burial Mounds 80_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Burial Mounds 40\\Burial Mounds 40.scmap",
+    "path": "maps/Burial Mounds 40/Burial Mounds 40.scmap",
     "hash": "7DD1305BBB60F696D265500FEF90DE74F615BF0D",
     "size": 31412476
   },
   {
-    "path": "maps/Burial Mounds 40\\burial mounds 40_save.lua",
+    "path": "maps/Burial Mounds 40/burial mounds 40_save.lua",
     "hash": "54F93EBD074F6DFDCCE772D14153740279E4A23D",
     "size": 1095145
   },
   {
-    "path": "maps/Burial Mounds 40\\burial mounds 40_scenario.lua",
+    "path": "maps/Burial Mounds 40/burial mounds 40_scenario.lua",
     "hash": "FCAB9455121D2A551EF168D39A0E43CB8EEF153E",
     "size": 1207
   },
   {
-    "path": "maps/Burial Mounds 40\\burial mounds 40_script.lua",
+    "path": "maps/Burial Mounds 40/burial mounds 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Burial Mounds 20\\Burial Mounds 20.scmap",
+    "path": "maps/Burial Mounds 20/Burial Mounds 20.scmap",
     "hash": "3CB4EDB3745788A16CCA51A9526C854793735BC7",
     "size": 9403136
   },
   {
-    "path": "maps/Burial Mounds 20\\Burial Mounds 20_save.lua",
+    "path": "maps/Burial Mounds 20/Burial Mounds 20_save.lua",
     "hash": "F5AE14474CF1E04D50ACA81BD3FF006E04CB3A16",
     "size": 714625
   },
   {
-    "path": "maps/Burial Mounds 20\\Burial Mounds 20_scenario.lua",
+    "path": "maps/Burial Mounds 20/Burial Mounds 20_scenario.lua",
     "hash": "80A43079F0965F3C24E7FCD06E8C10E5598C9FD1",
     "size": 1212
   },
   {
-    "path": "maps/Burial Mounds 20\\Burial Mounds 20_script.lua",
+    "path": "maps/Burial Mounds 20/Burial Mounds 20_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20.scmap",
+    "path": "maps/Blasted_20/Blasted_20.scmap",
     "hash": "4E2370FB6D45AE44AC72D53FEF5B54FE0A52AAF5",
     "size": 7901418
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_save.lua",
+    "path": "maps/Blasted_20/Blasted_20_save.lua",
     "hash": "2C62AF8044C31F059C55AAEC2FEFDDE9F7FD95C9",
     "size": 327512
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_scenario.lua",
+    "path": "maps/Blasted_20/Blasted_20_scenario.lua",
     "hash": "02965E9AAF0D27CE20F064B74D0E6BB78F643FC4",
     "size": 951
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_script.lua",
+    "path": "maps/Blasted_20/Blasted_20_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_Standard_save.lua",
+    "path": "maps/Blasted_20/Blasted_20_Standard_save.lua",
     "hash": "64CD79C1B9F8C802BC24969C35225578D059729A",
     "size": 304195
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_Standard_scenario.lua",
+    "path": "maps/Blasted_20/Blasted_20_Standard_scenario.lua",
     "hash": "CB6FE7A10D1D9CD296F8E4BDA691C09DCB9844B9",
     "size": 830
   },
   {
-    "path": "maps/Blasted_20\\Blasted_20_Standard_script.lua",
+    "path": "maps/Blasted_20/Blasted_20_Standard_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Betrayal Ocean\\Betrayal_Ocean.scmap",
+    "path": "maps/Betrayal Ocean/Betrayal_Ocean.scmap",
     "hash": "E84F48D9962455137C6DEAE97429871478D77A6B",
     "size": 121952198
   },
   {
-    "path": "maps/Betrayal Ocean\\Betrayal_Ocean_save.lua",
+    "path": "maps/Betrayal Ocean/Betrayal_Ocean_save.lua",
     "hash": "175FCC72EB87746CA3ABE62916699576E4AB4721",
     "size": 366497
   },
   {
-    "path": "maps/Betrayal Ocean\\Betrayal_Ocean_scenario.lua",
+    "path": "maps/Betrayal Ocean/Betrayal_Ocean_scenario.lua",
     "hash": "573661FF1A6FA11D90E6732A94A8FC1BEA513C0A",
     "size": 1250
   },
   {
-    "path": "maps/Betrayal Ocean\\Betrayal_Ocean_script.lua",
+    "path": "maps/Betrayal Ocean/Betrayal_Ocean_script.lua",
     "hash": "5C5DFFC673D1F4E54DDFF646525BAA4EF8A2FFD4",
     "size": 296
   },
   {
-    "path": "maps/Battle Isles 40\\Battle Isles 40.scmap",
+    "path": "maps/Battle Isles 40/Battle Isles 40.scmap",
     "hash": "4841C803447A014B7D3A424020FBA08E973D43C6",
     "size": 29521812
   },
   {
-    "path": "maps/Battle Isles 40\\Battle Isles 40_save.lua",
+    "path": "maps/Battle Isles 40/Battle Isles 40_save.lua",
     "hash": "ECD730F1F08E7A0ED42A8BBF751C020FBE84C77A",
     "size": 412170
   },
   {
-    "path": "maps/Battle Isles 40\\Battle Isles 40_scenario.lua",
+    "path": "maps/Battle Isles 40/Battle Isles 40_scenario.lua",
     "hash": "941B800C887184D2FE591589DFD90B6D6BC62980",
     "size": 1010
   },
   {
-    "path": "maps/Battle Isles 40\\Battle Isles 40_script.lua",
+    "path": "maps/Battle Isles 40/Battle Isles 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/Barrier Islands\\barrier_islands.scmap",
+    "path": "maps/Barrier Islands/barrier_islands.scmap",
     "hash": "95384BB30D4120126490D75B3C9AEE230F574862",
     "size": 30031576
   },
   {
-    "path": "maps/Barrier Islands\\barrier_islands_save.lua",
+    "path": "maps/Barrier Islands/barrier_islands_save.lua",
     "hash": "515F7992A761E68486EE5400C175D7F3485516E7",
     "size": 632778
   },
   {
-    "path": "maps/Barrier Islands\\barrier_islands_scenario.lua",
+    "path": "maps/Barrier Islands/barrier_islands_scenario.lua",
     "hash": "FFF68A37DCABC51AD58F8E5453186310D6AB67E4",
     "size": 888
   },
   {
-    "path": "maps/Barrier Islands\\barrier_islands_script.lua",
+    "path": "maps/Barrier Islands/barrier_islands_script.lua",
     "hash": "AE68E6E99692ACB4FBB27F3EF17BBD5F3D7C1D32",
     "size": 160
   },
   {
-    "path": "maps/Asterion_Abyss\\Asterion_Abyss.scmap",
+    "path": "maps/Asterion_Abyss/Asterion_Abyss.scmap",
     "hash": "9DAE46D8BB9B9AD0BDA4C73109FAE9487631F3F6",
     "size": 10258397
   },
   {
-    "path": "maps/Asterion_Abyss\\Asterion_Abyss_save.lua",
+    "path": "maps/Asterion_Abyss/Asterion_Abyss_save.lua",
     "hash": "D26F9480D707C3E73B540A87144AF8035FDD1FEF",
     "size": 266969
   },
   {
-    "path": "maps/Asterion_Abyss\\Asterion_Abyss_scenario.lua",
+    "path": "maps/Asterion_Abyss/Asterion_Abyss_scenario.lua",
     "hash": "C71F83F13213B9F45E48354E74AE4CF6AC609F7F",
     "size": 818
   },
   {
-    "path": "maps/Asterion_Abyss\\asterion_abyss_script.lua",
+    "path": "maps/Asterion_Abyss/asterion_abyss_script.lua",
     "hash": "A8E500F8CC86F0619DBDFFDD8865F54D81279C4F",
     "size": 187
   },
   {
-    "path": "maps/Armed and Dangerous\\Armed and Dangerous.scmap",
+    "path": "maps/Armed and Dangerous/Armed and Dangerous.scmap",
     "hash": "B16A8D13BC49572C71D92E09FC403C73452208D4",
     "size": 9822198
   },
   {
-    "path": "maps/Armed and Dangerous\\Armed and Dangerous_save.lua",
+    "path": "maps/Armed and Dangerous/Armed and Dangerous_save.lua",
     "hash": "0134CD9F0B6ED091F476C57ACBD54316CAA273F3",
     "size": 360537
   },
   {
-    "path": "maps/Armed and Dangerous\\armed and dangerous_scenario.lua",
+    "path": "maps/Armed and Dangerous/armed and dangerous_scenario.lua",
     "hash": "8D17A643D86AE1FFBC3C9EB5D9A36B39672F7D5F",
     "size": 1005
   },
   {
-    "path": "maps/Armed and Dangerous\\armed and dangerous_script.lua",
+    "path": "maps/Armed and Dangerous/armed and dangerous_script.lua",
     "hash": "B02541D83B7F2EB11C96307E30472EFD3FB3E5EF",
     "size": 160
   },
   {
-    "path": "maps/anussons playground\\Anussons.scmap",
+    "path": "maps/anussons playground/Anussons.scmap",
     "hash": "B419EEB20C35A7489E59C2313F42A78F9ADA2060",
     "size": 32051551
   },
   {
-    "path": "maps/anussons playground\\Anussons_LowTide.scmap",
+    "path": "maps/anussons playground/Anussons_LowTide.scmap",
     "hash": "4897937673D76361619F4A4107AD2E1BD5986F2D",
     "size": 32051551
   },
   {
-    "path": "maps/anussons playground\\Anussons_LowTide_save.lua",
+    "path": "maps/anussons playground/Anussons_LowTide_save.lua",
     "hash": "6382200F2F893F329A8679D3A9EC63E23F6BE832",
     "size": 670123
   },
   {
-    "path": "maps/anussons playground\\Anussons_LowTide_scenario.lua",
+    "path": "maps/anussons playground/Anussons_LowTide_scenario.lua",
     "hash": "0B2EF00D4DE9EEDC5CCC4B065ACAB26639EF3330",
     "size": 1035
   },
   {
-    "path": "maps/anussons playground\\Anussons_LowTide_script.lua",
+    "path": "maps/anussons playground/Anussons_LowTide_script.lua",
     "hash": "E802F37298254ABDC55484AEDE23E88635407BCE",
     "size": 300
   },
   {
-    "path": "maps/anussons playground\\Anussons_save.lua",
+    "path": "maps/anussons playground/Anussons_save.lua",
     "hash": "530DEE482B48A6F81E549286CA272510E210CF1F",
     "size": 716132
   },
   {
-    "path": "maps/anussons playground\\Anussons_scenario.lua",
+    "path": "maps/anussons playground/Anussons_scenario.lua",
     "hash": "5E699F7AD91AFBC63F5D8ACB9E52D220AFAE2D32",
     "size": 956
   },
   {
-    "path": "maps/anussons playground\\Anussons_script.lua",
+    "path": "maps/anussons playground/Anussons_script.lua",
     "hash": "E802F37298254ABDC55484AEDE23E88635407BCE",
     "size": 300
   },
   {
-    "path": "maps/Amazonia\\amazonia.scmap",
+    "path": "maps/Amazonia/amazonia.scmap",
     "hash": "6A013EFEF6837C628838456C7AB099199A557A83",
     "size": 30092695
   },
   {
-    "path": "maps/Amazonia\\amazonia_save.lua",
+    "path": "maps/Amazonia/amazonia_save.lua",
     "hash": "F59E080C5C2DFC218FAFA7509F5181ED2DC02DCF",
     "size": 389247
   },
   {
-    "path": "maps/Amazonia\\amazonia_scenario.lua",
+    "path": "maps/Amazonia/amazonia_scenario.lua",
     "hash": "DF421858A52FA7E860ADB8B1C5A00F1D9630C50C",
     "size": 879
   },
   {
-    "path": "maps/Amazonia\\amazonia_script.lua",
+    "path": "maps/Amazonia/amazonia_script.lua",
     "hash": "8E099403B7D2FFC0B75151F740B76A5265DC7039",
     "size": 184
   },
   {
-    "path": "maps/Amazonia\\amazonia_std_save.lua",
+    "path": "maps/Amazonia/amazonia_std_save.lua",
     "hash": "582548DC29F4BF2ECF984DCCFBF3FA592AD46B69",
     "size": 318848
   },
   {
-    "path": "maps/Amazonia\\amazonia_std_scenario.lua",
+    "path": "maps/Amazonia/amazonia_std_scenario.lua",
     "hash": "2A104311B0647108E210A297E3A17C50B2A5F2E8",
     "size": 1243
   },
   {
-    "path": "maps/Alpha 7 40\\Alpha 7 40.scmap",
+    "path": "maps/Alpha 7 40/Alpha 7 40.scmap",
     "hash": "E5E1EECE8D2208F391158610C632B24E7AC9F30C",
     "size": 35759421
   },
   {
-    "path": "maps/Alpha 7 40\\Alpha 7 40_save.lua",
+    "path": "maps/Alpha 7 40/Alpha 7 40_save.lua",
     "hash": "54A84015C322D06357D424E842B0F1B43F28074A",
     "size": 612588
   },
   {
-    "path": "maps/Alpha 7 40\\Alpha 7 40_scenario.lua",
+    "path": "maps/Alpha 7 40/Alpha 7 40_scenario.lua",
     "hash": "96567B0A6E404A34ADECC5CB7CC0D893F9668EF5",
     "size": 1135
   },
   {
-    "path": "maps/Alpha 7 40\\Alpha 7 40_script.lua",
+    "path": "maps/Alpha 7 40/Alpha 7 40_script.lua",
     "hash": "DF7A2D6857C6A5D71F15D22E888D52199B9A7D99",
     "size": 444
   },
   {
-    "path": "maps/7 winged arena\\7 winged arena.scmap",
+    "path": "maps/7 winged arena/7 winged arena.scmap",
     "hash": "716FCB68BDF5361E8645A9DEB19694B3B91F9385",
     "size": 34339201
   },
   {
-    "path": "maps/7 winged arena\\7 winged arena_save.lua",
+    "path": "maps/7 winged arena/7 winged arena_save.lua",
     "hash": "95FD084EC579EB158F6AB38E7EA678CC20250EAD",
     "size": 599068
   },
   {
-    "path": "maps/7 winged arena\\7 winged arena_scenario.lua",
+    "path": "maps/7 winged arena/7 winged arena_scenario.lua",
     "hash": "4159EFAD031BD3474758A5B0499D7B76DD22AB4D",
     "size": 940
   },
   {
-    "path": "maps/7 winged arena\\7 winged arena_script.lua",
+    "path": "maps/7 winged arena/7 winged arena_script.lua",
     "hash": "8E099403B7D2FFC0B75151F740B76A5265DC7039",
     "size": 184
   },
   {
-    "path": "maps/4 double island v2\\4 double island v2.scmap",
+    "path": "maps/4 double island v2/4 double island v2.scmap",
     "hash": "D6D508965C565C04F06651434D9FC14BB50164DC",
     "size": 31669804
   },
   {
-    "path": "maps/4 double island v2\\4 double island v2_save.lua",
+    "path": "maps/4 double island v2/4 double island v2_save.lua",
     "hash": "A6B6A12524EC0B69CBD2E3E4B236591DAC912E11",
     "size": 639868
   },
   {
-    "path": "maps/4 double island v2\\4 double island v2_scenario.lua",
+    "path": "maps/4 double island v2/4 double island v2_scenario.lua",
     "hash": "1A32C1A8DF49778848DD93C0306C9F231077709D",
     "size": 1003
   },
   {
-    "path": "maps/4 double island v2\\4 double island v2_script.lua",
+    "path": "maps/4 double island v2/4 double island v2_script.lua",
     "hash": "064FAC39B6475F0930AD8F5F1F93803FD0B3E4B2",
     "size": 181
   },
   {
-    "path": "maps/3Roads\\3roads.scmap",
+    "path": "maps/3Roads/3roads.scmap",
     "hash": "994BD5C33DE20EADC89D750D792EC4CAEA5C1365",
     "size": 8220382
   },
   {
-    "path": "maps/3Roads\\3Roads_save.lua",
+    "path": "maps/3Roads/3Roads_save.lua",
     "hash": "DF050492058702F49F931C0D157C8FA5A8EA4897",
     "size": 347304
   },
   {
-    "path": "maps/3Roads\\3roads_scenario.lua",
+    "path": "maps/3Roads/3roads_scenario.lua",
     "hash": "AE8ED6E76251F0E56CB7B3DA5E5512FFD7680EF8",
     "size": 777
   },
   {
-    "path": "maps/3Roads\\3roads_script.lua",
+    "path": "maps/3Roads/3roads_script.lua",
     "hash": "F090FF69E8B9319C5C7ABBCA5BE983E26457F98A",
     "size": 179
   },
@@ -1776,13 +1776,13 @@
   },
   {
     "path": "gamedata/loud_mods.scd",
-    "hash": "49C45BF671A8F5946D0C5391C29FF2AC3973EBB8",
-    "size": 60926057
+    "hash": "17414C0DAAFFF3603A1CF18352A7BF736FCAF067",
+    "size": 60926364
   },
   {
     "path": "gamedata/lua.scd",
-    "hash": "773BC6707E75221544CF3C7D984C2C3F955D4907",
-    "size": 1312975
+    "hash": "622D08840D55C59A90DD83DE0281225B6E0E1411",
+    "size": 1313395
   },
   {
     "path": "gamedata/meshes.scd",
