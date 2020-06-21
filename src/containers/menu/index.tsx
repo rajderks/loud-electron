@@ -2,7 +2,6 @@ import { remote } from 'electron';
 import React, { FunctionComponent, useCallback } from 'react';
 import TitleBar from 'frameless-titlebar';
 import { MenuItem } from 'frameless-titlebar/dist/title-bar/typings';
-// import icon from '../assets/logo512.png';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -37,12 +36,6 @@ const Menu: FunctionComponent = () => {
             click: clicky,
           },
         ]}
-        theme={
-          {
-            // any theme overrides specific
-            // to your application :)
-          }
-        }
         title="LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version 5.00"
         onClose={() => currentWindow.close()}
         onMinimize={() => currentWindow.minimize()}
