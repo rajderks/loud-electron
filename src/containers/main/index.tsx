@@ -1,17 +1,6 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { updaterGetCRCInfo$ } from '../../util/updater';
+import React, { FunctionComponent } from 'react';
 
 const Main: FunctionComponent = () => {
-  useEffect(() => {
-    updaterGetCRCInfo$().subscribe(
-      (n) => {
-        console.log(n);
-      },
-      (e) => {
-        console.error(e);
-      }
-    );
-  }, []);
   return (
     <div
       style={{
