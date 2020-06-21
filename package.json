@@ -62,7 +62,8 @@
     "clean": "rimraf build && rimraf out && rimraf quokka",
     "start": "yarn react-start",
     "build": "yarn react-build",
-    "test": "yarn react-test"
+    "test": "yarn react-test",
+    "dev": "yarn electron-dev"
   },
   "eslintConfig": {
     "extends": "react-app"
