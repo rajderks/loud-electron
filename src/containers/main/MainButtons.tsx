@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
+import { updaterCollectOutOfSyncFiles$ } from '../../util/updater';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -55,6 +56,15 @@ const useStyles = makeStyles((theme) => ({
 
 const MainButtons: FunctionComponent = () => {
   const classes = useStyles();
+  const handleFloep = useCallback(() => {
+    const fileInfos = require('../../util/__tests__/test-crc-fileinfo.json');
+    updaterCollectOutOfSyncFiles$(
+      fileInfos,
+      `${process.env.REACT_APP_FS_BASE_URL!}/LOUD`
+    ).subscribe((n) => {
+      console.log('finished', n);
+    });
+  }, []);
   return (
     <>
       <div className={classes.buttonWrapper}>
@@ -62,7 +72,9 @@ const MainButtons: FunctionComponent = () => {
           <ButtonBase
             className={classes.button}
             classes={{ root: classes.updateButton }}
-            onClick={() => {}}
+            onClick={() => {
+              handleFloep();
+            }}
           >
             <Typography color="inherit" variant="body2">
               Update

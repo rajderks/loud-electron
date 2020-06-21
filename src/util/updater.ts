@@ -1,16 +1,17 @@
 import fs from 'fs';
 import ftp from 'jsftp';
 import crypto from 'crypto';
-import { RemoteFileInfo } from './types';
+import { RemoteFileInfo, LogConfig } from './types';
 import { of, from, defer, Observable, iif, EMPTY } from 'rxjs';
 import {
-  switchMap,
   map,
   catchError,
   toArray,
   mergeMap,
   concatMap,
+  tap,
 } from 'rxjs/operators';
+import Logger from './logger';
 
 interface FTP extends ftp {
   auth(
@@ -24,6 +25,12 @@ const connection = {
   host: process.env.REACT_APP_FTP_HOST,
   user: process.env.REACT_APP_FTP_USER,
   pass: process.env.REACT_APP_FTP_PASS,
+};
+
+const defaultLogConfig: LogConfig = {
+  channels: (process.env.REACT_APP_LOG_CONFIG_CHANNELS?.split(',').map((x) =>
+    x.trim()
+  ) as LogConfig['channels']) ?? ['log'],
 };
 
 const updaterConnectFTP$ = () =>
@@ -105,7 +112,7 @@ const updaterGetRemoteFile$ = (fileInfo: RemoteFileInfo, client: FTP) => {
   );
 };
 
-const updateGetAndWriteRemoteFiles$ = (
+const updaterGetAndWriteRemoteFiles$ = (
   baseURI: string,
   fileInfos: RemoteFileInfo[]
 ) => {
@@ -228,6 +235,9 @@ const updaterLocalFileData$ = (path: string): Observable<Buffer> =>
 const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
   `${baseURI}/${path}`.replace('\\', '/').replace('//', '/').trim();
 
+const updaterCreateRemoteFileURI = (fileInfo: RemoteFileInfo) =>
+  `${fileInfo.path},0x${fileInfo.hash},${fileInfo.size}`;
+
 const updateCreateLocalFileDirURI = (fileURI: string) => {
   const chunks = fileURI.split('/');
   chunks.pop();
@@ -240,32 +250,55 @@ const updateCreateLocalFileDirURI = (fileURI: string) => {
  */
 const updaterCompareRemoteFileInfo$ = (
   fileInfo: RemoteFileInfo,
-  baseURI: string
+  baseURI: string,
+  logConfig: LogConfig = defaultLogConfig
 ): Observable<[RemoteFileInfo, boolean]> =>
   of(fileInfo).pipe(
-    switchMap((info) =>
+    concatMap((info) =>
       updaterLocalFileData$(updaterCreateLocalFileURI(baseURI, info.path)).pipe(
         map((data) => {
           const shacrypto = crypto.createHash('sha1');
           shacrypto.update(data);
           const result = shacrypto.digest('hex').toUpperCase();
           shacrypto.destroy();
-          return result === info.hash && data.byteLength === info.size;
+          const resultBoolean =
+            result === info.hash && data.byteLength === info.size;
+
+          return resultBoolean;
         }),
-        map((result) => [info, result] as [RemoteFileInfo, boolean])
+        map((result) => [info, result] as [RemoteFileInfo, boolean]),
+        tap(([info, result]) => {
+          Logger.next({
+            level: 'log',
+            message: `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
+              info
+            )} / ${result}`,
+            ...logConfig,
+          });
+        })
       )
     ),
-    catchError((err) => of([fileInfo, false] as [RemoteFileInfo, boolean]))
+    catchError((err) => {
+      Logger.next({
+        level: 'error',
+        message: `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
+          fileInfo
+        )} / ${err}`,
+        ...logConfig,
+      });
+      return of([fileInfo, false] as [RemoteFileInfo, boolean]);
+    })
   );
 
-const updateCollectOutOfSyncFiles$ = (
+const updaterCollectOutOfSyncFiles$ = (
   fileInfos: RemoteFileInfo[],
-  baseURI: string
+  baseURI: string,
+  logConfig: LogConfig = defaultLogConfig
 ) =>
   from(fileInfos).pipe(
     mergeMap((info) =>
-      updaterCompareRemoteFileInfo$(info, baseURI).pipe(
-        switchMap(([info, result]) => iif(() => !!result, EMPTY, of(info)))
+      updaterCompareRemoteFileInfo$(info, baseURI, logConfig).pipe(
+        mergeMap(([info, result]) => iif(() => !!result, EMPTY, of(info)))
       )
     ),
     toArray()
@@ -278,8 +311,8 @@ export {
   updaterCompareRemoteFileInfo$,
   updaterStringToRemoteFileInfo,
   updaterLocalFileData$,
-  updateCollectOutOfSyncFiles$,
+  updaterCollectOutOfSyncFiles$,
   updaterGetRemoteFile$,
   updaterWriteBufferToLocalFile$,
-  updateGetAndWriteRemoteFiles$,
+  updaterGetAndWriteRemoteFiles$,
 };

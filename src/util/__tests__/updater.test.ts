@@ -1,6 +1,6 @@
 import fs from 'fs';
 import {
-  updateCollectOutOfSyncFiles$,
+  updaterCollectOutOfSyncFiles$,
   updaterGetCRCInfo$,
   updaterParseRemoteFileContent,
   updaterLocalFileData$,
@@ -64,7 +64,7 @@ describe('Updater', () => {
       );
   });
   it('can identify which local items are out of sync', (done) => {
-    updateCollectOutOfSyncFiles$(
+    updaterCollectOutOfSyncFiles$(
       infos as RemoteFileInfo[],
       `${BASE_URI}/LOUD`
     ).subscribe(
