@@ -25,3 +25,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/util/__tests__/LOUD/**/*
+quokka
+quokka-scratch.ts

@@ -58,7 +58,7 @@
     "build": "yarn react-build",
     "postinstall": "electron-builder install-app-deps",
     "release": "electron-builder --windows --publish never",
-    "clean": "rimraf build && rimraf dist",
+    "clean": "rimraf build && rimraf out",
     "start": "yarn react-start",
     "test": "yarn react-test"
   },
