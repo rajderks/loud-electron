@@ -28,6 +28,7 @@
     "crc": "^3.8.0",
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.2.0",
+    "frameless-titlebar": "^2.1.3",
     "jsftp": "^2.1.3",
     "moment": "^2.26.0",
     "react": "^16.13.1",
@@ -55,11 +56,12 @@
     "react-start": "craco start",
     "electron-build": "electron-builder",
     "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "build": "yarn react-build",
+    "preelectron-pack": "yarn build",
     "postinstall": "electron-builder install-app-deps",
-    "release": "electron-builder --windows --publish never",
-    "clean": "rimraf build && rimraf out",
+    "release": "yarn build && electron-builder -c.extraMetadata.main=public/electron.js --windows --publish never",
+    "clean": "rimraf build && rimraf out && rimraf quokka",
     "start": "yarn react-start",
+    "build": "yarn react-build",
     "test": "yarn react-test"
   },
   "eslintConfig": {
@@ -76,20 +78,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "______build": {
-    "appId": "com.loud.client",
-    "productName": "LOUD Client",
-    "copyright": "",
-    "mac": {
-      "category": ""
-    },
-    "files": [
-      "build/**/*",
-      "package.json"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    }
   }
 }
