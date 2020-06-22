@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
 import { updaterCollectOutOfSyncFiles$ } from '../../util/updater';
+import { UpdateStatus } from './constants';
+import MainUpdateStatus from './MainUpdateStatus';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -37,15 +39,14 @@ const useStyles = makeStyles((theme) => ({
   updateIndicator: {
     height: 15,
     flex: '0 0 100%',
-    backgroundColor: '#FBFF3A',
     color: 'black',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    position: 'relative',
+    backgroundColor: '#FBFF3A',
   },
-  updateIndicatorText: {
-    fontWeight: 'bold',
-  },
+
   paypalButton: {
     position: 'absolute',
     top: '58.3%',
@@ -54,17 +55,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainButtons: FunctionComponent = () => {
+interface Props {
+  onUpdate: () => void;
+  onRun: () => void;
+  onLog: () => void;
+  onDonate: () => void;
+  updateStatus: UpdateStatus;
+}
+
+const MainButtons: FunctionComponent<Props> = ({
+  onUpdate,
+  onRun,
+  onLog,
+  onDonate,
+  updateStatus,
+}) => {
   const classes = useStyles();
-  const handleFloep = useCallback(() => {
-    const fileInfos = require('../../util/__tests__/test-crc-fileinfo.json');
-    updaterCollectOutOfSyncFiles$(
-      fileInfos,
-      `${process.env.REACT_APP_FS_BASE_URL!}/LOUD`
-    ).subscribe((n) => {
-      console.log('finished', n);
-    });
-  }, []);
   return (
     <>
       <div className={classes.buttonWrapper}>
@@ -72,30 +78,22 @@ const MainButtons: FunctionComponent = () => {
           <ButtonBase
             className={classes.button}
             classes={{ root: classes.updateButton }}
-            onClick={() => {
-              handleFloep();
-            }}
+            onClick={onUpdate}
           >
             <Typography color="inherit" variant="body2">
               Update
             </Typography>
           </ButtonBase>
           <div className={classes.updateIndicator}>
-            <Typography
-              classes={{ root: classes.updateIndicatorText }}
-              color="inherit"
-              variant="caption"
-            >
-              Not checked
-            </Typography>
+            <MainUpdateStatus updateStatus={updateStatus} />
           </div>
         </div>
-        <ButtonBase className={classes.button} onClick={() => {}}>
+        <ButtonBase className={classes.button} onClick={onRun}>
           <Typography color="inherit" variant="body2">
             Run Game
           </Typography>
         </ButtonBase>
-        <ButtonBase className={classes.button} onClick={() => {}}>
+        <ButtonBase className={classes.button} onClick={onLog}>
           <Typography color="inherit" variant="body2">
             Updater Log
           </Typography>
@@ -104,7 +102,7 @@ const MainButtons: FunctionComponent = () => {
       <ButtonBase
         className={classes.paypalButton}
         classes={{ root: classes.button }}
-        onClick={() => {}}
+        onClick={onDonate}
       >
         <Typography color="inherit" variant="body2">
           PayPal Donation
@@ -114,4 +112,4 @@ const MainButtons: FunctionComponent = () => {
   );
 };
 
-export default MainButtons;
+export default React.memo(MainButtons);

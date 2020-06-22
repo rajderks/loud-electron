@@ -11,7 +11,11 @@ import {
   concatMap,
   tap,
 } from 'rxjs/operators';
-import Logger from './logger';
+import { logEntry } from './logger';
+import {
+  MainLogDownloadFilePercentageStatusSubject,
+  MainLogDownloadFileProgressStatusSubject,
+} from '../containers/main/observables';
 
 interface FTP extends ftp {
   auth(
@@ -28,9 +32,10 @@ const connection = {
 };
 
 const defaultLogConfig: LogConfig = {
-  channels: (process.env.REACT_APP_LOG_CONFIG_CHANNELS?.split(',').map((x) =>
-    x.trim()
-  ) as LogConfig['channels']) ?? ['log'],
+  channels:
+    (process.env.REACT_APP_LOG_CONFIG_CHANNELS?.split(',').map((x) =>
+      x.trim()
+    ) as LogConfig['channels']) ?? [],
 };
 
 const updaterConnectFTP$ = () =>
@@ -51,20 +56,40 @@ const updaterConnectFTP$ = () =>
     })
   );
 
-const updaterGetCRCInfo$ = () =>
+const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
   from<Promise<string>>(
-    new Promise((res, rej) => {
+    new Promise((res) => {
       const client: FTP = new ftp(connection) as FTP;
       client.on('connect', (errReady) => {
         if (errReady) {
+          logEntry(
+            `updaterGetCRCInfo$:connect:: ${errReady}`,
+            'error',
+            logConfig.channels
+          );
           throw errReady;
         }
         client.auth(connection.user!, connection.pass!, (errAuth) => {
           if (errAuth) {
+            logEntry(
+              `updaterGetCRCInfo$:auth:: ${errAuth}`,
+              'error',
+              logConfig.channels
+            );
             throw errAuth;
           }
+          logEntry(
+            `updaterGetCRCInfo$:auth:: success`,
+            'log',
+            logConfig.channels
+          );
           client.get('LOUD/SCFA_FileInfo.txt', (err, socket) => {
             if (err) {
+              logEntry(
+                `updaterGetCRCInfo$:get:: ${err}`,
+                'error',
+                logConfig.channels
+              );
               throw err;
             }
             let str = '';
@@ -74,8 +99,18 @@ const updaterGetCRCInfo$ = () =>
 
             socket.on('close', (errClose) => {
               if (errClose) {
+                logEntry(
+                  `updaterGetCRCInfo$:close:: ${err}`,
+                  'error',
+                  logConfig.channels
+                );
                 throw errClose;
               }
+              logEntry(
+                `updaterGetCRCInfo$:get:: success`,
+                'log',
+                logConfig.channels
+              );
               res(str);
             });
             socket.resume();
@@ -85,23 +120,43 @@ const updaterGetCRCInfo$ = () =>
     })
   );
 
-const updaterGetRemoteFile$ = (fileInfo: RemoteFileInfo, client: FTP) => {
-  // console.log('updaterGetRemoteFile$', fileInfo);
+const updaterGetRemoteFile$ = (
+  fileInfo: RemoteFileInfo,
+  client: FTP,
+  logConfig: LogConfig = defaultLogConfig
+) => {
   return from<Promise<Buffer>>(
     new Promise((res, rej) => {
       client.get(`LOUD/${fileInfo.path}`, (err, socket) => {
         if (err) {
-          console.error('updaterGetRemoteFile$', fileInfo);
-          console.error(err);
+          logEntry(
+            `updaterGetRemoteFile$:get:: ${err}`,
+            'error',
+            logConfig.channels
+          );
           throw err;
         }
+        logEntry(
+          `updaterGetRemoteFile$:start:: ${fileInfo.path}, ${fileInfo.size}`,
+          'log',
+          logConfig.channels
+        );
+        MainLogDownloadFilePercentageStatusSubject.next(0);
         let buffer = Buffer.from('');
         socket.on('data', (d) => {
           buffer = Buffer.concat([buffer, d]);
+          MainLogDownloadFilePercentageStatusSubject.next(
+            Math.floor((buffer.byteLength / fileInfo.size) * 100)
+          );
         });
 
         socket.on('close', (errClose) => {
           if (errClose) {
+            logEntry(
+              `updaterGetRemoteFile$:close:: ${err}`,
+              'error',
+              logConfig.channels
+            );
             throw errClose;
           }
           res(buffer);
@@ -114,8 +169,9 @@ const updaterGetRemoteFile$ = (fileInfo: RemoteFileInfo, client: FTP) => {
 
 const updaterGetAndWriteRemoteFiles$ = (
   baseURI: string,
-  fileInfos: RemoteFileInfo[]
-) => {
+  fileInfos: RemoteFileInfo[],
+  logConfig: LogConfig = defaultLogConfig
+): Observable<[RemoteFileInfo[], RemoteFileInfo[]]> => {
   return new Observable((subscriber) => {
     const filesSucceeded: RemoteFileInfo[] = [];
     const filesFailed: RemoteFileInfo[] = [];
@@ -123,13 +179,20 @@ const updaterGetAndWriteRemoteFiles$ = (
       (c) => {
         from(fileInfos)
           .pipe(
-            concatMap((fileInfo) =>
+            concatMap((fileInfo, fii) =>
               updaterGetRemoteFile$(fileInfo as RemoteFileInfo, c).pipe(
+                tap(() => {
+                  MainLogDownloadFileProgressStatusSubject.next([
+                    fii,
+                    fileInfos.length,
+                  ]);
+                }),
                 mergeMap((buffer, i) =>
                   updaterWriteBufferToLocalFile$(
-                    baseURI + '/LOUD',
+                    baseURI,
                     fileInfo,
-                    buffer
+                    buffer,
+                    logConfig
                   ).pipe(
                     map((fi) => {
                       return [fi, true] as [RemoteFileInfo, boolean];
@@ -137,7 +200,11 @@ const updaterGetAndWriteRemoteFiles$ = (
                   )
                 ),
                 catchError((e) => {
-                  console.error(e);
+                  logEntry(
+                    `updaterGetAndWriteRemoteFiles$:: ${e}`,
+                    'error',
+                    logConfig.channels
+                  );
                   return of([fileInfo, false] as [RemoteFileInfo, boolean]);
                 })
               )
@@ -152,7 +219,7 @@ const updaterGetAndWriteRemoteFiles$ = (
               }
             },
             (e) => {
-              console.error(e);
+              logEntry(`updaterGetAndWriteRemoteFiles$::inner: ${e}`);
             },
             () => {
               subscriber.next([filesSucceeded, filesFailed]);
@@ -161,7 +228,7 @@ const updaterGetAndWriteRemoteFiles$ = (
           );
       },
       (e) => {
-        console.error(e);
+        logEntry(`updaterGetAndWriteRemoteFiles$::outer: ${e}`);
         subscriber.error(e);
       }
     );
@@ -169,28 +236,44 @@ const updaterGetAndWriteRemoteFiles$ = (
 };
 
 const updaterWriteBufferToLocalFile$ = (
-  baseURI: string,
+  uri: string,
   fileInfo: RemoteFileInfo,
-  buffer: Buffer
+  buffer: Buffer,
+  logConfig: LogConfig = defaultLogConfig
 ) => {
   return from(
     new Promise<RemoteFileInfo>((res, rej) => {
-      const path = updaterCreateLocalFileURI(baseURI, fileInfo.path);
+      const path = updaterCreateLocalFileURI(uri, fileInfo.path);
       const dir = updateCreateLocalFileDirURI(path);
+      logEntry(
+        `Writing file ${path}, ${fileInfo.size}`,
+        'log',
+        logConfig.channels
+      );
       fs.mkdir(dir, { recursive: true }, (err) => {
         if (err) {
-          console.error(
-            'updaterWriteBufferToLocalFile$',
-            fileInfo,
-            buffer.length
+          logEntry(
+            `updaterWriteBufferToLocalFile$:mkdir::${fileInfo.path},${buffer.length} / ${err}`,
+            'error',
+            logConfig.channels
           );
-          console.error(err);
           throw err;
         }
         fs.writeFile(path, buffer, (errWrite) => {
           if (errWrite) {
+            logEntry(
+              `updaterWriteBufferToLocalFile$:mkdir::${fileInfo.path},${buffer.length} / ${errWrite}`,
+              'error',
+              logConfig.channels
+            );
             throw errWrite;
           }
+
+          logEntry(
+            `updaterWriteBufferToLocalFile$:done::${fileInfo.path},${buffer.length}`,
+            'log',
+            logConfig.channels
+          );
           res(fileInfo);
         });
       });
@@ -218,12 +301,16 @@ const updaterStringToRemoteFileInfo = (fileEntry: string): RemoteFileInfo => {
   };
 };
 
-const updaterLocalFileData$ = (path: string): Observable<Buffer> =>
+const updaterLocalFileData$ = (
+  path: string,
+  logConfig: LogConfig = defaultLogConfig
+): Observable<Buffer> =>
   defer(() =>
     from<Promise<Buffer>>(
       new Promise((res, rej) => {
         fs.readFile(path, (err, data) => {
           if (err) {
+            logEntry(`${err}`, 'error', logConfig.channels);
             rej(err);
           }
           res(data);
@@ -233,7 +320,7 @@ const updaterLocalFileData$ = (path: string): Observable<Buffer> =>
   );
 
 const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
-  `${baseURI}/${path}`.replace('\\', '/').replace('//', '/').trim();
+  `${baseURI}/LOUD/${path}`.replace('\\', '/').replace('//', '/').trim();
 
 const updaterCreateRemoteFileURI = (fileInfo: RemoteFileInfo) =>
   `${fileInfo.path},0x${fileInfo.hash},${fileInfo.size}`;
@@ -255,7 +342,10 @@ const updaterCompareRemoteFileInfo$ = (
 ): Observable<[RemoteFileInfo, boolean]> =>
   of(fileInfo).pipe(
     concatMap((info) =>
-      updaterLocalFileData$(updaterCreateLocalFileURI(baseURI, info.path)).pipe(
+      updaterLocalFileData$(
+        updaterCreateLocalFileURI(baseURI, fileInfo.path),
+        logConfig
+      ).pipe(
         map((data) => {
           const shacrypto = crypto.createHash('sha1');
           shacrypto.update(data);
@@ -268,24 +358,25 @@ const updaterCompareRemoteFileInfo$ = (
         }),
         map((result) => [info, result] as [RemoteFileInfo, boolean]),
         tap(([info, result]) => {
-          Logger.next({
-            level: 'log',
-            message: `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
+          logEntry(
+            `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
               info
             )} / ${result}`,
-            ...logConfig,
-          });
+            'log',
+            logConfig.channels
+          );
         })
       )
     ),
     catchError((err) => {
-      Logger.next({
-        level: 'error',
-        message: `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
+      logEntry(
+        `CompareRemoteFileInfo$::${updaterCreateRemoteFileURI(
           fileInfo
         )} / ${err}`,
-        ...logConfig,
-      });
+        'error',
+        logConfig.channels
+      );
+
       return of([fileInfo, false] as [RemoteFileInfo, boolean]);
     })
   );

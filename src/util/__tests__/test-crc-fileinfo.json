@@ -450,19 +450,19 @@
     "size": 160
   },
   {
-    "path": "maps/Setons Clutch 40/setons clutch 40.scmap",
-    "hash": "43FAED46A89BAB4153C784924ED515B0CB2B0FAB",
-    "size": 29897046
+    "path": "maps/Setons Clutch 40/Setons Clutch 40.scmap",
+    "hash": "C70879921DBA801CE4657DCB8E1791C845E1C6D6",
+    "size": 29895441
   },
   {
-    "path": "maps/Setons Clutch 40/setons clutch 40_save.lua",
-    "hash": "A9F1FC319861581F37334D96103797E744ABD083",
-    "size": 453073
+    "path": "maps/Setons Clutch 40/Setons Clutch 40_save.lua",
+    "hash": "4CBA15365D751B12AA48CD89D006E915698767CD",
+    "size": 456032
   },
   {
     "path": "maps/Setons Clutch 40/setons clutch 40_scenario.lua",
-    "hash": "7E5D206F7BDCA5EC18D8F4D3D9E89D8004278379",
-    "size": 955
+    "hash": "5D420068DE3699234FBB66BC3131F7FE7C105826",
+    "size": 953
   },
   {
     "path": "maps/Setons Clutch 40/setons clutch 40_script.lua",
@@ -470,19 +470,19 @@
     "size": 444
   },
   {
-    "path": "maps/Setons Clutch/setons clutch.scmap",
-    "hash": "36E234E9919518FFAD1231DFA3E456C2C9AC217D",
-    "size": 9636487
+    "path": "maps/Setons Clutch/Setons Clutch.scmap",
+    "hash": "4E00F63103650F1AB9415C37ADB4FB2E516540FD",
+    "size": 9635127
   },
   {
-    "path": "maps/Setons Clutch/setons clutch_save.lua",
-    "hash": "6C2CE914B5B7832E9F8DCC11182238421DE6CB16",
-    "size": 394410
+    "path": "maps/Setons Clutch/Setons Clutch_save.lua",
+    "hash": "565A0D9EDD0A1FD85772D51A26D0A7A907A98018",
+    "size": 396692
   },
   {
     "path": "maps/Setons Clutch/setons clutch_scenario.lua",
-    "hash": "D898A36861ED87E48E56F08ECA7CE3801EA8EA17",
-    "size": 1028
+    "hash": "603E425E03984CFB888823D37AD84DBEBF659240",
+    "size": 1027
   },
   {
     "path": "maps/Setons Clutch/setons clutch_script.lua",
@@ -1781,8 +1781,8 @@
   },
   {
     "path": "gamedata/lua.scd",
-    "hash": "622D08840D55C59A90DD83DE0281225B6E0E1411",
-    "size": 1313395
+    "hash": "16051DB57A9422ADBBD4C1F56ECE86A8C55FA958",
+    "size": 1313786
   },
   {
     "path": "gamedata/meshes.scd",

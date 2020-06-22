@@ -6,16 +6,17 @@ import {
   updaterLocalFileData$,
 } from '../updater';
 import { map } from 'rxjs/operators';
-import { RemoteFileInfo } from '../types';
+import { RemoteFileInfo, LogConfig } from '../types';
 
 const BASE_URI = './src/util/__tests__/';
+
+const defaultLogConfig: LogConfig = { channels: [] };
 
 describe('Updater', () => {
   let infos: RemoteFileInfo[] = [];
   it('can retrieve the files CRC from the FTP', (done) => {
-    updaterGetCRCInfo$().subscribe(
+    updaterGetCRCInfo$(defaultLogConfig).subscribe(
       (n) => {
-        // console.log(JSON.stringify(n));
         fs.writeFileSync(`${BASE_URI}test-crc.txt`, n);
         done();
       },
@@ -26,7 +27,7 @@ describe('Updater', () => {
     );
   });
   it('can parse remote file info into RemoteFileInfo instances', (done) => {
-    updaterLocalFileData$('./src/util/__tests__/test-crc.txt')
+    updaterLocalFileData$('./src/util/__tests__/test-crc.txt', defaultLogConfig)
       .pipe(map((content) => updaterParseRemoteFileContent(content.toString())))
       .subscribe(
         (n) => {
@@ -66,14 +67,15 @@ describe('Updater', () => {
   it('can identify which local items are out of sync', (done) => {
     updaterCollectOutOfSyncFiles$(
       infos as RemoteFileInfo[],
-      `${BASE_URI}/LOUD`
+      `${BASE_URI}`,
+      defaultLogConfig
     ).subscribe(
       (n) => {
         expect(n.length).toBe(379);
         done();
       },
       (e) => {
-        console.error(e.errno, e);
+        // console.error(e.errno, e);
         done(e);
       }
     );

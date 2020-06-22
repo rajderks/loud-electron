@@ -4,10 +4,13 @@ import { LogEntry } from './types';
 import { Subject, of } from 'rxjs';
 import { filter, buffer, debounceTime, concatMap, tap } from 'rxjs/operators';
 
-const BASE_URI = process.env.REACT_APP_LOG_URI!;
+const BASE_URI =
+  process.env.JEST_WORKER_ID === undefined
+    ? process.env.REACT_APP_LOG_URI!
+    : './jest_log.txt';
 
 fs.unlink(BASE_URI, () => {});
-fs.writeFileSync(BASE_URI, '');
+fs.writeFile(BASE_URI, '', () => {});
 
 const logHeader = (level: LogEntry['level']) =>
   `[${level.toUpperCase()}][${moment().format('hh:mm:ssA')}]`;
@@ -66,7 +69,7 @@ Logger.pipe(
   )
 ).subscribe();
 
-export const log = (
+export const logEntry = (
   message: LogEntry['message'],
   level: LogEntry['level'] = 'log',
   channels: LogEntry['channels'] = ['log', 'main', 'file']
