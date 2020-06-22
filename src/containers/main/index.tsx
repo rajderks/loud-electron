@@ -19,9 +19,9 @@ import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
-import checkfolder from '../../util/checkfolder';
+import checkFolder from '../../util/checkFolder';
 import electron from 'electron';
-import testwrite from '../../util/testwrite';
+import testWrite from '../../util/testWrite';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -29,7 +29,7 @@ const Main: FunctionComponent = () => {
   );
 
   useEffect(() => {
-    checkfolder().subscribe(
+    checkFolder().subscribe(
       () => {
         logEntry('Client is in correct folder', 'log', ['file']);
       },
@@ -42,7 +42,7 @@ const Main: FunctionComponent = () => {
         electron.remote.app.quit();
       }
     );
-    testwrite().subscribe(
+    testWrite().subscribe(
       () => {
         logEntry('Test write succeeded', 'log', ['main', 'file']);
       },

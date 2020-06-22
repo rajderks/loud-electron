@@ -2,7 +2,7 @@ import fs from 'fs';
 import { BASE_URI } from '../constants';
 import { from } from 'rxjs';
 
-const checkfolder = () => {
+const checkFolder = () => {
   return from(
     new Promise((res, rej) => {
       fs.stat(`${BASE_URI}/bin/SupremeCommander.exe`, (errSC) => {
@@ -21,4 +21,4 @@ const checkfolder = () => {
   );
 };
 
-export default checkfolder;
+export default checkFolder;

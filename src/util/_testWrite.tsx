@@ -2,7 +2,7 @@ import fs from 'fs';
 import { BASE_URI } from '../constants';
 import { from } from 'rxjs';
 
-const testwrite = () => {
+const testWrite = () => {
   return from(
     new Promise((res, rej) => {
       fs.writeFile(
@@ -25,4 +25,4 @@ const testwrite = () => {
   );
 };
 
-export default testwrite;
+export default testWrite;

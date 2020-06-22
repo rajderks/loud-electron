@@ -36,11 +36,11 @@
 
 ## Test Write
 
-_Func TestWrite()_
+_Func testWrite()_
 
 ```
 Local $TestFile, $TestFileData, $TestFilePath = @ScriptDir & "\test.txt"
-	LogInfo("Running TestWrite")
+	LogInfo("Running testWrite")
 	If FileExists($TestFilePath) = 1 Then
 		FileSetAttrib($TestFilePath, "-R-S-H-N-O-T")
 		FileDelete($TestFilePath)
@@ -57,7 +57,7 @@ Local $TestFile, $TestFileData, $TestFilePath = @ScriptDir & "\test.txt"
 		MsgBox(0, "Error", "This updater program must be run with administrative rights")
 		Exit
 	EndIf
-	LogInfo("TestWrite completed")
+	LogInfo("testWrite completed")
 ```
 
 ## Set file attr
