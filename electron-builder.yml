@@ -14,6 +14,7 @@ directories:
 
 win:
   icon: public/favicon.ico
+  artifactName: '${productName}.${ext}'
   target:
     - portable
 # linux:

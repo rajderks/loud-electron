@@ -39,6 +39,7 @@ const rungame = () => {
           callback
         );
       });
+      return;
     }
     execFile(
       `${BASE_URI}/bin/ForgedAlliance.exe`,
