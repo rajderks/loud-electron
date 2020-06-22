@@ -6,7 +6,7 @@
 - [ ] [File Attributes](#set-file-attr)
 - [ ] [User Directories](#user-directories)
 - [ ] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
-- [ ] [Run game](#run-game)
+- [x] [Run game](#run-game)
 - [ ] [Help file](#help-file)
 - [ ] [Updater log](#updater-log)
 - [ ] [Game log](#game-log)

@@ -18,7 +18,7 @@ import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
-import { app, remote } from 'electron';
+import rungame from '../../util/rungame';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -87,7 +87,9 @@ const Main: FunctionComponent = () => {
       );
   }, []);
 
-  const handleRun = () => {};
+  const handleRun = () => {
+    rungame();
+  };
 
   const handleLog = () => {};
 
