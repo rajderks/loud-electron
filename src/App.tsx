@@ -9,6 +9,7 @@ import {
 import MapsLoadable from './containers/maps/loadable';
 import Menu from './containers/menu';
 import MainLoadable from './containers/main/loadable';
+import './util/logger';
 
 const theme = createMuiTheme({
   palette: {

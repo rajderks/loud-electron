@@ -21,6 +21,7 @@ import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
 import checkfolder from '../../util/checkfolder';
 import electron from 'electron';
+import testwrite from '../../util/testwrite';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -37,6 +38,19 @@ const Main: FunctionComponent = () => {
         electron.remote.dialog.showErrorBox(
           'Error!',
           'Please put the client in the root of your Supreme Commander folder i.e. C:\\SteamLibrary\\steamapps\\common\\Supreme Commander Forged Alliance'
+        );
+        electron.remote.app.quit();
+      }
+    );
+    testwrite().subscribe(
+      () => {
+        logEntry('Test write succeeded', 'log', ['main', 'file']);
+      },
+      (e) => {
+        logEntry(`Could not write/unlink test file ${e}`, 'error', ['file']);
+        electron.remote.dialog.showErrorBox(
+          'Error!',
+          'Could not write test file. Please run the client as administrator and/or make sure the game folder is not read-only'
         );
         electron.remote.app.quit();
       }

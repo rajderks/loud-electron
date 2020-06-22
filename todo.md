@@ -2,7 +2,7 @@
 
 - [x] Log file setup
 - [x] [Folder check](#folder-check)
-- [ ] [Test write](#test-write)
+- [x] [Test write](#test-write)
 - [ ] [File Attributes](#set-file-attr)
 - [ ] [User Directories](#user-directories)
 - [ ] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
