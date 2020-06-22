@@ -1,6 +1,5 @@
 const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, ipcMain } = electron;
 
 const path = require('path');
 // const url = require('url');
@@ -8,6 +7,10 @@ const isDev = require('electron-is-dev');
 
 // let blankWindow;
 let mainWindow;
+
+ipcMain.on('get-env', (event) => {
+  event.sender.send('get-env-reply', process.env.PORTABLE_EXECUTABLE_DIR);
+});
 
 function createBlank() {
   // blankWindow = new BrowserWindow({ width: 1, height: 1 });

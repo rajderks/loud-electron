@@ -16,10 +16,9 @@ win:
   icon: public/favicon.ico
   target:
     - portable
-
-linux:
-  target:
-    - deb
-  icon: favicon.png
-  synopsis: The LOUD Project client
-  category: Game
+# linux:
+#   target:
+#     - deb
+#   icon: favicon.png
+#   synopsis: The LOUD Project client
+#   category: Game

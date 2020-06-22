@@ -18,6 +18,7 @@ import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
+import { app, remote } from 'electron';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -109,7 +110,11 @@ const Main: FunctionComponent = () => {
   }, [updateStatus]);
 
   useEffect(() => {
-    logEntry(`base uri: ${BASE_URI}`, 'log', ['log', 'file', 'main']);
+    logEntry(
+      `base uri: ${BASE_URI} (if this doesn't match your SupCom directory, file a bug report in discord and quit the client)`,
+      'log',
+      ['log', 'file', 'main']
+    );
   }, []);
 
   return (

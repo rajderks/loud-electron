@@ -7,8 +7,7 @@ import {
 } from '../updater';
 import { map } from 'rxjs/operators';
 import { RemoteFileInfo, LogConfig } from '../types';
-
-const BASE_URI = './src/util/__tests__/';
+import { BASE_URI } from '../../constants';
 
 const defaultLogConfig: LogConfig = { channels: [] };
 
