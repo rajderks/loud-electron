@@ -22,14 +22,17 @@ function createWindow() {
     frame: false,
     fullscreenable: false,
     maximizable: false,
-    resizable: isDev ? true : false,
+    resizable: isDev ? true : true,
     fullscreen: false,
+    backgroundColor: '#2A2A2A',
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,
     },
   });
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000/index.tsx'

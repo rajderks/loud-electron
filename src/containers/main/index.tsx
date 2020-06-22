@@ -17,8 +17,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
-
-const BASE_URI = process.env.REACT_APP_FS_BASE_URL!;
+import { BASE_URI } from '../../constants';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -108,6 +107,10 @@ const Main: FunctionComponent = () => {
         return;
     }
   }, [updateStatus]);
+
+  useEffect(() => {
+    logEntry(`base uri: ${BASE_URI}`, 'log', ['log', 'file', 'main']);
+  }, []);
 
   return (
     <div

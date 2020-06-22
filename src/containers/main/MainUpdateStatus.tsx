@@ -36,7 +36,7 @@ const updateStatusMessage = (
     case UpdateStatus.Updating:
       return progress ? `Updating (${progress})` : 'Updating';
     case UpdateStatus.CRC:
-      return 'Comparing';
+      return 'Checking';
     case UpdateStatus.NotChecked:
     default:
       return 'Not checked';

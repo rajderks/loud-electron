@@ -4,13 +4,11 @@ import React, {
   useEffect,
   useLayoutEffect,
   useRef,
-  SyntheticEvent,
   useCallback,
 } from 'react';
 import { makeStyles, Fab, Zoom } from '@material-ui/core';
 import Logger from '../../util/logger';
 import { filter, scan, debounceTime, buffer, map } from 'rxjs/operators';
-import { timer } from 'rxjs';
 import PinDownIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles((theme) => ({

@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { FunctionComponent } from 'react';
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
-import { updaterCollectOutOfSyncFiles$ } from '../../util/updater';
 import { UpdateStatus } from './constants';
 import MainUpdateStatus from './MainUpdateStatus';
 

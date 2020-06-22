@@ -6,19 +6,10 @@ import { MenuItem } from 'frameless-titlebar/dist/title-bar/typings';
 const currentWindow = remote.getCurrentWindow();
 
 const Menu: FunctionComponent = () => {
-  const clicky = useCallback<(menu: MenuItem) => void>((menu) => {
-    console.warn(menu);
-  }, []);
+  const clicky = useCallback<(menu: MenuItem) => void>((menu) => {}, []);
   return (
     <>
       <TitleBar
-        // icon={
-        //   <div
-        //     style={{
-        //       backgroundImage: `url('${require('../../assets/logo512.png')}')`,
-        //     }}
-        //   />
-        // } // app icon
         iconSrc={require('../../assets/loud.ico')}
         currentWindow={currentWindow} // electron window instance
         platform={process.platform as any} // win32, darwin, linux

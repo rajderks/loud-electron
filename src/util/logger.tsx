@@ -3,14 +3,17 @@ import fs from 'fs';
 import { LogEntry } from './types';
 import { Subject, of } from 'rxjs';
 import { filter, buffer, debounceTime, concatMap, tap } from 'rxjs/operators';
+import { BASE_URI } from '../constants';
 
-const BASE_URI =
+const LOG_URI =
   process.env.JEST_WORKER_ID === undefined
-    ? process.env.REACT_APP_LOG_URI!
+    ? process.env.NODE_ENV !== 'production'
+      ? './loud_log.txt'
+      : `${BASE_URI}/loud_log.txt`!
     : './jest_log.txt';
 
-fs.unlink(BASE_URI, () => {});
-fs.writeFile(BASE_URI, '', () => {});
+fs.unlink(LOG_URI, () => {});
+fs.writeFile(LOG_URI, '', () => {});
 
 const logHeader = (level: LogEntry['level']) =>
   `[${level.toUpperCase()}][${moment().format('hh:mm:ssA')}]`;
@@ -56,7 +59,7 @@ Logger.pipe(
             (acc, le) => `${acc}${logMessage(le)}\r\n`,
             ''
           );
-          fs.appendFile(BASE_URI, reducedMessage, (err) => {
+          fs.appendFile(LOG_URI, reducedMessage, (err) => {
             if (err) {
               console.error(err);
             }
