@@ -15,7 +15,7 @@
 - [ ] [IconsMod](#iconsmod)
 - [ ] [Info File](#infofile)
 - [ ] [Discord invite](#discord-invite)
-- [ ] [Desktop Shortcuts](#desktop-shortcuts)
+- [x] [Desktop Shortcuts](#desktop-shortcuts) **(wont-fix)**
 - [ ] [List updates](#list-updates)
 - [ ] [Open maps folder](#open-maps-folder)
 - [ ] [Open mods folder](#open-mods-folder)
