@@ -19,11 +19,30 @@ import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
+import checkfolder from '../../util/checkfolder';
+import electron from 'electron';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
     UpdateStatus.NotChecked
   );
+
+  useEffect(() => {
+    checkfolder().subscribe(
+      () => {
+        logEntry('Client is in correct folder', 'log', ['file']);
+      },
+      (e) => {
+        logEntry('Client is not in correct folder', 'error', ['file']);
+        electron.remote.dialog.showErrorBox(
+          'Error!',
+          'Please put the client in the root of your Supreme Commander folder i.e. C:\\SteamLibrary\\steamapps\\common\\Supreme Commander Forged Alliance'
+        );
+        electron.remote.app.quit();
+      }
+    );
+  }, []);
+
   const handleUpdate = useCallback(() => {
     setUpdateStatus(UpdateStatus.CRC);
     updaterGetCRCInfo$()

@@ -1,7 +1,7 @@
 # Todo
 
 - [x] Log file setup
-- [ ] [Folder check](#folder-check)
+- [x] [Folder check](#folder-check)
 - [ ] [Test write](#test-write)
 - [ ] [File Attributes](#set-file-attr)
 - [ ] [User Directories](#user-directories)
