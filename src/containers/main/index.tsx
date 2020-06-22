@@ -22,6 +22,7 @@ import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
 import electron from 'electron';
 import testWrite from '../../util/testWrite';
+import createUserDirectories from '../../util/createUserDirectories';
 
 const Main: FunctionComponent = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
@@ -55,6 +56,7 @@ const Main: FunctionComponent = () => {
         electron.remote.app.quit();
       }
     );
+    createUserDirectories();
   }, []);
 
   const handleUpdate = useCallback(() => {
