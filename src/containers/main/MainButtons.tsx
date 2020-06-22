@@ -63,6 +63,17 @@ interface Props {
   updateStatus: UpdateStatus;
 }
 
+const indicatorColor = (updateStatus: UpdateStatus) => {
+  switch (updateStatus) {
+    case UpdateStatus.Failed:
+      return 'red';
+    case UpdateStatus.UpToDate:
+      return 'green';
+    default:
+      return '#FBFF3A';
+  }
+};
+
 const MainButtons: FunctionComponent<Props> = ({
   onUpdate,
   onRun,
@@ -84,7 +95,10 @@ const MainButtons: FunctionComponent<Props> = ({
               Update
             </Typography>
           </ButtonBase>
-          <div className={classes.updateIndicator}>
+          <div
+            className={classes.updateIndicator}
+            style={{ backgroundColor: indicatorColor(updateStatus) }}
+          >
             <MainUpdateStatus updateStatus={updateStatus} />
           </div>
         </div>
