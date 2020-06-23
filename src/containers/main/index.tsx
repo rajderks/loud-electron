@@ -26,6 +26,7 @@ import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
 import MainContext from './MainContext';
 import { Typography, makeStyles } from '@material-ui/core';
+import openTarget, { openTargetCheck } from '../../util/openTarget';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Main: FunctionComponent = () => {
   const classes = useStyles();
-  const { userMapsEnabled, userModsEnabled } = useContext(MainContext);
+  const { enabledItems, changeEnabledItem } = useContext(MainContext);
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
     UpdateStatus.NotChecked
   );
@@ -117,6 +118,9 @@ const Main: FunctionComponent = () => {
       )
       .subscribe(
         (n) => {
+          openTargetCheck('datapathlua').subscribe((n) => {
+            changeEnabledItem('louddatapathlua', n);
+          });
           const [success, failed] = n;
           if (failed.length) {
             logEntry(
@@ -143,13 +147,15 @@ const Main: FunctionComponent = () => {
           setUpdateStatus(UpdateStatus.UpToDate);
         }
       );
-  }, []);
+  }, [changeEnabledItem]);
 
   const handleRun = () => {
     rungame();
   };
 
-  const handleLog = () => {};
+  const handleLog = () => {
+    openTarget('log');
+  };
 
   const handleDonate = () => {};
 
@@ -168,15 +174,6 @@ const Main: FunctionComponent = () => {
         return;
     }
   }, [updateStatus]);
-
-  useEffect(() => {
-    logEntry(
-      `base uri: ${BASE_URI} (if this doesn't match your SupCom directory, file a bug report in discord and quit the client)`,
-      'log',
-      ['log', 'file', 'main']
-    );
-    logEntry(`Doc uri is ${electron.remote.app.getPath('documents')}`);
-  }, []);
 
   return (
     <div
@@ -201,17 +198,21 @@ const Main: FunctionComponent = () => {
           variant="body2"
           className={classes.userContentLabel}
           style={{
-            color: userMapsEnabled ? 'red' : 'white',
+            color: enabledItems.includes('maps') ? 'red' : 'white',
           }}
-        >{`User maps: ${userMapsEnabled ? 'enabled' : 'disabled'}`}</Typography>
+        >{`User maps: ${
+          enabledItems.includes('maps') ? 'enabled' : 'disabled'
+        }`}</Typography>
         <Typography
           display="inline"
           variant="body2"
           className={classes.userContentLabel}
           style={{
-            color: userModsEnabled ? 'red' : 'white',
+            color: enabledItems.includes('mods') ? 'red' : 'white',
           }}
-        >{`User mods: ${userModsEnabled ? 'enabled' : 'disabled'}`}</Typography>
+        >{`User mods: ${
+          enabledItems.includes('mods') ? 'enabled' : 'disabled'
+        }`}</Typography>
       </div>
     </div>
   );

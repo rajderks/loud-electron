@@ -5,39 +5,46 @@ import { MenuItem } from 'frameless-titlebar/dist/title-bar/typings';
 import toggleUserContent from '../../util/toggleUserContent';
 import { logEntry } from '../../util/logger';
 import MainContext from '../main/MainContext';
-import openFolder from '../../util/openFolder';
+import openTarget from '../../util/openTarget';
 
 const currentWindow = remote.getCurrentWindow();
 
 const Menu: FunctionComponent = () => {
-  const { setUserContentEnabled } = useContext(MainContext);
+  const { changeEnabledItem, enabledItems } = useContext(MainContext);
 
   const clicky = useCallback<(menu: MenuItem) => void>(
     (menu) => {
       if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
-        const subject = menu.id.split('-')[1] as 'maps' | 'mods';
-        toggleUserContent(subject).subscribe((n) => {
+        const target = menu.id.split('-')[1] as 'maps' | 'mods';
+        toggleUserContent(target).subscribe((n) => {
           logEntry('Toggled user content');
-          setUserContentEnabled(subject, n);
+          changeEnabledItem(target, n);
         });
       } else if (
         menu.id === 'open-maps' ||
         menu.id === 'open-mods' ||
         menu.id === 'open-replays'
       ) {
-        const subject = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
-        openFolder(subject);
+        const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
+        openTarget(target);
+      } else if (
+        menu.id === 'help-help' ||
+        menu.id === 'help-info' ||
+        menu.id === 'help-gamelog'
+      ) {
+        const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
+        openTarget(target);
       }
     },
-    [setUserContentEnabled]
+    [changeEnabledItem]
   );
 
   return (
     <>
       <TitleBar
         iconSrc={require('../../assets/loud.ico')}
-        currentWindow={currentWindow} // electron window instance
-        platform={process.platform as any} // win32, darwin, linux
+        currentWindow={currentWindow}
+        platform={process.platform as any}
         menu={[
           {
             label: 'Game',
@@ -50,32 +57,57 @@ const Menu: FunctionComponent = () => {
                 id: 'open-maps',
                 label: 'Open Maps folder',
                 click: clicky,
+                disabled: !enabledItems.includes('open-maps'),
               },
               {
                 id: 'open-mods',
                 label: 'Open Mods folder',
                 click: clicky,
+                disabled: !enabledItems.includes('open-mods'),
               },
               {
                 id: 'open-replays',
                 label: 'Open Replays folder',
                 click: clicky,
+                disabled: !enabledItems.includes('open-replays'),
               },
               {
                 id: 'toggle-maps',
                 label: 'Toggle user maps',
                 click: clicky,
+                disabled: !enabledItems.includes('louddatapathlua'),
               },
               {
                 id: 'toggle-mods',
                 label: 'Toggle user mods',
                 click: clicky,
+                disabled: !enabledItems.includes('louddatapathlua'),
               },
             ],
           },
           {
             label: 'Help',
             click: clicky,
+            submenu: [
+              {
+                id: 'help-help',
+                label: 'Menu help',
+                click: clicky,
+                disabled: !enabledItems.includes('help-help'),
+              },
+              {
+                id: 'help-info',
+                label: 'Game Info',
+                click: clicky,
+                disabled: !enabledItems.includes('help-info'),
+              },
+              {
+                id: 'help-gamelog',
+                label: 'View Game Log',
+                click: clicky,
+                disabled: !enabledItems.includes('help-gamelog'),
+              },
+            ],
           },
         ]}
         title="LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version 5.00"

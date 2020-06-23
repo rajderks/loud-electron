@@ -3,7 +3,7 @@
 --mount_contents(SHGetFolderPath('PERSONAL') .. 'My Games\\Gas Powered Games\\Supreme Commander Forged Alliance\\maps', '/maps')
 */
 
-import { BASE_URI } from '../constants';
+import { BASE_URI, FILE_URI_LOUDDATAPATHLUA } from '../constants';
 import fs from 'fs';
 import { from } from 'rxjs';
 import { logEntry } from './logger';
@@ -20,8 +20,7 @@ const subjectString = (subject: string) =>
 const toggleUserContent = (subject: 'maps' | 'mods') =>
   from(
     new Promise<boolean>((res, rej) => {
-      const luaFilePath = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
-      fs.stat(luaFilePath, (errLua, data) => {
+      fs.stat(FILE_URI_LOUDDATAPATHLUA, (errLua) => {
         if (errLua) {
           logEntry(
             `toggleUserContent:luaFile:: LOUD/bin/LoudDataPath.lua file does not exist, unable to enable/disable user maps and mods`,
@@ -30,9 +29,11 @@ const toggleUserContent = (subject: 'maps' | 'mods') =>
           rej();
           return;
         }
-        fs.readFile(luaFilePath, (errRead, data) => {
+        fs.readFile(FILE_URI_LOUDDATAPATHLUA, (errRead, data) => {
           if (errRead) {
-            logEntry(`toggleUserConrent:read:: could not read ${luaFilePath}`);
+            logEntry(
+              `toggleUserConrent:read:: could not read ${FILE_URI_LOUDDATAPATHLUA}`
+            );
             rej();
             return;
           }
@@ -43,7 +44,7 @@ const toggleUserContent = (subject: 'maps' | 'mods') =>
           const replaceStr = `${isOn ? '--' : ''}${subjectString(subject)}`;
 
           changeLineInFile(
-            luaFilePath,
+            FILE_URI_LOUDDATAPATHLUA,
             isOn ? regOn : regOff,
             replaceStr
           ).subscribe(

@@ -9,11 +9,11 @@
 - [x] [Toggle user mods](#toggle-user-mods)
 - [ ] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
 - [x] [Run game](#run-game)
-- [ ] [Help file](#help-file)
-- [ ] [Updater log](#updater-log)
-- [ ] [Game log](#game-log)
+- [x] [Help file](#help-file)
+- [x] [Updater log](#updater-log)
+- [x] [Game log](#game-log)
 - [ ] [IconsMod](#iconsmod)
-- [ ] [Info File](#infofile)
+- [x] [Info File](#infofile)
 - [ ] [Discord invite](#discord-invite)
 - [x] [Desktop Shortcuts](#desktop-shortcuts) **(wont-fix)**
 - [ ] [List updates](#list-updates)

@@ -1,15 +1,25 @@
 import React from 'react';
 
+export type MainContextItems =
+  | 'louddatapathlua'
+  | 'maps'
+  | 'mods'
+  | 'open-maps'
+  | 'open-mods'
+  | 'open-replays'
+  | 'help-help'
+  | 'help-info'
+  | 'help-gamelog'
+  | 'log';
+
 export interface IMainContext {
-  userMapsEnabled: boolean;
-  userModsEnabled: boolean;
-  setUserContentEnabled: (subject: 'mods' | 'maps', enabled: boolean) => void;
+  enabledItems: MainContextItems[];
+  changeEnabledItem: (subject: MainContextItems, enabled: boolean) => void;
 }
 
 const MainContext = React.createContext<IMainContext>({
-  userMapsEnabled: false,
-  userModsEnabled: false,
-  setUserContentEnabled: () => {},
+  changeEnabledItem: () => {},
+  enabledItems: [],
 });
 
 export default MainContext;

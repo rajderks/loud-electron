@@ -1,7 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
 import { UpdateStatus } from './constants';
 import MainUpdateStatus from './MainUpdateStatus';
+import MainContextProvider from './MainContextProvider';
+import MainContext from './MainContext';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -81,6 +83,7 @@ const MainButtons: FunctionComponent<Props> = ({
   updateStatus,
 }) => {
   const classes = useStyles();
+  const { enabledItems } = useContext(MainContext);
   return (
     <>
       <div className={classes.buttonWrapper}>
@@ -106,7 +109,11 @@ const MainButtons: FunctionComponent<Props> = ({
             Run Game
           </Typography>
         </ButtonBase>
-        <ButtonBase className={classes.button} onClick={onLog}>
+        <ButtonBase
+          className={classes.button}
+          onClick={onLog}
+          disabled={!enabledItems.includes('log')}
+        >
           <Typography color="inherit" variant="body2">
             Updater Log
           </Typography>

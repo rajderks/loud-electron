@@ -3,42 +3,131 @@ import React, {
   useMemo,
   useEffect,
   FunctionComponent,
-  useState,
+  useReducer,
 } from 'react';
-import MainContext, { IMainContext } from './MainContext';
+import MainContext, { IMainContext, MainContextItems } from './MainContext';
 import { checkUserContent } from '../../util/toggleUserContent';
+import { logEntry } from '../../util/logger';
+import { BASE_URI } from '../../constants';
+import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
+import { targetURI, openTargetCheck } from '../../util/openTarget';
+import electron from 'electron';
+
+interface State {
+  enabledItems: MainContextItems[];
+}
+
+interface ActionEnable {
+  type: 'enable';
+  payload: MainContextItems;
+}
+
+interface ActionDisable {
+  type: 'disable';
+  payload: MainContextItems;
+}
+
+type Actions = ActionEnable | ActionDisable;
+
+const initialState: State = {
+  enabledItems: [],
+};
+
+const mainReducer = (state: State, action: Actions): State => {
+  switch (action.type) {
+    case 'enable':
+      if (!state.enabledItems.includes(action.payload)) {
+        return {
+          ...state,
+          enabledItems: [...state.enabledItems, action.payload],
+        };
+      }
+      return state;
+    case 'disable':
+      if (state.enabledItems.includes(action.payload)) {
+        const items = state.enabledItems.slice();
+        const idx = items.findIndex((i) => i === action.payload);
+        if (idx > -1) {
+          items.splice(idx, 1);
+          return { ...state, enabledItems: items };
+        }
+        return state;
+      }
+      return state;
+    default:
+      return state;
+  }
+};
 
 const MainContextProvider: FunctionComponent = ({ children }) => {
-  const [userModsEnabled, setUserModsEnabled] = useState(false);
-  const [userMapsEnabled, setUserMapsEnabled] = useState(false);
+  const [state, dispatch] = useReducer(mainReducer, initialState);
 
-  const handleChangeUserContent: IMainContext['setUserContentEnabled'] = useCallback(
-    (subject, enabled) => {
-      if (subject === 'maps') {
-        setUserMapsEnabled(enabled);
-      } else if (subject === 'mods') {
-        setUserModsEnabled(enabled);
-      }
+  const handleChangeEnabledItem: IMainContext['changeEnabledItem'] = useCallback(
+    (item, enabled) => {
+      dispatch({ type: enabled ? 'enable' : 'disable', payload: item });
     },
     []
   );
   useEffect(() => {
     checkUserContent('mods').subscribe((n) =>
-      handleChangeUserContent('mods', n)
+      handleChangeEnabledItem('mods', n)
     );
     checkUserContent('maps').subscribe((n) =>
-      handleChangeUserContent('maps', n)
+      handleChangeEnabledItem('maps', n)
     );
-  }, [handleChangeUserContent]);
+  }, [handleChangeEnabledItem]);
 
   const contextValue = useMemo<IMainContext>(
     () => ({
-      userMapsEnabled,
-      userModsEnabled,
-      setUserContentEnabled: handleChangeUserContent,
+      enabledItems: state.enabledItems,
+      changeEnabledItem: handleChangeEnabledItem,
     }),
-    [handleChangeUserContent, userMapsEnabled, userModsEnabled]
+    [handleChangeEnabledItem, state.enabledItems]
   );
+
+  useEffect(() => {
+    logEntry(
+      `base uri: ${BASE_URI} (if this doesn't match your SupCom directory, file a bug report in discord and quit the client)`,
+      'log',
+      ['log', 'file', 'main']
+    );
+    logEntry(`Doc uri is ${electron.remote.app.getPath('documents')}`);
+    createDocumentsDirectories$().subscribe(([target, created]) => {
+      if (target === 'maps') {
+        handleChangeEnabledItem('open-maps', created);
+      }
+      if (target === 'mods') {
+        handleChangeEnabledItem('open-mods', created);
+      }
+
+      if (target === 'replays') {
+        handleChangeEnabledItem('open-replays', created);
+      }
+      if (created) {
+        logEntry(`Created ${target} folder, or it already existed`);
+      } else {
+        logEntry(
+          `Could not create ${target} folder ${targetURI(target)}`,
+          'error'
+        );
+      }
+    });
+    openTargetCheck('log').subscribe((n) => {
+      handleChangeEnabledItem('log', n);
+    });
+    openTargetCheck('gamelog').subscribe((n) => {
+      handleChangeEnabledItem('help-gamelog', n);
+    });
+    openTargetCheck('help').subscribe((n) => {
+      handleChangeEnabledItem('help-help', n);
+    });
+    openTargetCheck('info').subscribe((n) => {
+      handleChangeEnabledItem('help-info', n);
+    });
+    openTargetCheck('datapathlua').subscribe((n) => {
+      handleChangeEnabledItem('louddatapathlua', n);
+    });
+  }, [handleChangeEnabledItem]);
 
   return (
     <MainContext.Provider value={contextValue}>{children}</MainContext.Provider>
