@@ -175,6 +175,7 @@ const Main: FunctionComponent = () => {
       'log',
       ['log', 'file', 'main']
     );
+    logEntry(`Doc uri is ${electron.remote.app.getPath('documents')}`);
   }, []);
 
   return (

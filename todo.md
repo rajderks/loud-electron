@@ -5,8 +5,8 @@
 - [x] [Test write](#test-write)
 - [ ] [File Attributes](#set-file-attr)
 - [x] [User Directories](#user-directories)
-- [ ] [Toggle user maps](#toggle-user-maps)
-- [ ] [Toggle user mods](#toggle-user-mods)
+- [x] [Toggle user maps](#toggle-user-maps)
+- [x] [Toggle user mods](#toggle-user-mods)
 - [ ] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
 - [x] [Run game](#run-game)
 - [ ] [Help file](#help-file)
@@ -17,9 +17,9 @@
 - [ ] [Discord invite](#discord-invite)
 - [x] [Desktop Shortcuts](#desktop-shortcuts) **(wont-fix)**
 - [ ] [List updates](#list-updates)
-- [ ] [Open maps folder](#open-maps-folder)
-- [ ] [Open mods folder](#open-mods-folder)
-- [ ] [Open replays folder](#open-replays-folder)
+- [x] [Open maps folder](#open-maps-folder)
+- [x] [Open mods folder](#open-mods-folder)
+- [x] [Open replays folder](#open-replays-folder)
 - [ ] [Cleanup](#cleanup)
 - [ ] [Game data cleanup](#game-data-cleanup)
 - [ ] [Maps cleanup](#maps-cleanup)
@@ -29,9 +29,9 @@
 - [x] Check for update
 - [x] Download out of sync files
 - [ ] disable gui buttons during update
-- [ ] User maps enabled (UI, save to config file)
-- [ ] User mods enabled (UI, save to config file)
-- [ ] if LoudDataPath.lua doesn't exist ("LoudDataPath.lua file does not exist, unable to enable/disable UserMaps and UserMods")
+- [x] User maps enabled (UI, save to config file)
+- [x] User mods enabled (UI, save to config file)
+- [x] if LoudDataPath.lua doesn't exist ("LoudDataPath.lua file does not exist, unable to enable/disable UserMaps and UserMods")
 - [ ] if loud\gamedata missing show warning loud not install, should use updater. (disable run)
 
 ## Test Write

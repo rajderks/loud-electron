@@ -7,4 +7,24 @@ const BASE_URI =
       './'
     : './src/util/__tests__/';
 
-export { BASE_URI };
+const DOC_DIR = remote.app.getPath('documents');
+const DOC_DIR_SUPCOM_MAPS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/Maps`.replace(
+  /\//g,
+  '\\'
+);
+const DOC_DIR_SUPCOM_MODS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/Mods`.replace(
+  /\//g,
+  '\\'
+);
+const DOC_DIR_SUPCOM_REPLAYS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/replays`.replace(
+  /\//g,
+  '\\'
+);
+
+export {
+  BASE_URI,
+  DOC_DIR,
+  DOC_DIR_SUPCOM_MAPS,
+  DOC_DIR_SUPCOM_MODS,
+  DOC_DIR_SUPCOM_REPLAYS,
+};
