@@ -6,7 +6,7 @@ const changeLineInFile = (
   path: string,
   find: string | RegExp,
   replace: string
-) => {
+) => 
   from(
     new Promise((res, rej) => {
       fs.readFile(path, 'utf8', (errRead, data) => {
@@ -29,5 +29,5 @@ const changeLineInFile = (
       });
     })
   );
-};
+
 export default changeLineInFile;

@@ -3,6 +3,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useContext,
 } from 'react';
 import MainButtons from './MainButtons';
 import {
@@ -23,8 +24,30 @@ import checkFolder from '../../util/checkFolder';
 import electron from 'electron';
 import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
+import MainContext from './MainContext';
+import { Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  userContentWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    right: theme.spacing(0.5),
+    color: 'white',
+    width: 250,
+    height: 24,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  userContentLabel: {
+    fontWeight: theme.typography.fontWeightLight,
+    fontSize: theme.typography.fontSize * 0.9,
+  },
+}));
 
 const Main: FunctionComponent = () => {
+  const classes = useStyles();
+  const { userMapsEnabled, userModsEnabled } = useContext(MainContext);
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>(
     UpdateStatus.NotChecked
   );
@@ -171,6 +194,24 @@ const Main: FunctionComponent = () => {
         onDonate={handleDonate}
       />
       <MainLog key="main-log" />
+      <div className={classes.userContentWrapper}>
+        <Typography
+          display="inline"
+          variant="body2"
+          className={classes.userContentLabel}
+          style={{
+            color: userMapsEnabled ? 'red' : 'white',
+          }}
+        >{`User maps: ${userMapsEnabled ? 'enabled' : 'disabled'}`}</Typography>
+        <Typography
+          display="inline"
+          variant="body2"
+          className={classes.userContentLabel}
+          style={{
+            color: userModsEnabled ? 'red' : 'white',
+          }}
+        >{`User mods: ${userModsEnabled ? 'enabled' : 'disabled'}`}</Typography>
+      </div>
     </div>
   );
 };

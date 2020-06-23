@@ -10,6 +10,7 @@ import MapsLoadable from './containers/maps/loadable';
 import Menu from './containers/menu';
 import MainLoadable from './containers/main/loadable';
 import './util/logger';
+import MainContextProvider from './containers/main/MainContextProvider';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,28 +31,30 @@ function App() {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <div
-          style={{
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <>
-            <Menu />
-            <Router>
-              <Switch>
-                <Route path="/">
-                  <MainLoadable />
-                </Route>
-                <Route path="/maps">
-                  <MapsLoadable />
-                </Route>
-              </Switch>
-            </Router>
-          </>
-        </div>
+        <MainContextProvider>
+          <div
+            style={{
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <>
+              <Menu />
+              <Router>
+                <Switch>
+                  <Route path="/">
+                    <MainLoadable />
+                  </Route>
+                  <Route path="/maps">
+                    <MapsLoadable />
+                  </Route>
+                </Switch>
+              </Router>
+            </>
+          </div>
+        </MainContextProvider>
       </ThemeProvider>
     </CssBaseline>
   );
