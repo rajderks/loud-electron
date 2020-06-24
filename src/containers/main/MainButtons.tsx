@@ -2,7 +2,6 @@ import React, { FunctionComponent, useContext } from 'react';
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
 import { UpdateStatus } from './constants';
 import MainUpdateStatus from './MainUpdateStatus';
-import MainContextProvider from './MainContextProvider';
 import MainContext from './MainContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
     width: 442,
     height: 40,
-    color: 'white',
     justifyContent: 'space-between',
   },
   updateButtonWrapper: {
@@ -47,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     backgroundColor: '#FBFF3A',
   },
-
+  buttonDisabled: {
+    color: 'gray',
+  },
   paypalButton: {
     position: 'absolute',
     top: '58.3%',
@@ -90,7 +90,10 @@ const MainButtons: FunctionComponent<Props> = ({
         <div className={classes.updateButtonWrapper}>
           <ButtonBase
             className={classes.button}
-            classes={{ root: classes.updateButton }}
+            classes={{
+              root: classes.updateButton,
+              disabled: classes.buttonDisabled,
+            }}
             onClick={onUpdate}
           >
             <Typography color="inherit" variant="body2">
@@ -104,13 +107,23 @@ const MainButtons: FunctionComponent<Props> = ({
             <MainUpdateStatus updateStatus={updateStatus} />
           </div>
         </div>
-        <ButtonBase className={classes.button} onClick={onRun}>
+        <ButtonBase
+          className={classes.button}
+          classes={{ disabled: classes.buttonDisabled }}
+          onClick={onRun}
+          disabled={
+            (updateStatus !== UpdateStatus.UpToDate &&
+              updateStatus !== UpdateStatus.NotChecked) ||
+            !enabledItems.includes('run')
+          }
+        >
           <Typography color="inherit" variant="body2">
             Run Game
           </Typography>
         </ButtonBase>
         <ButtonBase
           className={classes.button}
+          classes={{ disabled: classes.buttonDisabled }}
           onClick={onLog}
           disabled={!enabledItems.includes('log')}
         >
@@ -121,7 +134,7 @@ const MainButtons: FunctionComponent<Props> = ({
       </div>
       <ButtonBase
         className={classes.paypalButton}
-        classes={{ root: classes.button }}
+        classes={{ root: classes.button, disabled: classes.buttonDisabled }}
         onClick={onDonate}
       >
         <Typography color="inherit" variant="body2">

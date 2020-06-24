@@ -20,6 +20,7 @@ const DOC_DIR_SUPCOM_REPLAYS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Co
   /\//g,
   '\\'
 );
+const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
 const FILE_URI_LOG = `${BASE_URI}/loud_log.txt`;
 const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
 const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
@@ -28,6 +29,7 @@ const FILE_URI_LOUDDATAPATHLUA = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
 
 export {
   BASE_URI,
+  DIR_LOUD_GAMEDATA,
   DOC_DIR,
   DOC_DIR_SUPCOM_MAPS,
   DOC_DIR_SUPCOM_MODS,

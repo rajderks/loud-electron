@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { spawn } from 'child_process';
 import {
+  DIR_LOUD_GAMEDATA,
   DOC_DIR_SUPCOM_MAPS,
   DOC_DIR_SUPCOM_MODS,
   DOC_DIR_SUPCOM_REPLAYS,
@@ -20,7 +21,8 @@ export type Target =
   | 'log'
   | 'gamelog'
   | 'help'
-  | 'info';
+  | 'info'
+  | 'loud';
 
 const targetPath = (target: Target) => {
   switch (target) {
@@ -67,6 +69,8 @@ export const targetURI = (target: Target) => {
       return FILE_URI_HELP;
     case 'info':
       return FILE_URI_INFO;
+    case 'loud':
+      return DIR_LOUD_GAMEDATA;
     default:
       throw new Error('invalid target');
   }

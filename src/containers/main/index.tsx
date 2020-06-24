@@ -26,7 +26,8 @@ import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
 import MainContext from './MainContext';
 import { Typography, makeStyles } from '@material-ui/core';
-import openTarget, { openTargetCheck } from '../../util/openTarget';
+import openTarget, { openTargetCheck, targetURI } from '../../util/openTarget';
+import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -118,9 +119,6 @@ const Main: FunctionComponent = () => {
       )
       .subscribe(
         (n) => {
-          openTargetCheck('datapathlua').subscribe((n) => {
-            changeEnabledItem('louddatapathlua', n);
-          });
           const [success, failed] = n;
           if (failed.length) {
             logEntry(
@@ -145,6 +143,53 @@ const Main: FunctionComponent = () => {
         },
         () => {
           setUpdateStatus(UpdateStatus.UpToDate);
+          openTargetCheck('datapathlua').subscribe((n) => {
+            changeEnabledItem('louddatapathlua', n);
+          });
+          openTargetCheck('loud').subscribe((n) => {
+            changeEnabledItem('run', n);
+          });
+          createDocumentsDirectories$().subscribe(([target, created]) => {
+            if (target === 'maps') {
+              changeEnabledItem('open-maps', created);
+            }
+            if (target === 'mods') {
+              changeEnabledItem('open-mods', created);
+            }
+
+            if (target === 'replays') {
+              changeEnabledItem('open-replays', created);
+            }
+            if (created) {
+              logEntry(`Created ${target} folder, or it already existed`);
+            } else {
+              logEntry(
+                `Could not create ${target} folder ${targetURI(target)}`,
+                'error'
+              );
+            }
+          });
+          openTargetCheck('log').subscribe((n) => {
+            changeEnabledItem('log', n);
+          });
+          openTargetCheck('gamelog').subscribe((n) => {
+            changeEnabledItem('help-gamelog', n);
+          });
+          openTargetCheck('help').subscribe((n) => {
+            changeEnabledItem('help-help', n);
+          });
+          openTargetCheck('info').subscribe((n) => {
+            changeEnabledItem('help-info', n);
+          });
+          openTargetCheck('datapathlua').subscribe((n) => {
+            changeEnabledItem('louddatapathlua', n);
+          });
+          openTargetCheck('loud').subscribe((n) => {
+            if (!n) {
+              logEntry('LOUD is not install. Press the update button!');
+            }
+            changeEnabledItem('run', n);
+          });
         }
       );
   }, [changeEnabledItem]);

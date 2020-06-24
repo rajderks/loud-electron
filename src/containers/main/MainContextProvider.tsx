@@ -85,6 +85,7 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
     [handleChangeEnabledItem, state.enabledItems]
   );
 
+  /* Startup checks */
   useEffect(() => {
     logEntry(
       `base uri: ${BASE_URI} (if this doesn't match your SupCom directory, file a bug report in discord and quit the client)`,
@@ -126,6 +127,12 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
     });
     openTargetCheck('datapathlua').subscribe((n) => {
       handleChangeEnabledItem('louddatapathlua', n);
+    });
+    openTargetCheck('loud').subscribe((n) => {
+      if (!n) {
+        logEntry('LOUD is not install. Press the update button!');
+      }
+      handleChangeEnabledItem('run', n);
     });
   }, [handleChangeEnabledItem]);
 

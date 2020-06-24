@@ -10,7 +10,8 @@ export type MainContextItems =
   | 'help-help'
   | 'help-info'
   | 'help-gamelog'
-  | 'log';
+  | 'log'
+  | 'run';
 
 export interface IMainContext {
   enabledItems: MainContextItems[];
