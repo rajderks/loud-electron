@@ -10,7 +10,7 @@ const LoadableComponent = React.lazy(() => {
   return Promise.all([
     import('./App'),
     new Promise((res) => setTimeout(res, 2000)),
-  ]).then(([moduleExports]) => moduleExports);
+  ]).then(([moduleExports]) => moduleExports) as any;
 });
 
 const AppLoadable = () => {
