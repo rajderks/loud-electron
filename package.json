@@ -60,7 +60,7 @@
     "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",
     "postinstall": "electron-builder install-app-deps",
-    "release": "yarn react-build && electron-builder -c.extraMetadata.main=public/electron.js --windows --linux --publish never",
+    "release": "yarn react-build && electron-builder -c.extraMetadata.main=public/electron.js --publish never",
     "clean": "rimraf build && rimraf out && rimraf quokka && rimraf LOUD",
     "start": "yarn react-start",
     "build": "yarn release",
