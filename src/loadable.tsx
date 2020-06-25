@@ -1,3 +1,5 @@
+// @ts-ignore
+
 /**
  * Combat weird pop-in of fonts and such by giving it a minimal delay.
  */
