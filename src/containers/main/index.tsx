@@ -28,6 +28,8 @@ import MainContext from './MainContext';
 import { Typography, makeStyles } from '@material-ui/core';
 import openTarget, { openTargetCheck, targetURI } from '../../util/openTarget';
 import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
+import checkClientUpdate$ from '../../util/checkClientUpdate';
+import { exec } from 'child_process';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -219,6 +221,34 @@ const Main: FunctionComponent = () => {
         return;
     }
   }, [updateStatus]);
+
+  useEffect(() => {
+    checkClientUpdate$().subscribe((n) => {
+      console.log(n);
+      if (n) {
+        electron.remote.dialog
+          .showMessageBox({
+            type: 'info',
+            defaultId: 1,
+            buttons: ['no', 'yes'],
+            message:
+              'A new version is available. Do you want to download it now?',
+            cancelId: 0,
+          })
+          .then(({ response }) => {
+            if (response === 1) {
+              exec(`start ${n}`, (err) => {
+                if (err) {
+                  logEntry(`${err}`, 'error');
+                  return;
+                }
+                electron.remote.app.quit();
+              });
+            }
+          });
+      }
+    });
+  }, []);
 
   return (
     <div

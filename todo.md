@@ -33,7 +33,7 @@
 - [x] User mods enabled (UI, save to config file)
 - [x] if LoudDataPath.lua doesn't exist ("LoudDataPath.lua file does not exist, unable to enable/disable UserMaps and UserMods")
 - [x] if loud\gamedata missing show warning loud not install, should use updater. (disable run)
-- [ ] check github api for new version
+- [x] check github api for new version
 - [ ] cache server CRC and only download out of sync server CRC entries.
 
 ## Test Write
