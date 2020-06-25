@@ -134,6 +134,9 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
       }
       handleChangeEnabledItem('run', n);
     });
+    openTargetCheck('iconmod').subscribe((n) => {
+      handleChangeEnabledItem('iconmod', n);
+    });
   }, [handleChangeEnabledItem]);
 
   return (

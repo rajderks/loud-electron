@@ -37,6 +37,8 @@ const Menu: FunctionComponent = () => {
         openTarget(target);
       } else if (menu.id === 'create-crc') {
         updaterCreateLocalCRC$().subscribe();
+      } else if (menu.id === 'run-iconmod') {
+        openTarget('iconmod');
       }
     },
     [changeEnabledItem]
@@ -56,6 +58,12 @@ const Menu: FunctionComponent = () => {
           {
             label: 'Tools',
             submenu: [
+              {
+                id: 'run-iconmod',
+                label: 'Icons Mod Installer',
+                click: clicky,
+                disabled: !enabledItems.includes('iconmod'),
+              },
               {
                 id: 'open-maps',
                 label: 'Open Maps folder',

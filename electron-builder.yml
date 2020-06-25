@@ -17,9 +17,9 @@ win:
   artifactName: '${productName}.${ext}'
   target:
     - portable
-# linux:
-#   target:
-#     - deb
-#   icon: favicon.png
-#   synopsis: The LOUD Project client
-#   category: Game
+linux:
+  target:
+    - deb
+  synopsis: The LOUD Project client
+  artifactName: '${productName}.${ext}'
+  category: Game

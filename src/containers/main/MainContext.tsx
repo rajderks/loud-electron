@@ -11,6 +11,7 @@ export type MainContextItems =
   | 'help-info'
   | 'help-gamelog'
   | 'log'
+  | 'iconmod'
   | 'run';
 
 export interface IMainContext {

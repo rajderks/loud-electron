@@ -1,6 +1,6 @@
 {
   "name": "loud-client",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "loud client description",
   "homepage": "./",
   "author": {
@@ -60,10 +60,10 @@
     "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",
     "postinstall": "electron-builder install-app-deps",
-    "release": "yarn clean && yarn build && electron-builder -c.extraMetadata.main=public/electron.js --windows --publish never",
+    "release": "yarn react-build && yarn build && electron-builder -c.extraMetadata.main=public/electron.js --windows --publish never",
     "clean": "rimraf build && rimraf out && rimraf quokka && rimraf LOUD",
     "start": "yarn react-start",
-    "build": "yarn react-build",
+    "build": "yarn release",
     "test": "yarn react-test",
     "dev": "yarn electron-dev"
   },

@@ -27,6 +27,10 @@ const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
 const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
 const FILE_URI_INFO = `${BASE_URI}/LOUD/doc/info.txt`;
 const FILE_URI_LOUDDATAPATHLUA = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
+const FILE_URI_ICONMOD = `${BASE_URI}/LOUD/bin/Advanced Strategic Icons Mod Installer.exe`.replace(
+  /\//g,
+  '\\'
+);
 
 export {
   BASE_URI,
@@ -40,4 +44,5 @@ export {
   FILE_URI_HELP,
   FILE_URI_INFO,
   FILE_URI_LOUDDATAPATHLUA,
+  FILE_URI_ICONMOD,
 };

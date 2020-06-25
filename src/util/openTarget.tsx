@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { spawn } from 'child_process';
+import { spawn, exec } from 'child_process';
 import {
   DIR_LOUD_GAMEDATA,
   DOC_DIR_SUPCOM_MAPS,
@@ -10,8 +10,10 @@ import {
   FILE_URI_GAMELOG,
   FILE_URI_HELP,
   FILE_URI_LOUDDATAPATHLUA,
+  FILE_URI_ICONMOD,
 } from '../constants';
 import { from } from 'rxjs';
+import { logEntry } from './logger';
 
 export type Target =
   | 'datapathlua'
@@ -22,7 +24,8 @@ export type Target =
   | 'gamelog'
   | 'help'
   | 'info'
-  | 'loud';
+  | 'loud'
+  | 'iconmod';
 
 const targetPath = (target: Target) => {
   switch (target) {
@@ -46,6 +49,8 @@ const targetPath = (target: Target) => {
 
     case 'info':
       return `notepad.exe`;
+    case 'iconmod':
+      return `C:/Windows/explorer.exe`;
     default:
       throw new Error('invalid target');
   }
@@ -71,6 +76,8 @@ export const targetURI = (target: Target) => {
       return FILE_URI_INFO;
     case 'loud':
       return DIR_LOUD_GAMEDATA;
+    case 'iconmod':
+      return FILE_URI_ICONMOD;
     default:
       throw new Error('invalid target');
   }
@@ -95,7 +102,15 @@ const openTarget = (target: Target) => {
   if (!targetPath.length) {
     return;
   }
-  spawn(path, targetArgs);
+  if (path === FILE_URI_ICONMOD) {
+    exec(`${FILE_URI_ICONMOD}`, (err) => {
+      if (err) {
+        logEntry(`${err}`, 'error');
+      }
+    });
+  } else {
+    spawn(path, targetArgs);
+  }
 };
 
 export default openTarget;
