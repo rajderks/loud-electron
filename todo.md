@@ -7,7 +7,7 @@
 - [x] [User Directories](#user-directories)
 - [x] [Toggle user maps](#toggle-user-maps)
 - [x] [Toggle user mods](#toggle-user-mods)
-- [ ] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
+- [x] [Old files cleanup](#old-files-cleanup) **(wont-fix)**
 - [x] [Run game](#run-game)
 - [x] [Help file](#help-file)
 - [x] [Updater log](#updater-log)
@@ -16,11 +16,11 @@
 - [x] [Info File](#infofile)
 - [ ] [Discord invite](#discord-invite)
 - [x] [Desktop Shortcuts](#desktop-shortcuts) **(wont-fix)**
-- [ ] [List updates](#list-updates)
+- [x] [List updates](#list-updates)
 - [x] [Open maps folder](#open-maps-folder)
 - [x] [Open mods folder](#open-mods-folder)
 - [x] [Open replays folder](#open-replays-folder)
-- [ ] [Cleanup](#cleanup)
+- [x] [Cleanup](#cleanup) **(wont-fix)**
 - [ ] [Game data cleanup](#game-data-cleanup)
 - [ ] [Maps cleanup](#maps-cleanup)
 - [ ] [Mods cleanup](#mods-cleanup)
@@ -28,11 +28,13 @@
 - [x] set updater color according to update status
 - [x] Check for update
 - [x] Download out of sync files
-- [ ] disable gui buttons during update
+- [x] disable gui buttons during update
 - [x] User maps enabled (UI, save to config file)
 - [x] User mods enabled (UI, save to config file)
 - [x] if LoudDataPath.lua doesn't exist ("LoudDataPath.lua file does not exist, unable to enable/disable UserMaps and UserMods")
-- [ ] if loud\gamedata missing show warning loud not install, should use updater. (disable run)
+- [x] if loud\gamedata missing show warning loud not install, should use updater. (disable run)
+- [ ] check github api for new version
+- [ ] cache server CRC and only download out of sync server CRC entries.
 
 ## Test Write
 

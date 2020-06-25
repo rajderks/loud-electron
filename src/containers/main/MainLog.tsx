@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 const logSub = Logger.pipe(filter((x) => x.channels.includes('main')));
 const logSubDebounce = Logger.pipe(
   filter((x) => x.channels.includes('main')),
-  debounceTime(200)
+  debounceTime(25)
 );
 
 const MainLog: FunctionComponent = () => {

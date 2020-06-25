@@ -1,13 +1,14 @@
 import { remote } from 'electron';
 
-const BASE_URI =
-  process.env.JEST_WORKER_ID === undefined
-    ? remote.getGlobal('process').env.PORTABLE_EXECUTABLE_DIR ??
-      process.env.REACT_APP_FS_BASE_URL ??
-      './'
-    : './src/util/__tests__/';
+const isJest = process.env.JEST_WORKER_ID !== undefined;
 
-const DOC_DIR = remote.app.getPath('documents');
+const BASE_URI = !isJest
+  ? remote.getGlobal('process').env.PORTABLE_EXECUTABLE_DIR ??
+    process.env.REACT_APP_FS_BASE_URL ??
+    './'
+  : './src/util/__tests__/';
+
+const DOC_DIR = isJest ? '' : remote.app.getPath('documents');
 const DOC_DIR_SUPCOM_MAPS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/Maps`.replace(
   /\//g,
   '\\'

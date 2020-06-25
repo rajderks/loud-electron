@@ -6,6 +6,7 @@ import toggleUserContent from '../../util/toggleUserContent';
 import { logEntry } from '../../util/logger';
 import MainContext from '../main/MainContext';
 import openTarget from '../../util/openTarget';
+import { updaterCreateLocalCRC$ } from '../../util/updater';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -34,6 +35,8 @@ const Menu: FunctionComponent = () => {
       ) {
         const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
         openTarget(target);
+      } else if (menu.id === 'create-crc') {
+        updaterCreateLocalCRC$().subscribe();
       }
     },
     [changeEnabledItem]
@@ -82,6 +85,12 @@ const Menu: FunctionComponent = () => {
                 label: 'Toggle user mods',
                 click: clicky,
                 disabled: !enabledItems.includes('louddatapathlua'),
+              },
+              {
+                id: 'create-crc',
+                label: 'Create CRC file',
+                click: clicky,
+                disabled: !enabledItems.includes('run'),
               },
             ],
           },

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import ftp from 'jsftp';
 import crypto from 'crypto';
 import { RemoteFileInfo, LogConfig } from './types';
@@ -16,6 +17,7 @@ import {
   MainLogDownloadFilePercentageStatusSubject,
   MainLogDownloadFileProgressStatusSubject,
 } from '../containers/main/observables';
+import { BASE_URI } from '../constants';
 
 interface FTP extends ftp {
   auth(
@@ -387,7 +389,7 @@ const updaterCollectOutOfSyncFiles$ = (
   logConfig: LogConfig = defaultLogConfig
 ) =>
   from(fileInfos).pipe(
-    mergeMap((info) =>
+    concatMap((info) =>
       updaterCompareRemoteFileInfo$(info, baseURI, logConfig).pipe(
         mergeMap(([info, result]) => iif(() => !!result, EMPTY, of(info)))
       )
@@ -395,7 +397,94 @@ const updaterCollectOutOfSyncFiles$ = (
     toArray()
   );
 
+const excludeCRC = [
+  'louddatapath.lua',
+  'usermaps',
+  'usermods',
+  'usergamedata',
+  'loud.log',
+];
+
+const updaterCreateLocalCRC$ = () => {
+  logEntry('updaterCreateLocalCRC$:: Starting the CRC Process');
+  return from(
+    new Promise((res, rej) => {
+      const walk = (
+        dir: string,
+        done: (err: Error | null, results?: string[]) => void
+      ) => {
+        var results: string[] = [];
+        fs.readdir(dir, (err, list) => {
+          if (err) {
+            return done(err);
+          }
+          var pending = list.length;
+          if (!pending) {
+            return done(null, results);
+          }
+          list.forEach((file) => {
+            file = path.resolve(dir, file);
+            fs.stat(file, (_err, stat) => {
+              if (stat && stat.isDirectory()) {
+                walk(file, (_err, res) => {
+                  results = results.concat(res!);
+                  if (!--pending) done(null, results);
+                });
+              } else {
+                results.push(file);
+                if (!--pending) done(null, results);
+              }
+            });
+          });
+        });
+      };
+      walk(`${BASE_URI}/LOUD`, (err, results) => {
+        if (err || !results) {
+          logEntry(`updaterCreateLocalCRC$:walk::${err} / ${results}`);
+          rej(err);
+          return;
+        }
+        const crcs = results
+          .filter((res) => {
+            return !excludeCRC.find((ex) => res.toLowerCase().includes(ex));
+          })
+          .map((result) => {
+            const buffer = fs.readFileSync(result);
+            const fileURI = path
+              .normalize(result)
+              .replace(path.normalize(`${BASE_URI}/LOUD/`), '');
+            const shacrypto = crypto.createHash('sha1');
+            shacrypto.update(buffer);
+            const sha1 = shacrypto.digest('hex').toUpperCase();
+            shacrypto.destroy();
+            return `${fileURI},0x${sha1},${buffer.byteLength}`;
+          });
+        crcs.push(
+          'bin\\LoudDataPath.lua,0xE0A4D83007A0222CD1EDBD77E6CFA81BB2F32252,1499'
+        );
+        crcs.sort();
+        fs.writeFile(
+          `${BASE_URI}/SCFA_FileInfo.txt`,
+          crcs.join('\r\n'),
+          (err) => {
+            if (err) {
+              logEntry(`Could not generate CRC file ${err}`, 'error');
+              rej(err);
+              return;
+            }
+            logEntry(
+              'updaterCreateLocalCRC$:: Finished the CRC Process. The file is located at ./SCFA_FileInfo.txt'
+            );
+            res();
+          }
+        );
+      });
+    })
+  );
+};
+
 export {
+  updaterCreateLocalCRC$,
   updaterConnectFTP$,
   updaterGetCRCInfo$,
   updaterParseRemoteFileContent,

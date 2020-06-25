@@ -5,7 +5,7 @@ import { logEntry } from './logger';
 const createUserDirectories = () => {
   fs.stat(`${BASE_URI}/LOUD/usermaps`, (err, stats) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/LOUD/usermaps`, (errMkdir) => {
+      fs.mkdir(`${BASE_URI}/LOUD/usermaps`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
           logEntry(
             `createUserDirectories:usermaps:mkDir:: ${errMkdir}`,
@@ -38,7 +38,7 @@ const createUserDirectories = () => {
   });
   fs.stat(`${BASE_URI}/LOUD/usermods`, (err, stats) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/LOUD/usermods`, (errMkdir) => {
+      fs.mkdir(`${BASE_URI}/LOUD/usermods`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
           logEntry(
             `createUserDirectories:usermods:mkDir:: ${errMkdir}`,
