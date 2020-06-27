@@ -204,7 +204,9 @@ const Main: FunctionComponent = () => {
     openTarget('log');
   };
 
-  const handleDonate = () => {};
+  const handleDonate = () => {
+    openTarget('patreon');
+  };
 
   useEffect(() => {
     switch (updateStatus) {

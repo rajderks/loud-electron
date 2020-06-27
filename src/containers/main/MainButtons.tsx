@@ -138,7 +138,7 @@ const MainButtons: FunctionComponent<Props> = ({
         onClick={onDonate}
       >
         <Typography color="inherit" variant="body2">
-          PayPal Donation
+          Patreon
         </Typography>
       </ButtonBase>
     </>

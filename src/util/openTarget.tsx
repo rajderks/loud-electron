@@ -14,6 +14,7 @@ import {
 } from '../constants';
 import { from } from 'rxjs';
 import { logEntry } from './logger';
+import { shell } from 'electron';
 
 export type Target =
   | 'datapathlua'
@@ -25,32 +26,26 @@ export type Target =
   | 'help'
   | 'info'
   | 'loud'
+  | 'patreon'
   | 'iconmod';
 
 const targetPath = (target: Target) => {
   switch (target) {
     case 'maps':
       return `C:/Windows/explorer.exe`;
-
     case 'mods':
       return `C:/Windows/explorer.exe`;
-
     case 'replays':
       return `C:/Windows/explorer.exe`;
-
     case 'log':
       return `notepad.exe`;
-
     case 'gamelog':
       return `notepad.exe`;
-
     case 'help':
       return `notepad.exe`;
-
     case 'info':
       return `notepad.exe`;
     case 'iconmod':
-      return `C:/Windows/explorer.exe`;
     default:
       throw new Error('invalid target');
   }
@@ -97,19 +92,22 @@ export const openTargetCheck = (target: Target) =>
   );
 
 const openTarget = (target: Target) => {
-  let path = targetPath(target);
-  let targetArgs: string[] = [targetURI(target)];
-  if (!targetPath.length) {
-    return;
-  }
-  if (path === FILE_URI_ICONMOD) {
+  if (target === 'iconmod') {
     exec(`${FILE_URI_ICONMOD}`, (err) => {
       if (err) {
         logEntry(`${err}`, 'error');
       }
     });
+  } else if (target === 'patreon') {
+    shell.openPath('https://www.patreon.com/user?u=37869110');
   } else {
-    spawn(path, targetArgs);
+    let path = targetPath(target);
+    let targetArgs: string[] = [targetURI(target)];
+    if (!targetPath.length) {
+      return;
+    } else {
+      spawn(path, targetArgs);
+    }
   }
 };
 
