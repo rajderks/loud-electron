@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { execFile } from 'child_process';
+import { execFile, spawn, exec } from 'child_process';
 import { BASE_URI } from '../constants';
 import { logEntry } from './logger';
 
@@ -16,7 +16,7 @@ const callback = (error: Error | null, stdout: string, stderr: string) => {
 };
 
 const rungame = () => {
-  // "D:\SteamLibrary\steamapps\common\Supreme Commander Forged Alliance\bin\SupremeCommander.exe"  /log "..\LOUD\bin\Loud.log" /init "..\LOUD\bin\LoudDataPath.lua"
+  const BASE_URI_WIN = BASE_URI.replace(/\//g, '\\');
   fs.stat(`${BASE_URI}/bin/ForgedAlliance.exe`, (errFA) => {
     if (errFA) {
       // try SupCom
@@ -28,28 +28,15 @@ const rungame = () => {
           );
           // try SupCom
         }
-        execFile(
-          `${BASE_URI}/bin/SupremeCommander.exe`,
-          [
-            '/log',
-            '.../LOUD/bin/Loud.log',
-            '/init',
-            '../LOUD/bin/LoudDataPath.lua',
-          ],
-          callback
+
+        exec(
+          `"${BASE_URI}/bin/SupremeCommander.exe" /log "${BASE_URI_WIN}\\LOUD\\bin\\Loud.log" /init "${BASE_URI_WIN}\\LOUD\\bin\\LoudDataPath.lua"`
         );
       });
       return;
     }
-    execFile(
-      `${BASE_URI}/bin/ForgedAlliance.exe`,
-      [
-        '/log',
-        '.../LOUD/bin/Loud.log',
-        '/init',
-        '../LOUD/bin/LoudDataPath.lua',
-      ],
-      callback
+    exec(
+      `"${BASE_URI}/bin/ForgedAlliance.exe" /log "${BASE_URI_WIN}\\LOUD\\bin\\Loud.log" /init "${BASE_URI_WIN}\\LOUD\\bin\\LoudDataPath.lua"`
     );
   });
 };

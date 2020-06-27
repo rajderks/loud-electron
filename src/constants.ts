@@ -2,7 +2,7 @@ import { remote } from 'electron';
 
 const isJest = process.env.JEST_WORKER_ID !== undefined;
 
-const BASE_URI = !isJest
+const BASE_URI: string = !isJest
   ? remote.getGlobal('process').env.PORTABLE_EXECUTABLE_DIR ??
     process.env.REACT_APP_FS_BASE_URL ??
     './'
