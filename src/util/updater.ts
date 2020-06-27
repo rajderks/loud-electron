@@ -28,16 +28,15 @@ interface FTP extends ftp {
 }
 
 const connection = {
-  host: process.env.REACT_APP_FTP_HOST,
-  user: process.env.REACT_APP_FTP_USER,
-  pass: process.env.REACT_APP_FTP_PASS,
+  host: '51.222.29.196',
+  user: 'ftploud',
+  pass: 'ftploud123',
 };
 
 const defaultLogConfig: LogConfig = {
-  channels:
-    (process.env.REACT_APP_LOG_CONFIG_CHANNELS?.split(',').map((x) =>
-      x.trim()
-    ) as LogConfig['channels']) ?? [],
+  channels: (process.env.REACT_APP_LOG_CONFIG_CHANNELS ?? 'main,log,file')
+    .split(',')
+    .map((x) => x.trim()) as LogConfig['channels'],
 };
 
 const updaterConnectFTP$ = () =>
