@@ -19,6 +19,9 @@ import {
 } from '../containers/main/observables';
 import { BASE_URI } from '../constants';
 
+/**
+ * Type for FTP instance
+ */
 interface FTP extends ftp {
   auth(
     name: string,
@@ -33,52 +36,95 @@ const connection = {
   pass: 'ftploud123',
 };
 
+/**
+ * Determine the default log configuration by environment
+ */
 const defaultLogConfig: LogConfig = {
   channels: (process.env.REACT_APP_LOG_CONFIG_CHANNELS ?? 'main,log,file')
     .split(',')
     .map((x) => x.trim()) as LogConfig['channels'],
 };
 
-const updaterConnectFTP$ = () =>
-  from<Promise<FTP>>(
-    new Promise((res, rej) => {
+/**
+ * Create a local file URI from given baseURI and path
+ * @param baseURI
+ * @param path
+ */
+const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
+  `${baseURI}/LOUD/${path}`.replace('\\', '/').replace('//', '/').trim();
+
+/**
+ * Create a remote file path from a RemoteFileInfo
+ * @param fileInfo
+ */
+const updaterCreateRemoteFileURI = (fileInfo: RemoteFileInfo) =>
+  `${fileInfo.path},0x${fileInfo.hash},${fileInfo.size}`;
+
+/**
+ * Extract the local dir for a file
+ * @param fileURI
+ */
+const updaterCreateLocalFileDirURI = (fileURI: string) => {
+  const chunks = fileURI.split('/');
+  chunks.pop();
+  return chunks.join('/');
+};
+/**
+ * Convenience function for parsing a line from a CRC file into a RemoteFileInfo instance
+ * @param fileEntry
+ */
+const updaterStringToRemoteFileInfo = (fileEntry: string): RemoteFileInfo => {
+  const fixedFileEntry = fileEntry.replace('\\', '/').trim();
+  const [path, hexsha, size] = fixedFileEntry.split(',');
+
+  return {
+    path,
+    hash: hexsha.substr(2),
+    size: Number.parseInt(size),
+  };
+};
+
+/**
+ * Connect to the FTP server
+ */
+const updaterConnectFTP$ = () => {
+  logEntry('updaterConnectFTP$:: Connecting...');
+  return from<Promise<FTP>>(
+    new Promise((res) => {
       const client: FTP = new ftp(connection) as FTP;
       client.on('connect', (err) => {
         if (err) {
+          logEntry(`updaterConnectFTP$:connect:: ${err}`, 'error');
           throw err;
         }
         client.auth(connection.user!, connection.pass!, (errAuth) => {
           if (errAuth) {
+            logEntry(`updaterConnectFTP$:auth:: ${errAuth}`, 'error');
             throw errAuth;
           }
           res(client);
         });
       });
+      client.on('error', (err) => {
+        logEntry(
+          `updaterConnectFTP$:connect:: Could not connect to host`,
+          'error'
+        );
+        throw err;
+      });
     })
   );
+};
 
+/**
+ * Fetch the CRC info from the server
+ * @param logConfig
+ */
 const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
   from<Promise<string>>(
     new Promise((res) => {
-      const client: FTP = new ftp(connection) as FTP;
-      client.on('connect', (errReady) => {
-        if (errReady) {
-          logEntry(
-            `updaterGetCRCInfo$:connect:: ${errReady}`,
-            'error',
-            logConfig.channels
-          );
-          throw errReady;
-        }
-        client.auth(connection.user!, connection.pass!, (errAuth) => {
-          if (errAuth) {
-            logEntry(
-              `updaterGetCRCInfo$:auth:: ${errAuth}`,
-              'error',
-              logConfig.channels
-            );
-            throw errAuth;
-          }
+      updaterConnectFTP$().subscribe(
+        (client) => {
           logEntry(
             `updaterGetCRCInfo$:auth:: success`,
             'log',
@@ -116,18 +162,31 @@ const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
             });
             socket.resume();
           });
-        });
-      });
+        },
+        (e) => {
+          logEntry(
+            `updaterGetCRCInfo$:connect/auth:: ${e}`,
+            'error',
+            logConfig.channels
+          );
+        }
+      );
     })
   );
 
+/**
+ * Get a remote file from the server
+ * @param fileInfo
+ * @param client
+ * @param logConfig
+ */
 const updaterGetRemoteFile$ = (
   fileInfo: RemoteFileInfo,
   client: FTP,
   logConfig: LogConfig = defaultLogConfig
 ) => {
   return from<Promise<Buffer>>(
-    new Promise((res, rej) => {
+    new Promise((res) => {
       client.get(`LOUD/${fileInfo.path}`, (err, socket) => {
         if (err) {
           logEntry(
@@ -168,6 +227,12 @@ const updaterGetRemoteFile$ = (
   );
 };
 
+/**
+ * Convenience method for fetching and writing multiple files from the FTP
+ * @param baseURI
+ * @param fileInfos
+ * @param logConfig
+ */
 const updaterGetAndWriteRemoteFiles$ = (
   baseURI: string,
   fileInfos: RemoteFileInfo[],
@@ -236,6 +301,13 @@ const updaterGetAndWriteRemoteFiles$ = (
   });
 };
 
+/**
+ * Write a buffer to a local file
+ * @param uri
+ * @param fileInfo
+ * @param buffer
+ * @param logConfig
+ */
 const updaterWriteBufferToLocalFile$ = (
   uri: string,
   fileInfo: RemoteFileInfo,
@@ -245,7 +317,7 @@ const updaterWriteBufferToLocalFile$ = (
   return from(
     new Promise<RemoteFileInfo>((res, rej) => {
       const path = updaterCreateLocalFileURI(uri, fileInfo.path);
-      const dir = updateCreateLocalFileDirURI(path);
+      const dir = updaterCreateLocalFileDirURI(path);
       logEntry(
         `Writing file ${path}, ${fileInfo.size}`,
         'log',
@@ -282,6 +354,10 @@ const updaterWriteBufferToLocalFile$ = (
   );
 };
 
+/**
+ * Generate RemoteFileInfo from the remote CRC files' content
+ * @param remoteFileContent
+ */
 const updaterParseRemoteFileContent = (
   remoteFileContent: string
 ): RemoteFileInfo[] =>
@@ -291,17 +367,11 @@ const updaterParseRemoteFileContent = (
     .split(/\r?\n/)
     .map((line) => updaterStringToRemoteFileInfo(line));
 
-const updaterStringToRemoteFileInfo = (fileEntry: string): RemoteFileInfo => {
-  const fixedFileEntry = fileEntry.replace('\\', '/').trim();
-  const [path, hexsha, size] = fixedFileEntry.split(',');
-
-  return {
-    path,
-    hash: hexsha.substr(2),
-    size: Number.parseInt(size),
-  };
-};
-
+/**
+ * Retrieve a buffer from a local file
+ * @param path
+ * @param logConfig
+ */
 const updaterLocalFileData$ = (
   path: string,
   logConfig: LogConfig = defaultLogConfig
@@ -319,18 +389,6 @@ const updaterLocalFileData$ = (
       })
     )
   );
-
-const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
-  `${baseURI}/LOUD/${path}`.replace('\\', '/').replace('//', '/').trim();
-
-const updaterCreateRemoteFileURI = (fileInfo: RemoteFileInfo) =>
-  `${fileInfo.path},0x${fileInfo.hash},${fileInfo.size}`;
-
-const updateCreateLocalFileDirURI = (fileURI: string) => {
-  const chunks = fileURI.split('/');
-  chunks.pop();
-  return chunks.join('/');
-};
 
 /**
  * Compare given [[RemoteFileInfo]] to local counterpart
@@ -382,12 +440,21 @@ const updaterCompareRemoteFileInfo$ = (
     })
   );
 
+/**
+ * Determine which files are out of sync by comparing the remote CRC with a locally created CRC.
+ * @param fileInfos
+ * @param baseURI
+ * @param logConfig
+ */
 const updaterCollectOutOfSyncFiles$ = (
   fileInfos: RemoteFileInfo[],
   baseURI: string,
   logConfig: LogConfig = defaultLogConfig
-) =>
-  from(fileInfos).pipe(
+) => {
+  logEntry(
+    'updaterCollectOutOfSyncFiles$:: Start gathering files that are out-of-sync'
+  );
+  return from(fileInfos).pipe(
     concatMap((info) =>
       updaterCompareRemoteFileInfo$(info, baseURI, logConfig).pipe(
         mergeMap(([info, result]) => iif(() => !!result, EMPTY, of(info)))
@@ -395,7 +462,10 @@ const updaterCollectOutOfSyncFiles$ = (
     ),
     toArray()
   );
-
+};
+/**
+ * Excluded partial paths from the CRC creator
+ */
 const excludeCRC = [
   'louddatapath.lua',
   'usermaps',
@@ -404,6 +474,9 @@ const excludeCRC = [
   'loud.log',
 ];
 
+/**
+ * Create a local CRC to be used as a source on the server
+ */
 const updaterCreateLocalCRC$ = () => {
   logEntry('updaterCreateLocalCRC$:: Starting the CRC Process');
   return from(

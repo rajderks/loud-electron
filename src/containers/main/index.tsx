@@ -101,13 +101,10 @@ const Main: FunctionComponent = () => {
         ),
         tap((n) => {
           if (n.length === 0) {
-            logEntry(`All files up to date`, 'log');
+            logEntry(`All files up to date`);
             setUpdateStatus(UpdateStatus.UpToDate);
           } else if (n.length > 1) {
-            logEntry(
-              `Files out of sync:\r\n${n.map((m) => `${m.path}\r\n`)}`,
-              'log'
-            );
+            logEntry(`Files out of sync:\r\n${n.map((m) => `${m.path}\r\n`)}`);
             setUpdateStatus(UpdateStatus.Updating);
           }
         }),
