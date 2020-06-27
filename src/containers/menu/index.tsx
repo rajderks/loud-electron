@@ -13,7 +13,7 @@ const currentWindow = remote.getCurrentWindow();
 const Menu: FunctionComponent = () => {
   const { changeEnabledItem, enabledItems } = useContext(MainContext);
 
-  const clicky = useCallback<(menu: MenuItem) => void>(
+  const buttonCallback = useCallback<(menu: MenuItem) => void>(
     (menu) => {
       if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
         const target = menu.id.split('-')[1] as 'maps' | 'mods';
@@ -53,7 +53,7 @@ const Menu: FunctionComponent = () => {
         menu={[
           {
             label: 'Game',
-            click: clicky,
+            click: buttonCallback,
           },
           {
             label: 'Tools',
@@ -61,67 +61,67 @@ const Menu: FunctionComponent = () => {
               {
                 id: 'run-iconmod',
                 label: 'Icons Mod Installer',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('iconmod'),
               },
               {
                 id: 'open-maps',
                 label: 'Open Maps folder',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('open-maps'),
               },
               {
                 id: 'open-mods',
                 label: 'Open Mods folder',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('open-mods'),
               },
               {
                 id: 'open-replays',
                 label: 'Open Replays folder',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('open-replays'),
               },
               {
                 id: 'toggle-maps',
                 label: 'Toggle user maps',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },
               {
                 id: 'toggle-mods',
                 label: 'Toggle user mods',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },
               {
                 id: 'create-crc',
                 label: 'Create CRC file',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('run'),
               },
             ],
           },
           {
             label: 'Help',
-            click: clicky,
+            click: buttonCallback,
             submenu: [
               {
                 id: 'help-help',
                 label: 'Menu help',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('help-help'),
               },
               {
                 id: 'help-info',
                 label: 'Game Info',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('help-info'),
               },
               {
                 id: 'help-gamelog',
                 label: 'View Game Log',
-                click: clicky,
+                click: buttonCallback,
                 disabled: !enabledItems.includes('help-gamelog'),
               },
             ],
