@@ -7,6 +7,7 @@ import { logEntry } from '../../util/logger';
 import MainContext from '../main/MainContext';
 import openTarget from '../../util/openTarget';
 import { updaterCreateLocalCRC$ } from '../../util/updater';
+import rungame from '../../util/rungame';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -15,7 +16,9 @@ const Menu: FunctionComponent = () => {
 
   const buttonCallback = useCallback<(menu: MenuItem) => void>(
     (menu) => {
-      if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
+      if (menu.id === 'game-run') {
+        rungame();
+      } else if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
         const target = menu.id.split('-')[1] as 'maps' | 'mods';
         toggleUserContent(target).subscribe((n) => {
           logEntry('Toggled user content');
@@ -54,6 +57,14 @@ const Menu: FunctionComponent = () => {
           {
             label: 'Game',
             click: buttonCallback,
+            submenu: [
+              {
+                id: 'game-run',
+                label: 'Run game',
+                click: buttonCallback,
+                disabled: !enabledItems.includes('run'),
+              },
+            ],
           },
           {
             label: 'Tools',
