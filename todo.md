@@ -12,9 +12,9 @@
 - [x] [Help file](#help-file)
 - [x] [Updater log](#updater-log)
 - [x] [Game log](#game-log)
-- [ ] [IconsMod](#iconsmod)
+- [x] [IconsMod](#iconsmod)
 - [x] [Info File](#infofile)
-- [ ] [Discord invite](#discord-invite)
+- [x] [Discord invite](#discord-invite)
 - [x] [Desktop Shortcuts](#desktop-shortcuts) **(wont-fix)**
 - [x] [List updates](#list-updates)
 - [x] [Open maps folder](#open-maps-folder)
