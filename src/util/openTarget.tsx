@@ -27,6 +27,7 @@ export type Target =
   | 'info'
   | 'loud'
   | 'patreon'
+  | 'discord'
   | 'iconmod';
 
 const targetPath = (target: Target) => {
@@ -100,6 +101,8 @@ const openTarget = (target: Target) => {
     });
   } else if (target === 'patreon') {
     shell.openPath('https://www.patreon.com/user?u=37869110');
+  } else if (target === 'discord') {
+    shell.openPath('https://discord.gg/8CsTDq2');
   } else {
     let path = targetPath(target);
     let targetArgs: string[] = [targetURI(target)];

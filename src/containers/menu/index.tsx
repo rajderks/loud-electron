@@ -32,6 +32,7 @@ const Menu: FunctionComponent = () => {
         const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
         openTarget(target);
       } else if (
+        menu.id === 'help-discord' ||
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
         menu.id === 'help-gamelog'
@@ -117,6 +118,11 @@ const Menu: FunctionComponent = () => {
             label: 'Help',
             click: buttonCallback,
             submenu: [
+              {
+                id: 'help-discord',
+                label: 'Discord invite',
+                click: buttonCallback,
+              },
               {
                 id: 'help-help',
                 label: 'Menu help',
