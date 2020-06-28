@@ -41,7 +41,7 @@ These are the primary features of the client:
 ### Shortcuts
 
 If you have the old client installed (_SCFA_Updater.exe_) and used it to creat shortcuts on your desktop, these will still work.
-However, the LOUD Updater shortcut will point to the old client. Either create new shortcuts to the LOUD_Client.{exe|deb} or adjust the existing shortcuts to target LOUD_Client.exe instead
+However, the LOUD Updater shortcut will point to the old client. Either create new shortcuts to the LOUD_Client.exe or adjust the existing shortcuts to target LOUD_Client.exe instead
 
 #### Game Shortcut
 
