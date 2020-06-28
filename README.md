@@ -57,7 +57,7 @@ The result should look like so:
 #### Linux
 
 Although the **LOUD_Client** is primarily to be used on the Windows OS, Linux should be able to update the mod using this client.
-Feel free to hang in our Discord of it doesn't, as there is no way for myself to test this right now.
+Feel free to hang in our Discord if it doesn't, as there is no way for myself to test this right now.
 
 ## Contributing
 
