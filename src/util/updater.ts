@@ -18,7 +18,7 @@ import {
   MainLogDownloadFilePercentageStatusSubject,
   MainLogDownloadFileProgressStatusSubject,
 } from '../containers/main/observables';
-import { BASE_URI } from '../constants';
+import { BASE_URI, DOC_URI_GAMEPREFS } from '../constants';
 
 /**
  * Type for FTP instance
@@ -705,10 +705,28 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
   );
 };
 
+const updaterCleanupUserprefs$ = (logConfig = defaultLogConfig) => {
+  logEntry('updtaerCleanupGameprefs$:: start', 'log', logConfig.channels);
+  return from(
+    new Promise((res, rej) => {
+      fs.statSync(DOC_URI_GAMEPREFS);
+      const buffer = fs.readFileSync(DOC_URI_GAMEPREFS);
+      let fileStr = buffer.toString();
+      fileStr = fileStr.replace(/fidelity = \d/g, 'fidelity = 2');
+      fileStr = fileStr.replace(/shadow_quality = \d/g, 'shadow_quality = 3');
+      fileStr = fileStr.replace(/texture_level = \d/g, 'texture_level = 2');
+      fileStr = fileStr.replace(/level_of_detail = \d/g, 'level_of_detail = 2');
+      fs.writeFileSync(DOC_URI_GAMEPREFS, fileStr);
+      res();
+    })
+  );
+};
+
 export {
   updaterCleanupGameData$,
   updaterCleanupMaps$,
   updaterCleanupMods$,
+  updaterCleanupUserprefs$,
   updaterCreateLocalCRC$,
   updaterConnectFTP$,
   updaterGetCRCInfo$,

@@ -1,4 +1,5 @@
 import { remote } from 'electron';
+import path from 'path';
 
 const isJest = process.env.JEST_WORKER_ID !== undefined;
 
@@ -9,6 +10,7 @@ const BASE_URI: string = !isJest
   : './src/util/__tests__/';
 
 const DOC_DIR = isJest ? '' : remote.app.getPath('documents');
+const APPDATA_DIR = isJest ? '' : remote.app.getPath('appData');
 const DOC_DIR_SUPCOM_MAPS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/Maps`.replace(
   /\//g,
   '\\'
@@ -21,6 +23,14 @@ const DOC_DIR_SUPCOM_REPLAYS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Co
   /\//g,
   '\\'
 );
+
+const DOC_URI_GAMEPREFS = path.resolve(
+  `${APPDATA_DIR}/../Local/Gas Powered Games/Supreme Commander Forged Alliance/Game.prefs`.replace(
+    /\//g,
+    '\\'
+  )
+);
+
 const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
 const FILE_URI_LOG = `${BASE_URI}/loud_log.txt`;
 const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
@@ -36,6 +46,7 @@ export {
   BASE_URI,
   DIR_LOUD_GAMEDATA,
   DOC_DIR,
+  DOC_URI_GAMEPREFS,
   DOC_DIR_SUPCOM_MAPS,
   DOC_DIR_SUPCOM_MODS,
   DOC_DIR_SUPCOM_REPLAYS,

@@ -14,6 +14,7 @@ import {
   updaterCleanupMaps$,
   updaterCleanupMods$,
   updaterCleanupGameData$,
+  updaterCleanupUserprefs$,
 } from '../../util/updater';
 import { UpdateStatus } from './constants';
 import { logEntry } from '../../util/logger';
@@ -148,6 +149,18 @@ const Main: FunctionComponent = () => {
             updaterCleanupGameData$(fileInfos).subscribe();
             updaterCleanupMaps$(fileInfos).subscribe();
             updaterCleanupMods$().subscribe();
+            updaterCleanupUserprefs$().subscribe(
+              () => {
+                logEntry('Succesfully patched Game.Prefs');
+              },
+              (e) => {
+                logEntry(e, 'error');
+                electron.remote.dialog.showErrorBox(
+                  'Error!',
+                  'Could not patch Game.prefs. Make sure you create a profile first by starting vanilla Supreme Commander, than run the updater once more. If you have a profile, ignore this message and set the texture details to low in the options menu ingame'
+                );
+              }
+            );
           }
           setUpdateStatus(UpdateStatus.UpToDate);
           openTargetCheck('datapathlua').subscribe((n) => {
@@ -231,7 +244,6 @@ const Main: FunctionComponent = () => {
 
   useEffect(() => {
     checkClientUpdate$().subscribe((n) => {
-      console.log(n);
       if (n) {
         electron.remote.dialog
           .showMessageBox({
