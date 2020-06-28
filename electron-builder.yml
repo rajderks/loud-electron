@@ -1,5 +1,5 @@
 appId: com.theloudproject.client
-productName: LOUD Client
+productName: LOUD_Client
 copyright: Copyright © 2020 Roy Derks
 files: ['./build/**/*', './public/electron.js']
 directories:
