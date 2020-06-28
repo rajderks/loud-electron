@@ -11,6 +11,9 @@ import {
   updaterGetCRCInfo$,
   updaterParseRemoteFileContent,
   updaterGetAndWriteRemoteFiles$,
+  updaterCleanupMaps$,
+  updaterCleanupMods$,
+  updaterCleanupGameData$,
 } from '../../util/updater';
 import { UpdateStatus } from './constants';
 import { logEntry } from '../../util/logger';
@@ -87,21 +90,21 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(() => {
+    let fileInfos: RemoteFileInfo[] | null = null;
     setUpdateStatus(UpdateStatus.CRC);
     updaterGetCRCInfo$()
       .pipe(
-        switchMap((crcInfo) =>
-          updaterCollectOutOfSyncFiles$(
-            updaterParseRemoteFileContent(crcInfo),
-            BASE_URI,
-            {
-              channels: ['file'],
-            }
-          )
-        ),
+        switchMap((crcInfo) => {
+          const fis = updaterParseRemoteFileContent(crcInfo);
+          fileInfos = fis.slice();
+          return updaterCollectOutOfSyncFiles$(fis, BASE_URI, {
+            channels: ['file'],
+          });
+        }),
         tap((n) => {
           if (n.length === 0) {
             logEntry(`All files up to date`);
+            // set the fileinfos out of scope so that we can use them in the complete handler, messy but effective.
             setUpdateStatus(UpdateStatus.UpToDate);
           } else if (n.length > 1) {
             logEntry(`Files out of sync:\r\n${n.map((m) => `${m.path}\r\n`)}`);
@@ -141,6 +144,11 @@ const Main: FunctionComponent = () => {
           setUpdateStatus(UpdateStatus.Failed);
         },
         () => {
+          if (fileInfos) {
+            updaterCleanupGameData$(fileInfos).subscribe();
+            updaterCleanupMaps$(fileInfos).subscribe();
+            updaterCleanupMods$().subscribe();
+          }
           setUpdateStatus(UpdateStatus.UpToDate);
           openTargetCheck('datapathlua').subscribe((n) => {
             changeEnabledItem('louddatapathlua', n);
@@ -185,7 +193,7 @@ const Main: FunctionComponent = () => {
           });
           openTargetCheck('loud').subscribe((n) => {
             if (!n) {
-              logEntry('LOUD is not install. Press the update button!');
+              logEntry('LOUD is not installed. Press the update button!');
             }
             changeEnabledItem('run', n);
           });

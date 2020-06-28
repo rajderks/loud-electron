@@ -1,4 +1,5 @@
 import fs from 'fs';
+import mv from 'mv';
 import path from 'path';
 import ftp from 'jsftp';
 import crypto from 'crypto';
@@ -477,7 +478,7 @@ const excludeCRC = [
 /**
  * Create a local CRC to be used as a source on the server
  */
-const updaterCreateLocalCRC$ = () => {
+const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
   logEntry('updaterCreateLocalCRC$:: Starting the CRC Process');
   return from(
     new Promise((res, rej) => {
@@ -512,7 +513,11 @@ const updaterCreateLocalCRC$ = () => {
       };
       walk(`${BASE_URI}/LOUD`, (err, results) => {
         if (err || !results) {
-          logEntry(`updaterCreateLocalCRC$:walk::${err} / ${results}`);
+          logEntry(
+            `updaterCreateLocalCRC$:walk::${err} / ${results}`,
+            'error',
+            logConfig.channels
+          );
           rej(err);
           return;
         }
@@ -540,12 +545,18 @@ const updaterCreateLocalCRC$ = () => {
           crcs.join('\r\n'),
           (err) => {
             if (err) {
-              logEntry(`Could not generate CRC file ${err}`, 'error');
+              logEntry(
+                `Could not generate CRC file ${err}`,
+                'error',
+                logConfig.channels
+              );
               rej(err);
               return;
             }
             logEntry(
-              'updaterCreateLocalCRC$:: Finished the CRC Process. The file is located at ./SCFA_FileInfo.txt'
+              'updaterCreateLocalCRC$:: Finished the CRC Process. The file is located at ./SCFA_FileInfo.txt',
+              'log',
+              logConfig.channels
             );
             res();
           }
@@ -555,7 +566,149 @@ const updaterCreateLocalCRC$ = () => {
   );
 };
 
+const updaterCleanupGameData$ = (
+  fileInfos: RemoteFileInfo[],
+  logConfig = defaultLogConfig
+) => {
+  logEntry(
+    'updaterCleanupGamedata$:: Starting gamedata cleanup',
+    'log',
+    logConfig.channels
+  );
+  const gamedataInCRC = fileInfos.reduce((acc, fi) => {
+    if (fi.path.startsWith('gamedata')) {
+      acc.push(fi.path.replace(/\//g, '\\').split('\\')[1]);
+    }
+    return acc;
+  }, [] as string[]);
+  return from(
+    new Promise((res) => {
+      fs.statSync(`${BASE_URI}/LOUD/gamedata`);
+      fs.readdir(`${BASE_URI}/LOUD/gamedata`, (err, entries) => {
+        if (err) {
+          logEntry(
+            `updaterCleanupGamedata$:: ${err}`,
+            'error',
+            logConfig.channels
+          );
+        }
+        const falseEntries = entries.filter((e) => !gamedataInCRC.includes(e));
+        for (let entry of falseEntries) {
+          fs.unlink(`${BASE_URI}/LOUD/gamedata/${entry}`, (errMv) => {
+            if (errMv) {
+              logEntry(`updaterCleanupGamedata$:mv:: ${errMv}`);
+            }
+          });
+        }
+        res(!!falseEntries.length);
+      });
+    })
+  );
+};
+
+const updaterCleanupMaps$ = (
+  fileInfos: RemoteFileInfo[],
+  logConfig = defaultLogConfig
+) => {
+  logEntry(
+    'updaterCleanupMaps$:: Starting Maps cleanup',
+    'log',
+    logConfig.channels
+  );
+  const mapsInCRC = fileInfos.reduce((acc, fi) => {
+    if (fi.path.startsWith('maps')) {
+      acc.push(fi.path.replace(/\//g, '\\').split('\\')[1]);
+    }
+    return acc;
+  }, [] as string[]);
+  return from(
+    new Promise((res) => {
+      fs.statSync(`${BASE_URI}/LOUD/maps`);
+      fs.readdir(`${BASE_URI}/LOUD/maps`, (err, entries) => {
+        if (err) {
+          logEntry(`updaterCleanupMaps$:: ${err}`, 'error', logConfig.channels);
+        }
+        const falseEntries = entries.filter((e) => !mapsInCRC.includes(e));
+        if (falseEntries.length) {
+          logEntry(
+            `updaterCleanupMaps$:: Found extraneous items ${JSON.stringify(
+              falseEntries
+            )}. Moving to maps.unsupported.`,
+            'log',
+            logConfig.channels
+          );
+          logEntry(
+            'User maps and mods are to be placed in your "Drive:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'warn',
+            logConfig.channels
+          );
+        }
+        fs.mkdirSync(`${BASE_URI}/LOUD/maps.unsupported`, { recursive: true });
+        for (let entry of falseEntries) {
+          mv(
+            `${BASE_URI}/LOUD/maps/${entry}`,
+            `${BASE_URI}/LOUD/maps.unsupported/${entry}`,
+            (errMv) => {
+              if (errMv) {
+                logEntry(`updaterCleanupMaps$:mv:: ${errMv}`);
+              }
+            }
+          );
+        }
+        res(!!falseEntries.length);
+      });
+    })
+  );
+};
+
+const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
+  logEntry(
+    'updaterCleanupMods$:: Starting Mods cleanup',
+    'log',
+    logConfig.channels
+  );
+  return from(
+    new Promise((res) => {
+      fs.stat(`${BASE_URI}/LOUD/mods`, (err) => {
+        if (err) {
+          res();
+          logEntry('err', 'error', logConfig.channels);
+          return;
+        }
+        const entries = fs.readdirSync(`${BASE_URI}/LOUD/mods`);
+        if (entries.length) {
+          logEntry(
+            'User maps and mods are to be placed in your "Drive:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'warn',
+            logConfig.channels
+          );
+        }
+        fs.mkdir(`${BASE_URI}/LOUD/mods.unsupported`, () => {
+          for (let entry of entries) {
+            mv(
+              `${BASE_URI}/LOUD/mods/${entry}`,
+              `${BASE_URI}/LOUD/mods.unsupported/${entry}`,
+              (err) => {
+                if (err) {
+                  logEntry(
+                    `updaterCleanupMods$:: ${err}`,
+                    'error',
+                    logConfig.channels
+                  );
+                }
+              }
+            );
+          }
+        });
+      });
+    })
+  );
+};
+
 export {
+  updaterCleanupGameData$,
+  updaterCleanupMaps$,
+  updaterCleanupMods$,
   updaterCreateLocalCRC$,
   updaterConnectFTP$,
   updaterGetCRCInfo$,

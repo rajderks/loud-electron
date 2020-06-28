@@ -3,7 +3,7 @@
 - [x] Log file setup
 - [x] [Folder check](#folder-check)
 - [x] [Test write](#test-write)
-- [ ] [File Attributes](#set-file-attr)
+- [x] [File Attributes](#set-file-attr) **(wont-fix-until-actually-a-problem)**
 - [x] [User Directories](#user-directories)
 - [x] [Toggle user maps](#toggle-user-maps)
 - [x] [Toggle user mods](#toggle-user-mods)
@@ -21,9 +21,9 @@
 - [x] [Open mods folder](#open-mods-folder)
 - [x] [Open replays folder](#open-replays-folder)
 - [x] [Cleanup](#cleanup) **(wont-fix)**
-- [ ] [Game data cleanup](#game-data-cleanup)
-- [ ] [Maps cleanup](#maps-cleanup)
-- [ ] [Mods cleanup](#mods-cleanup)
+- [x] [Game data cleanup](#game-data-cleanup)
+- [x] [Maps cleanup](#maps-cleanup)
+- [x] [Mods cleanup](#mods-cleanup)
 - [ ] [GameOptions](#gameoptions)
 - [x] set updater color according to update status
 - [x] Check for update
