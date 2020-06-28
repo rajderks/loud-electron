@@ -1,8 +1,6 @@
 # LOUD Client
 
-[client]: ./client.png
-
-![Client]
+![Client](client.PNG?raw=true)
 
 ## General
 
@@ -53,11 +51,8 @@ The result should look like so:
 
 `"C:\SteamLibrary\steamapps\common\Supreme Commander Forged Alliance\bin\SupremeCommander.exe" /log "..\LOUD\bin\Loud.log" /init "..\LOUD\bin\LoudDataPath.lua"`
 
-[createshortcut]: ./createshortcut.png
-[shortcut]: ./createshortcut.png
-
-![createshortcut](./createshortcut.png)
-![shortcut](./shortcut.png)
+![createshortcut](createshortcut.PNG?raw=true)
+![shortcut](shortcut.PNG?raw=true)
 
 #### Linux
 
