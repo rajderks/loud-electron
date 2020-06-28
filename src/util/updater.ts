@@ -407,6 +407,12 @@ const updaterCompareRemoteFileInfo$ = (
         logConfig
       ).pipe(
         map((data) => {
+          if (
+            info.path.toLowerCase().includes('louddatapath.lua') &&
+            data.byteLength
+          ) {
+            return true;
+          }
           const shacrypto = crypto.createHash('sha1');
           shacrypto.update(data);
           const result = shacrypto.digest('hex').toUpperCase();
