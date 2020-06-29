@@ -8,6 +8,7 @@ import MainContext from '../main/MainContext';
 import openTarget from '../../util/openTarget';
 import { updaterCreateLocalCRC$ } from '../../util/updater';
 import rungame from '../../util/rungame';
+import { version } from '../../../package.json';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -144,7 +145,7 @@ const Menu: FunctionComponent = () => {
             ],
           },
         ]}
-        title="LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version 5.00"
+        title={`LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version ${version}`}
         onClose={() => currentWindow.close()}
         onMinimize={() => currentWindow.minimize()}
         onMaximize={() => currentWindow.setSize(960, 544)}
