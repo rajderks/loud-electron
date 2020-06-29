@@ -1,5 +1,3 @@
-![Build/release](https://github.com/rajderks/loud-electron/workflows/Build/release/badge.svg)
-
 # LOUD Client
 
 ![Client](client.PNG?raw=true)
