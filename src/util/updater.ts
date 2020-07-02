@@ -649,6 +649,10 @@ const updaterCleanupMaps$ = (
             logConfig.channels
           );
         }
+        if (!falseEntries.length) {
+          res();
+          return;
+        }
         fs.mkdirSync(`${BASE_URI}/LOUD/maps.unsupported`, { recursive: true });
         for (let entry of falseEntries) {
           mv(
@@ -677,9 +681,12 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
     new Promise((res) => {
       fs.stat(`${BASE_URI}/LOUD/mods`, (err) => {
         if (err) {
-          res();
-          logEntry('err', 'error', logConfig.channels);
-          return;
+          if (err.message.includes('ENOENT')) {
+            res();
+            return;
+          }
+          logEntry(`${err}`, 'error', logConfig.channels);
+          throw err;
         }
         const entries = fs.readdirSync(`${BASE_URI}/LOUD/mods`);
         if (entries.length) {
