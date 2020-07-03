@@ -198,7 +198,7 @@ const updaterGetRemoteFile$ = (
           throw err;
         }
         logEntry(
-          `updaterGetRemoteFile$:start:: ${fileInfo.path}, ${fileInfo.size}`,
+          `updaterGetRemoteFile$:start:: Start downloading file ${fileInfo.path}, ${fileInfo.size}`,
           'log',
           logConfig.channels
         );
@@ -344,9 +344,9 @@ const updaterWriteBufferToLocalFile$ = (
           }
 
           logEntry(
-            `updaterWriteBufferToLocalFile$:done:: File updated succesfully ${fileInfo.path},${buffer.length}`,
+            `updaterWriteBufferToLocalFile$:done:: Successfully written file ${fileInfo.path},${buffer.length}`,
             'log',
-            logConfig.channels
+            logConfig.channels.filter((channel) => channel !== 'main')
           );
           res(fileInfo);
         });
