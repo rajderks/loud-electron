@@ -76,7 +76,7 @@ const Main: FunctionComponent = () => {
     );
     testWrite().subscribe(
       () => {
-        logEntry('Test write succeeded', 'log', ['main', 'file']);
+        logEntry('Test write succeeded', 'log', ['log', 'file']);
       },
       (e) => {
         logEntry(`Could not write/unlink test file ${e}`, 'error', ['file']);
@@ -104,7 +104,6 @@ const Main: FunctionComponent = () => {
         }),
         tap((n) => {
           if (n.length === 0) {
-            logEntry(`All files up to date`);
             // set the fileinfos out of scope so that we can use them in the complete handler, messy but effective.
             setUpdateStatus(UpdateStatus.UpToDate);
           } else if (n.length > 1) {
@@ -133,9 +132,10 @@ const Main: FunctionComponent = () => {
           if (success.length) {
             logEntry(
               `Succesfully downloaded/overwritten files: ${success.map(
-                (fi) => fi.path
+                (fi) => `${fi.path}\r\n`
               )}`,
-              'log'
+              'log',
+              ['log', 'file']
             );
             setUpdateStatus(UpdateStatus.UpToDate);
           }
@@ -151,7 +151,9 @@ const Main: FunctionComponent = () => {
             updaterCleanupMods$().subscribe();
             updaterCleanupUserprefs$().subscribe(
               () => {
-                logEntry('Succesfully patched Game.Prefs');
+                logEntry(
+                  'Succesfully changed the games Video Options to recommended settings'
+                );
               },
               (e) => {
                 logEntry(e, 'error');
@@ -181,11 +183,16 @@ const Main: FunctionComponent = () => {
               changeEnabledItem('open-replays', created);
             }
             if (created) {
-              logEntry(`Created ${target} folder, or it already existed`);
+              logEntry(
+                `Created ${target} folder, or it already existed`,
+                'log',
+                ['log', 'file']
+              );
             } else {
               logEntry(
                 `Could not create ${target} folder ${targetURI(target)}`,
-                'error'
+                'error',
+                ['log', 'file']
               );
             }
           });
@@ -210,6 +217,11 @@ const Main: FunctionComponent = () => {
             }
             changeEnabledItem('run', n);
           });
+          setTimeout(() => {
+            logEntry(
+              `All files up to date! Start the game with the "Run Game" button!`
+            );
+          }, 1500);
         }
       );
   }, [changeEnabledItem]);

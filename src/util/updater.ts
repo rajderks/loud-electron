@@ -89,7 +89,7 @@ const updaterStringToRemoteFileInfo = (fileEntry: string): RemoteFileInfo => {
  * Connect to the FTP server
  */
 const updaterConnectFTP$ = () => {
-  logEntry('updaterConnectFTP$:: Connecting...');
+  logEntry('updaterConnectFTP$:: Connecting to FTP...');
   return from<Promise<FTP>>(
     new Promise((res) => {
       const client: FTP = new ftp(connection) as FTP;
@@ -108,7 +108,7 @@ const updaterConnectFTP$ = () => {
       });
       client.on('error', (err) => {
         logEntry(
-          `updaterConnectFTP$:connect:: Could not connect to host`,
+          `updaterConnectFTP$:connect:: Could not connect to FTP ${err}`,
           'error'
         );
         throw err;
@@ -127,7 +127,7 @@ const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
       updaterConnectFTP$().subscribe(
         (client) => {
           logEntry(
-            `updaterGetCRCInfo$:auth:: success`,
+            `updaterGetCRCInfo$:auth:: Successfully connected to FTP`,
             'log',
             logConfig.channels
           );
@@ -155,7 +155,7 @@ const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
                 throw errClose;
               }
               logEntry(
-                `updaterGetCRCInfo$:get:: success`,
+                `updaterGetCRCInfo$:get:: Succesfully retrieved CRC file from FTP`,
                 'log',
                 logConfig.channels
               );
@@ -344,7 +344,7 @@ const updaterWriteBufferToLocalFile$ = (
           }
 
           logEntry(
-            `updaterWriteBufferToLocalFile$:done::${fileInfo.path},${buffer.length}`,
+            `updaterWriteBufferToLocalFile$:done:: File updated succesfully ${fileInfo.path},${buffer.length}`,
             'log',
             logConfig.channels
           );
@@ -429,7 +429,7 @@ const updaterCompareRemoteFileInfo$ = (
               info
             )} / ${result}`,
             'log',
-            logConfig.channels
+            logConfig.channels.filter((channel) => channel !== 'main')
           );
         })
       )
@@ -579,7 +579,7 @@ const updaterCleanupGameData$ = (
   logEntry(
     'updaterCleanupGamedata$:: Starting gamedata cleanup',
     'log',
-    logConfig.channels
+    logConfig.channels.filter((channel) => channel !== 'main')
   );
   const gamedataInCRC = fileInfos.reduce((acc, fi) => {
     if (fi.path.startsWith('gamedata')) {
@@ -619,7 +619,7 @@ const updaterCleanupMaps$ = (
   logEntry(
     'updaterCleanupMaps$:: Starting Maps cleanup',
     'log',
-    logConfig.channels
+    logConfig.channels.filter((channel) => channel !== 'main')
   );
   const mapsInCRC = fileInfos.reduce((acc, fi) => {
     if (fi.path.startsWith('maps')) {
@@ -644,7 +644,7 @@ const updaterCleanupMaps$ = (
             logConfig.channels
           );
           logEntry(
-            'User maps and mods are to be placed in your "Drive:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'User maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
             'warn',
             logConfig.channels
           );
@@ -675,7 +675,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
   logEntry(
     'updaterCleanupMods$:: Starting Mods cleanup',
     'log',
-    logConfig.channels
+    logConfig.channels.filter((channel) => channel !== 'main')
   );
   return from(
     new Promise((res) => {
@@ -691,7 +691,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
         const entries = fs.readdirSync(`${BASE_URI}/LOUD/mods`);
         if (entries.length) {
           logEntry(
-            'User maps and mods are to be placed in your "Drive:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'User maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
             'warn',
             logConfig.channels
           );
@@ -719,7 +719,11 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
 };
 
 const updaterCleanupUserprefs$ = (logConfig = defaultLogConfig) => {
-  logEntry('updtaerCleanupGameprefs$:: start', 'log', logConfig.channels);
+  logEntry(
+    'updaterCleanupGameprefs$:: Starting user preferences cleanup',
+    'log',
+    logConfig.channels.filter((channel) => channel !== 'main')
+  );
   return from(
     new Promise((res, rej) => {
       fs.statSync(DOC_URI_GAMEPREFS);

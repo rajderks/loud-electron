@@ -105,7 +105,10 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
         handleChangeEnabledItem('open-replays', created);
       }
       if (created) {
-        logEntry(`Created ${target} folder, or it already existed`);
+        logEntry(`Created ${target} folder, or it already existed`, 'log', [
+          'log',
+          'file',
+        ]);
       } else {
         logEntry(
           `Could not create ${target} folder ${targetURI(target)}`,

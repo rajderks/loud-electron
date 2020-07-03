@@ -57,13 +57,16 @@ const MainLog: FunctionComponent = () => {
   const classes = useStyles();
   const logRef = useRef<HTMLDivElement | null>(null);
   const [userScrolled, setUserScrolled] = useState(false);
-  const [messages, setMessages] = useState<string[]>(['Log initialized']);
+  const [messages, setMessages] = useState<string[]>([
+    'Welcome to the LOUD Client!',
+    'Press the Update button to update LOUD to the latest version, or run the game with the Run Game button',
+  ]);
 
   useEffect(() => {
     const sub = logSub
       .pipe(
         buffer(logSubDebounce),
-        map((buff) => buff.map((fi) => fi.message)),
+        map((buff) => buff.map((fi) => fi.message.split('::').pop()!.trim())),
         scan((acc, val) => [...acc, ...val], [] as string[])
       )
       .subscribe((n) => {

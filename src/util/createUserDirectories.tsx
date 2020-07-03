@@ -13,7 +13,9 @@ const createUserDirectories = () => {
           );
         } else {
           logEntry(
-            `createUserDirectories:usermaps:mkDir:: created usermaps folder`
+            `createUserDirectories:usermaps:mkDir:: created usermaps folder`,
+            'log',
+            ['log', 'file']
           );
         }
       });
@@ -31,7 +33,7 @@ const createUserDirectories = () => {
             `*** Warning *** Files found in 'usermaps' directory and will be loaded as maps`
           );
         } else {
-          logEntry(`'usermaps' directory exists`);
+          logEntry(`'usermaps' directory exists`, 'log', ['log', 'file']);
         }
       });
     }
@@ -46,7 +48,9 @@ const createUserDirectories = () => {
           );
         } else {
           logEntry(
-            `createUserDirectories:usermods:mkDir:: created usermods folder`
+            `createUserDirectories:usermods:mkDir:: created usermods folder`,
+            'log',
+            ['log', 'file']
           );
         }
       });
@@ -61,10 +65,12 @@ const createUserDirectories = () => {
         }
         if (files.length) {
           logEntry(
-            `*** Warning *** Files found in 'usermods' directory and will be loaded as maps`
+            `*** Warning *** Files found in 'usermods' directory and will be loaded as maps`,
+            'log',
+            ['log', 'file']
           );
         } else {
-          logEntry(`'usermods' directory exists`);
+          logEntry(`'usermods' directory exists`, 'log', ['log', 'file']);
         }
       });
     }
