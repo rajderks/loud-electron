@@ -34,6 +34,10 @@ import openTarget, { openTargetCheck, targetURI } from '../../util/openTarget';
 import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
 import checkClientUpdate$ from '../../util/checkClientUpdate';
 import { exec } from 'child_process';
+import {
+  MainLogDownloadFilePercentageStatusSubject,
+  MainLogDownloadFileProgressStatusSubject,
+} from './observables';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -91,6 +95,8 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(() => {
+    MainLogDownloadFilePercentageStatusSubject.next(0);
+    MainLogDownloadFileProgressStatusSubject.next([0, 0]);
     let fileInfos: RemoteFileInfo[] | null = null;
     setUpdateStatus(UpdateStatus.CRC);
     updaterGetCRCInfo$()
@@ -106,7 +112,7 @@ const Main: FunctionComponent = () => {
           if (n.length === 0) {
             // set the fileinfos out of scope so that we can use them in the complete handler, messy but effective.
             setUpdateStatus(UpdateStatus.UpToDate);
-          } else if (n.length > 1) {
+          } else if (n.length >= 1) {
             logEntry(`Files out of sync:\r\n${n.map((m) => `${m.path}\r\n`)}`);
             setUpdateStatus(UpdateStatus.Updating);
           }

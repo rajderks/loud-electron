@@ -246,15 +246,16 @@ const updaterGetAndWriteRemoteFiles$ = (
       (c) => {
         from(fileInfos)
           .pipe(
-            concatMap((fileInfo, fii) =>
-              updaterGetRemoteFile$(fileInfo as RemoteFileInfo, c).pipe(
-                tap(() => {
-                  MainLogDownloadFileProgressStatusSubject.next([
-                    fii,
-                    fileInfos.length,
-                  ]);
-                }),
-                mergeMap((buffer, i) =>
+            concatMap((fileInfo, fii) => {
+              if (fii === 0) {
+                MainLogDownloadFileProgressStatusSubject.next([
+                  fii + 1,
+                  fileInfos.length,
+                ]);
+              }
+
+              return updaterGetRemoteFile$(fileInfo as RemoteFileInfo, c).pipe(
+                mergeMap((buffer) =>
                   updaterWriteBufferToLocalFile$(
                     baseURI,
                     fileInfo,
@@ -263,6 +264,12 @@ const updaterGetAndWriteRemoteFiles$ = (
                   ).pipe(
                     map((fi) => {
                       return [fi, true] as [RemoteFileInfo, boolean];
+                    }),
+                    tap(() => {
+                      MainLogDownloadFileProgressStatusSubject.next([
+                        Math.min(fii + 2, fileInfos.length),
+                        fileInfos.length,
+                      ]);
                     })
                   )
                 ),
@@ -274,8 +281,8 @@ const updaterGetAndWriteRemoteFiles$ = (
                   );
                   return of([fileInfo, false] as [RemoteFileInfo, boolean]);
                 })
-              )
-            )
+              );
+            })
           )
           .subscribe(
             ([fileInfo, success]) => {
