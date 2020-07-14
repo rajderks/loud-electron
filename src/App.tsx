@@ -11,10 +11,11 @@ import Menu from './containers/menu';
 import MainLoadable from './containers/main/loadable';
 import './util/logger';
 import MainContextProvider from './containers/main/MainContextProvider';
+import PatchNotes from './containers/patchnotes';
 
 const theme = createMuiTheme({
   palette: {
-    type: 'light',
+    type: 'dark',
     primary: {
       main: colors.blue[700],
     },
@@ -22,7 +23,8 @@ const theme = createMuiTheme({
       main: colors.yellow[700],
     },
     background: {
-      default: '#2A2A2A',
+      default: '#0E263E',
+      paper: '#0E263E',
     },
   },
 });
@@ -41,14 +43,17 @@ function App() {
             }}
           >
             <>
-              <Menu />
               <Router>
                 <Switch>
-                  <Route path="/">
-                    <MainLoadable />
-                  </Route>
                   <Route path="/maps">
                     <MapsLoadable />
+                  </Route>
+                  <Route path="/patchnotes">
+                    <PatchNotes />
+                  </Route>
+                  <Route path="/">
+                    <Menu />
+                    <MainLoadable />
                   </Route>
                 </Switch>
               </Router>

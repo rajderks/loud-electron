@@ -25,7 +25,7 @@ import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
-import electron from 'electron';
+import electron, { remote } from 'electron';
 import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
 import MainContext from './MainContext';
@@ -56,6 +56,32 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.fontSize * 0.9,
   },
 }));
+
+const openPatchNotes = () => {
+  const isDev = require('electron-is-dev');
+  const parent = remote.getCurrentWindow();
+  const childWindow = new remote.BrowserWindow({
+    width: 960,
+    height: 544,
+    parent,
+    // icon: path.join(__dirname, 'icon.png'),
+    frame: false,
+    fullscreenable: false,
+    maximizable: false,
+    resizable: isDev ? true : true,
+    fullscreen: false,
+    backgroundColor: '#0E263E',
+    webPreferences: {
+      enableRemoteModule: true,
+      nodeIntegration: true,
+    },
+  });
+  childWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000/patchnotes'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  );
+};
 
 const Main: FunctionComponent = () => {
   const classes = useStyles();
@@ -92,6 +118,10 @@ const Main: FunctionComponent = () => {
       }
     );
     createUserDirectories();
+  }, []);
+
+  const handlePatchNotes = useCallback(() => {
+    openPatchNotes();
   }, []);
 
   const handleUpdate = useCallback(() => {
@@ -298,7 +328,7 @@ const Main: FunctionComponent = () => {
     >
       <MainButtons
         updateStatus={updateStatus}
-        onUpdate={handleUpdate}
+        onUpdate={handlePatchNotes}
         onRun={handleRun}
         onLog={handleLog}
         onDonate={handleDonate}

@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,9 +11,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Page: FunctionComponent<{}> = ({ children }) => {
+interface Props {
+  className?: string;
+}
+
+const Page: FunctionComponent<Props> = ({ children, className }) => {
   const classes = useStyles();
-  return <div className={classes.root}>{children}</div>;
+  return <div className={clsx(classes.root, className)}>{children}</div>;
 };
 
 export default Page;

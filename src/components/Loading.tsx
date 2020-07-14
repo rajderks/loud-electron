@@ -10,12 +10,15 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
     height: '100%',
   },
+  page: {
+    backgroundColor: 'inherit',
+  },
 }));
 
 const Loading: FunctionComponent = () => {
   const classes = useStyles();
   return (
-    <Page>
+    <Page className={classes.page}>
       <div className={classes.wrapper}>
         <div
           className="loadingImage"
