@@ -1,35 +1,50 @@
 import React, { FunctionComponent } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  makeStyles,
-  Button,
-} from '@material-ui/core';
+import TitleBar from 'frameless-titlebar';
+import { Typography, makeStyles } from '@material-ui/core';
+import { remote } from 'electron';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  title: {
+    letterSpacing: '1.6px',
+    fontWeight: 'lighter',
+    marginBottom: theme.spacing(1),
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.5, 3, 1, 3),
   },
-  title: {},
 }));
 
-const PageHeader: FunctionComponent = () => {
+interface Props {
+  title: string;
+}
+
+const PageHeader: FunctionComponent<Props> = ({ children, title }) => {
   const classes = useStyles();
+  const currentWindow = remote.getCurrentWindow();
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          LOUD PROJECT
+    <>
+      <TitleBar
+        onClose={() => currentWindow.close()}
+        onMinimize={() => currentWindow.minimize()}
+        onMaximize={() => currentWindow.setSize(960, 544)}
+        onDoubleClick={() => currentWindow.maximize()}
+        title=""
+        theme={{
+          bar: {
+            background: 'transparent',
+            borderBottom: 'none',
+          },
+        }}
+      />
+      <div className={classes.header}>
+        <Typography variant="h4" className={classes.title}>
+          {title}
         </Typography>
-        <Button color="inherit">News</Button>
-        <Button color="inherit">Maps</Button>
-        <Button color="inherit">Downloads</Button>
-      </Toolbar>
-    </AppBar>
+        {children}
+      </div>
+    </>
   );
 };
 

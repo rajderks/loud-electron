@@ -2,26 +2,38 @@ const electron = require('electron');
 const { app, BrowserWindow, ipcMain } = electron;
 
 const path = require('path');
-// const url = require('url');
 const isDev = require('electron-is-dev');
 
-// let blankWindow;
 let mainWindow;
 
 ipcMain.on('get-env', (event) => {
   event.sender.send('get-env-reply', process.env.PORTABLE_EXECUTABLE_DIR);
 });
 
-function createBlank() {
-  // blankWindow = new BrowserWindow({ width: 1, height: 1 });
-  createWindow();
-}
+ipcMain.on('open-route', (event, route) => {
+  let routeWindow = new BrowserWindow({
+    width: 820,
+    height: 584,
+    frame: false,
+    fullscreen: false,
+    backgroundColor: '#0E263E',
+    webPreferences: {
+      enableRemoteModule: true,
+      nodeIntegration: true,
+    },
+  });
+  routeWindow.loadURL(
+    isDev
+      ? `http://localhost:3000/index.tsx#/${route}`
+      : `file://${path.join(__dirname, `../build/index.html`)}#/${route}`
+  );
+  routeWindow.on('closed', () => (routeWindow = null));
+});
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 960,
     height: 544,
-    // icon: path.join(__dirname, 'icon.png'),
     frame: false,
     fullscreenable: false,
     maximizable: false,
@@ -41,11 +53,14 @@ function createWindow() {
       ? 'http://localhost:3000/index.tsx'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
-  mainWindow.on('closed', () => (mainWindow = null));
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+    app.quit();
+  });
 }
 
 app.allowRendererProcessReuse = false;
-app.on('ready', createBlank);
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -55,6 +70,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createBlank();
+    createWindow();
   }
 });

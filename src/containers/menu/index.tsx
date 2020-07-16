@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import React, { FunctionComponent, useCallback, useContext } from 'react';
 import TitleBar from 'frameless-titlebar';
 import { MenuItem } from 'frameless-titlebar/dist/title-bar/typings';
@@ -44,6 +44,8 @@ const Menu: FunctionComponent = () => {
         updaterCreateLocalCRC$().subscribe();
       } else if (menu.id === 'run-iconmod') {
         openTarget('iconmod');
+      } else if (menu.id === 'help-patchnotes') {
+        ipcRenderer.send('open-route', 'patchnotes');
       }
     },
     [changeEnabledItem]
@@ -120,6 +122,11 @@ const Menu: FunctionComponent = () => {
             click: buttonCallback,
             submenu: [
               {
+                id: 'help-patchnotes',
+                label: 'Patch notes',
+                click: buttonCallback,
+              },
+              {
                 id: 'help-discord',
                 label: 'Discord invite',
                 click: buttonCallback,
@@ -146,7 +153,7 @@ const Menu: FunctionComponent = () => {
           },
         ]}
         title={`LOUD Supreme Commander Forged Alliance Updater & Game Launcher -- Version ${version}`}
-        onClose={() => currentWindow.close()}
+        onClose={() => remote.app.quit()}
         onMinimize={() => currentWindow.minimize()}
         onMaximize={() => currentWindow.setSize(960, 544)}
         onDoubleClick={() => currentWindow.maximize()}
