@@ -49,7 +49,7 @@ const Menu: FunctionComponent = () => {
         ipcRenderer.send('open-route', 'patchnotes');
       } else if (menu.id === 'tools-maps') {
         if (isDev) {
-          ipcRenderer.send('open-route', 'maps');
+          ipcRenderer.send('open-route', 'maps', [1040, 680]);
         }
       } else if (menu.id === 'help-maps') {
         ipcRenderer.send('open-route', 'maps');

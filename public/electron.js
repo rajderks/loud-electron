@@ -10,10 +10,10 @@ ipcMain.on('get-env', (event) => {
   event.sender.send('get-env-reply', process.env.PORTABLE_EXECUTABLE_DIR);
 });
 
-ipcMain.on('open-route', (event, route) => {
+ipcMain.on('open-route', (event, route, size) => {
   let routeWindow = new BrowserWindow({
-    width: 820,
-    height: 584,
+    width: (size && size[0]) || 820,
+    height: (size && size[1]) || 584,
     frame: false,
     fullscreen: false,
     backgroundColor: '#0E263E',

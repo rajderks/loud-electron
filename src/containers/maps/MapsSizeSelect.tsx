@@ -7,12 +7,14 @@ interface Props
     'id' | 'classes' | 'defaultValue' | 'disabled' | 'value'
   > {
   onChange: (size: number) => void;
+  disableAll?: true;
 }
 
 const MapsSizeSelect: FunctionComponent<Props> = ({
   id,
   classes,
   defaultValue,
+  disableAll,
   disabled,
   onChange,
   value,
@@ -28,7 +30,7 @@ const MapsSizeSelect: FunctionComponent<Props> = ({
         onChange(e.target.value as number);
       }}
     >
-      <MenuItem value={-1}>All</MenuItem>
+      {!disableAll ? <MenuItem value={-1}>All</MenuItem> : null}
       <MenuItem value={0}>5x5</MenuItem>
       <MenuItem value={1}>10x10</MenuItem>
       <MenuItem value={2}>20x20</MenuItem>

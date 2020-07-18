@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import {
   Dialog,
   DialogActions,
@@ -11,12 +16,15 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Box,
 } from '@material-ui/core';
 import MapsPlayersTextField from './MapsPlayersTextField';
 import MapsSizeSelect from './MapsSizeSelect';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import api from '../../api/api';
 import { retry } from 'rxjs/operators';
+import { ApiError } from '../../api/types';
+import { logEntry } from '../../util/logger';
 
 const useStyles = makeStyles((theme) => ({
   contentRoot: {
@@ -40,32 +48,108 @@ interface Props {
   setOpen: (open: boolean) => void;
 }
 
+const validate = ({
+  file,
+  image,
+  name,
+  description,
+  players,
+  updateMap,
+  mapToken,
+  officialMap,
+  adminToken,
+}: {
+  file: File | null;
+  image: File | null;
+  name: string;
+  description: string;
+  players: string;
+  updateMap: boolean;
+  officialMap: boolean;
+  adminToken: string | null;
+  mapToken: string | null;
+}) => {
+  if (updateMap && !mapToken?.length) {
+    return false;
+  }
+  if (officialMap && !adminToken?.length) {
+    return false;
+  }
+  return file && image && name?.length && description?.length && players.length;
+};
+
 const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
   const classes = useStyles();
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [players, setPlayers] = useState('');
   const [size, setSize] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
+  const [mapToken, setMapToken] = useState<string>('');
+  const [adminToken, setAdminToken] = useState<string>('');
   const [uploading, setUploading] = useState(false);
+  const [officialMap, setOfficialMap] = useState(false);
+  const [updateMap, setUpdateMap] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [disableAddButton, setDisableAddButton] = useState<boolean>(false);
+
+  const reset = useCallback(() => {
+    setName('');
+    setDescription('');
+    setPlayers('');
+    setSize(0);
+    setFile(null);
+    setImage(null);
+    setFileName(null);
+    setImageName(null);
+    setUploading(false);
+    setError(null);
+    setDisableAddButton(false);
+    setMapToken('');
+    setOfficialMap(false);
+    setUpdateMap(false);
+    setAdminToken('');
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
     const formData = new FormData();
 
-    if (!file || !image || !name.length || uploading || !players.length) {
+    if (
+      !validate({
+        file,
+        image,
+        name,
+        players,
+        description,
+        adminToken,
+        mapToken,
+        updateMap,
+        officialMap,
+      })
+    ) {
       return;
     }
 
     setUploading(true);
 
-    formData.append('file', file);
-    formData.append('image', image);
+    formData.append('file', file!);
+    formData.append('image', image!);
     formData.append('name', name);
+    formData.append('description', description);
     formData.append('players', players);
     formData.append('size', String(size));
+    if (officialMap) {
+      formData.append('officialMap', String(officialMap));
+      formData.append('adminToken', adminToken);
+    }
+    if (updateMap) {
+      formData.append('mapToken', mapToken);
+    }
 
     api
       .post('maps', formData)
@@ -76,13 +160,41 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
         },
         (e) => {
           setUploading(false);
-          console.error(e);
+          setError((e.response as ApiError)?.message ?? 'unkown error');
+          logEntry((e.response as ApiError)?.message, 'error', ['log']);
         },
         () => {
           setUploading(false);
         }
       );
   };
+
+  useEffect(() => {
+    setDisableAddButton(
+      !validate({
+        file,
+        image,
+        name,
+        players,
+        description,
+        adminToken,
+        mapToken,
+        updateMap,
+        officialMap,
+      })
+    );
+  }, [
+    adminToken,
+    description,
+    file,
+    image,
+    mapToken,
+    name,
+    officialMap,
+    players,
+    updateMap,
+  ]);
+
   return (
     <>
       <Dialog open={open} maxWidth="lg">
@@ -96,6 +208,17 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
+              }}
+            />
+            <TextField
+              multiline
+              disabled={uploading}
+              label="Description*"
+              InputLabelProps={{ shrink: true }}
+              placeholder="Enter a short description"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
               }}
             />
             <MapsPlayersTextField
@@ -116,13 +239,58 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
                 onChange={setSize}
                 value={size}
                 defaultValue={size}
+                disableAll
               />
               <SizeIcon className={classes.sizeIcon} />
             </FormControl>
             <FormControlLabel
-              label="Official map"
-              control={<Checkbox disabled={uploading} value={false} />}
+              label="Official map (admin only)"
+              control={
+                <Checkbox
+                  disabled={uploading}
+                  value={officialMap}
+                  onChange={(_e, checked) => {
+                    setOfficialMap(checked);
+                  }}
+                />
+              }
             />
+            {officialMap ? (
+              <TextField
+                disabled={uploading}
+                label="Admin token (admin only)"
+                InputLabelProps={{ shrink: true }}
+                placeholder="Enter admin token"
+                type="password"
+                value={adminToken}
+                onChange={(e) => {
+                  setAdminToken(e.target.value);
+                }}
+              />
+            ) : null}
+            <FormControlLabel
+              label="Update map"
+              control={
+                <Checkbox
+                  disabled={uploading}
+                  value={officialMap}
+                  onChange={(_e, checked) => {
+                    setUpdateMap(checked);
+                  }}
+                />
+              }
+            />
+            {updateMap ? (
+              <TextField
+                multiline
+                disabled={uploading}
+                placeholder="Enter map token"
+                value={mapToken}
+                onChange={(e) => {
+                  setMapToken(e.target.value);
+                }}
+              />
+            ) : null}
             <div>
               <Button
                 variant="contained"
@@ -130,11 +298,11 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
                 color="secondary"
                 disabled={uploading}
               >
-                Select File (.zip or .rar)
+                Select File (.scd)
                 <input
                   name="file"
                   type="file"
-                  accept=".zip, .rar"
+                  accept=".scd"
                   style={{ display: 'none' }}
                   disabled={uploading}
                   onChange={(e) => {
@@ -188,18 +356,19 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
             </div>
             <Typography variant="caption">*required</Typography>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ marginBottom: 8 }}>
             <Button
               variant="contained"
               color="secondary"
               type="submit"
-              disabled={uploading}
+              disabled={disableAddButton || uploading}
             >
               ADD
             </Button>
             <Button
               disabled={uploading}
               onClick={() => {
+                reset();
                 setOpen(false);
               }}
             >
@@ -207,6 +376,13 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
             </Button>
           </DialogActions>
         </form>
+        <Box px={3} py={1} maxWidth={300}>
+          {error?.length ? (
+            <Typography color="error" variant="body2">
+              Error: {error}
+            </Typography>
+          ) : null}
+        </Box>
       </Dialog>
     </>
   );

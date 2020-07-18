@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     display: 'flex',
     flex: '0 0 100px',
+    margin: theme.spacing(0, 1.5, 0, 0),
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(1, 0),
     },

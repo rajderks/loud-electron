@@ -5,13 +5,14 @@ import React, {
   useCallback,
 } from 'react';
 import api from '../../api/api';
-import MapsTile from './MapsTileV2';
+import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
 import { makeStyles, Typography, darken } from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
 import MapsAddDialog from './MapsAddDialog';
 import PageHeader from '../../components/PageHeader';
+import MapsDetailsDialog from './MapsDetailsDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     maxWidth: 1440,
     margin: '0 auto',
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -37,6 +39,7 @@ const Maps: FunctionComponent<{}> = () => {
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
+  const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
 
   useEffect(() => {
     api.get<MapAttr[]>('maps').subscribe(
@@ -97,11 +100,23 @@ const Maps: FunctionComponent<{}> = () => {
     setAddOpen(open);
   }, []);
 
+  const handleOnClickMap = useCallback((mapAttr: MapAttr) => {
+    setMapsDetailsAttr(mapAttr);
+  }, []);
+
+  const handleMapsDetailsOnClose = useCallback(() => {
+    setMapsDetailsAttr(null);
+  }, []);
+
   return (
     <>
       <PageHeader title="Maps" />
       <div className={classes.root}>
         <MapsAddDialog open={addOpen} setOpen={handleAddOpen} />
+        <MapsDetailsDialog
+          mapAttr={mapsDetailsAttr}
+          onClose={handleMapsDetailsOnClose}
+        />
         <MapsFilters
           onChangeFilters={handleFiltersChanged}
           onAddClicked={handleAddOpen}
@@ -111,7 +126,15 @@ const Maps: FunctionComponent<{}> = () => {
             {!mapsFailed ? (
               mapsFiltered
                 ?.map((x, i) => ({ ...x, id: i }))
-                .map((mapAttr) => <MapsTile {...mapAttr} key={mapAttr.id} />)
+                .map((mapAttr) => (
+                  <MapsTile
+                    {...mapAttr}
+                    key={mapAttr.id}
+                    onClick={() => {
+                      handleOnClickMap(mapAttr);
+                    }}
+                  />
+                ))
             ) : (
               <Typography>
                 Something went wrong. Refresh the page to try again
