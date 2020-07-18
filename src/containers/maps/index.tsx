@@ -5,7 +5,7 @@ import React, {
   useCallback,
 } from 'react';
 import api from '../../api/api';
-import MapsTile from './MapsTile';
+import MapsTile from './MapsTileV2';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
 import { makeStyles, Typography, darken } from '@material-ui/core';
@@ -16,13 +16,18 @@ import PageHeader from '../../components/PageHeader';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     flex: '1 1 auto',
-    flexWrap: 'wrap',
     alignContent: 'flex-start',
-    padding: theme.spacing(0, 4, 4, 4),
+    backgroundColor: darken('#282C31', 0.35),
+    overflow: 'hidden',
+  },
+  gridWrapper: {
+    display: 'flex',
+    flex: '1 1 auto',
+    overflowY: 'auto',
     maxWidth: 1440,
     margin: '0 auto',
-    backgroundColor: darken('#282C31', 0.35),
   },
 }));
 
@@ -31,7 +36,7 @@ const Maps: FunctionComponent<{}> = () => {
   const [maps, setMaps] = useState<MapAttr[] | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(false);
-  const [addOpen, setAddOpen] = useState(true);
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     api.get<MapAttr[]>('maps').subscribe(
@@ -101,17 +106,19 @@ const Maps: FunctionComponent<{}> = () => {
           onChangeFilters={handleFiltersChanged}
           onAddClicked={handleAddOpen}
         />
-        <MapsGrid>
-          {!mapsFailed ? (
-            mapsFiltered
-              ?.map((x, i) => ({ ...x, id: i }))
-              .map((mapAttr) => <MapsTile {...mapAttr} key={mapAttr.id} />)
-          ) : (
-            <Typography>
-              Something went wrong. Refresh the page to try again
-            </Typography>
-          )}
-        </MapsGrid>
+        <div className={classes.gridWrapper}>
+          <MapsGrid>
+            {!mapsFailed ? (
+              mapsFiltered
+                ?.map((x, i) => ({ ...x, id: i }))
+                .map((mapAttr) => <MapsTile {...mapAttr} key={mapAttr.id} />)
+            ) : (
+              <Typography>
+                Something went wrong. Refresh the page to try again
+              </Typography>
+            )}
+          </MapsGrid>
+        </div>
       </div>
     </>
   );

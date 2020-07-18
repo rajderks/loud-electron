@@ -78,7 +78,8 @@ function App() {
           <>
             <Router>
               <Switch>
-                <Route path="/maps">
+                {/* <Route path="/maps"> */}
+                <Route path="/">
                   <MapsLoadable />
                 </Route>
                 <Route path="/patchnotes">

@@ -23,11 +23,15 @@ import MapsComparatorSelect from './MapsComparatorSelect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    margin: theme.spacing(3, 4, 3, 4),
+  },
+  content: {
     display: 'flex',
-    flex: '1 0 100%',
+    flex: '0 0 auto',
     flexWrap: 'wrap',
     alignItems: 'center',
-    margin: theme.spacing(3, 0, 3, 0),
+    margin: '0 auto',
+    maxWidth: 1440,
   },
   formControl: {
     margin: theme.spacing(1),
@@ -161,114 +165,116 @@ const MapsFilters: FunctionComponent<Props> = ({
 
   return (
     <div className={classes.root}>
-      <div className={classes.topFilterBar}>
-        <TextField
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start" disablePointerEvents>
-                <Icon>
-                  <SearchIcon />
-                </Icon>
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                {!!search.length ? (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setSearch('');
-                    }}
-                  >
-                    <ClearIcon />
-                  </IconButton>
-                ) : (
-                  <></>
-                )}
-              </InputAdornment>
-            ),
-          }}
-          style={{
-            flex: '1 1 90%',
-            marginRight: '10%',
-          }}
-          placeholder="Search for a map by name or author"
-          label="Search"
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-          value={search}
-        />
-        <Button
-          variant="contained"
-          color="secondary"
-          classes={{ root: classes.addButton }}
-          onClick={() => onAddClicked(true)}
-        >
-          ADD MAP
-        </Button>
-      </div>
-      <div className={classes.filterWrapper}>
-        <FormControl className={classes.formControl}>
-          <InputLabel
-            shrink
-            id="size-select"
-            color={size >= 0 ? 'secondary' : 'primary'}
+      <div className={classes.content}>
+        <div className={classes.topFilterBar}>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start" disablePointerEvents>
+                  <Icon>
+                    <SearchIcon />
+                  </Icon>
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  {!!search.length ? (
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        setSearch('');
+                      }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  ) : (
+                    <></>
+                  )}
+                </InputAdornment>
+              ),
+            }}
+            style={{
+              flex: '1 1 90%',
+              marginRight: '10%',
+            }}
+            placeholder="Search for a map by name or author"
+            label="Search"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            value={search}
+          />
+          <Button
+            variant="contained"
+            color="secondary"
+            classes={{ root: classes.addButton }}
+            onClick={() => onAddClicked(true)}
           >
-            Size
-          </InputLabel>
-          <MapsSizeSelect
-            id="size-select"
-            classes={{ select: classes.sizeSelect }}
-            onChange={setSize}
-            value={size}
-            defaultValue={-1}
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="size-select-comp"></InputLabel>
-          <MapsComparatorSelect
-            id="size-select-comp"
-            onChange={setSizeComparator}
-            defaultValue="="
-            value={sizeComparator}
-          />
-        </FormControl>
-
-        <SizeIcon className={classes.sizeIcon} color="primary" />
-      </div>
-      <div className={classes.filterWrapper}>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="players-textfield">
-            Players
-          </InputLabel>
-          <MapsPlayersTextField
-            id="players-textfield"
-            value={players}
-            onChange={setPlayers}
-          />
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel shrink id="players-select"></InputLabel>
-          <MapsComparatorSelect
-            id="players-select"
-            onChange={setPlayersComparator}
-            defaultValue="="
-            value={playersComparator}
-          />
-        </FormControl>
-        <FormControlLabel
-          className={classes.officialFormLabel}
-          label="Official only"
-          control={
-            <Checkbox
-              checked={official}
-              onChange={(e) => {
-                setOfficial(e.target.checked);
-              }}
+            ADD MAP
+          </Button>
+        </div>
+        <div className={classes.filterWrapper}>
+          <FormControl className={classes.formControl}>
+            <InputLabel
+              shrink
+              id="size-select"
+              color={size >= 0 ? 'secondary' : 'primary'}
+            >
+              Size
+            </InputLabel>
+            <MapsSizeSelect
+              id="size-select"
+              classes={{ select: classes.sizeSelect }}
+              onChange={setSize}
+              value={size}
+              defaultValue={-1}
             />
-          }
-        />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="size-select-comp"></InputLabel>
+            <MapsComparatorSelect
+              id="size-select-comp"
+              onChange={setSizeComparator}
+              defaultValue="="
+              value={sizeComparator}
+            />
+          </FormControl>
+
+          <SizeIcon className={classes.sizeIcon} color="primary" />
+        </div>
+        <div className={classes.filterWrapper}>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="players-textfield">
+              Players
+            </InputLabel>
+            <MapsPlayersTextField
+              id="players-textfield"
+              value={players}
+              onChange={setPlayers}
+            />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink id="players-select"></InputLabel>
+            <MapsComparatorSelect
+              id="players-select"
+              onChange={setPlayersComparator}
+              defaultValue="="
+              value={playersComparator}
+            />
+          </FormControl>
+          <FormControlLabel
+            className={classes.officialFormLabel}
+            label="Official only"
+            control={
+              <Checkbox
+                checked={official}
+                onChange={(e) => {
+                  setOfficial(e.target.checked);
+                }}
+              />
+            }
+          />
+        </div>
       </div>
     </div>
   );

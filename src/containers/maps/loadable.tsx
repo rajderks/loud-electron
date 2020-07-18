@@ -8,6 +8,8 @@ const LoadableComponent = React.lazy(() => import('./index'));
 const useStyles = makeStyles(() => ({
   page: {
     flexDirection: 'column',
+    overflow: 'hidden',
+    maxHeight: '100%',
   },
 }));
 
