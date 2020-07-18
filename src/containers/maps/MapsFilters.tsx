@@ -201,7 +201,7 @@ const MapsFilters: FunctionComponent<Props> = ({
         />
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           classes={{ root: classes.addButton }}
           onClick={() => onAddClicked(true)}
         >
@@ -210,7 +210,11 @@ const MapsFilters: FunctionComponent<Props> = ({
       </div>
       <div className={classes.filterWrapper}>
         <FormControl className={classes.formControl}>
-          <InputLabel shrink id="size-select">
+          <InputLabel
+            shrink
+            id="size-select"
+            color={size >= 0 ? 'secondary' : 'primary'}
+          >
             Size
           </InputLabel>
           <MapsSizeSelect

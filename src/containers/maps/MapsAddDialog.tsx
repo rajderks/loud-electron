@@ -127,7 +127,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
               <Button
                 variant="contained"
                 component="label"
-                color="primary"
+                color="secondary"
                 disabled={uploading}
               >
                 Select File (.zip or .rar)
@@ -159,7 +159,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
               <Button
                 variant="contained"
                 component="label"
-                color="primary"
+                color="secondary"
                 disabled={uploading}
               >
                 Select Image
@@ -191,7 +191,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
           <DialogActions>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               type="submit"
               disabled={uploading}
             >

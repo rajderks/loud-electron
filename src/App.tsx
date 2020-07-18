@@ -31,6 +31,22 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiInput: {
+      underline: {
+        '&:after': {
+          borderBottomColor: colors.yellow[700],
+        },
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        '&$focused': {
+          color: colors.yellow[700],
+        },
+      },
+
+      focused: {},
+    },
     MuiFormControlLabel: {
       label: {
         color: '#FFFFFF',
@@ -39,6 +55,9 @@ const theme = createMuiTheme({
     MuiSvgIcon: {
       colorPrimary: {
         color: '#FFFFFF',
+      },
+      colorSecondary: {
+        color: colors.yellow[700],
       },
     },
   },
