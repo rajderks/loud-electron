@@ -231,7 +231,7 @@ const MapsFilters: FunctionComponent<Props> = ({
           />
         </FormControl>
 
-        <SizeIcon className={classes.sizeIcon} />
+        <SizeIcon className={classes.sizeIcon} color="primary" />
       </div>
       <div className={classes.filterWrapper}>
         <FormControl className={classes.formControl}>
@@ -258,7 +258,6 @@ const MapsFilters: FunctionComponent<Props> = ({
           label="Official only"
           control={
             <Checkbox
-              color="primary"
               checked={official}
               onChange={(e) => {
                 setOfficial(e.target.checked);

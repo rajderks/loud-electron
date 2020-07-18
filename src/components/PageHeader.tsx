@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import TitleBar from 'frameless-titlebar';
-import { Typography, makeStyles } from '@material-ui/core';
+import { Typography, makeStyles, colors } from '@material-ui/core';
 import { remote } from 'electron';
 
 const useStyles = makeStyles((theme) => ({
@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1.6px',
     fontWeight: 'lighter',
     marginBottom: theme.spacing(1),
+    color: colors.grey[100],
   },
   header: {
     display: 'flex',

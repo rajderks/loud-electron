@@ -189,7 +189,12 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
             <Typography variant="caption">*required</Typography>
           </DialogContent>
           <DialogActions>
-            <Button variant="contained" type="submit" disabled={uploading}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              disabled={uploading}
+            >
               ADD
             </Button>
             <Button

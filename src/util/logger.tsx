@@ -12,8 +12,10 @@ const LOG_URI =
       : `${BASE_URI}/loud_log.txt`!
     : './jest_log.txt';
 
-fs.unlink(LOG_URI, () => {});
-fs.writeFile(LOG_URI, '', () => {});
+export const logInit = () => {
+  fs.unlink(LOG_URI, () => {});
+  fs.writeFile(LOG_URI, '', () => {});
+};
 
 const logHeader = (level: LogEntry['level']) =>
   `[${level.toUpperCase()}][${moment().format('hh:mm:ssA')}]`;

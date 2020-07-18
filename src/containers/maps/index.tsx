@@ -8,9 +8,10 @@ import api from '../../api/api';
 import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, darken } from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
 import MapsAddDialog from './MapsAddDialog';
+import PageHeader from '../../components/PageHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 4, 4, 4),
     maxWidth: 1440,
     margin: '0 auto',
+    backgroundColor: darken('#282C31', 0.35),
   },
 }));
 
@@ -91,24 +93,27 @@ const Maps: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div className={classes.root}>
-      <MapsAddDialog open={addOpen} setOpen={handleAddOpen} />
-      <MapsFilters
-        onChangeFilters={handleFiltersChanged}
-        onAddClicked={handleAddOpen}
-      />
-      <MapsGrid>
-        {!mapsFailed ? (
-          mapsFiltered
-            ?.map((x, i) => ({ ...x, id: i }))
-            .map((mapAttr) => <MapsTile {...mapAttr} key={mapAttr.id} />)
-        ) : (
-          <Typography>
-            Something went wrong. Refresh the page to try again
-          </Typography>
-        )}
-      </MapsGrid>
-    </div>
+    <>
+      <PageHeader title="Maps" />
+      <div className={classes.root}>
+        <MapsAddDialog open={addOpen} setOpen={handleAddOpen} />
+        <MapsFilters
+          onChangeFilters={handleFiltersChanged}
+          onAddClicked={handleAddOpen}
+        />
+        <MapsGrid>
+          {!mapsFailed ? (
+            mapsFiltered
+              ?.map((x, i) => ({ ...x, id: i }))
+              .map((mapAttr) => <MapsTile {...mapAttr} key={mapAttr.id} />)
+          ) : (
+            <Typography>
+              Something went wrong. Refresh the page to try again
+            </Typography>
+          )}
+        </MapsGrid>
+      </div>
+    </>
   );
 };
 

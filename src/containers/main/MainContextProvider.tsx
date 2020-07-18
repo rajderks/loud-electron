@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import MainContext, { IMainContext, MainContextItems } from './MainContext';
 import { checkUserContent } from '../../util/toggleUserContent';
-import { logEntry } from '../../util/logger';
+import { logEntry, logInit } from '../../util/logger';
 import { BASE_URI } from '../../constants';
 import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
 import { targetURI, openTargetCheck } from '../../util/openTarget';
@@ -61,6 +61,8 @@ const mainReducer = (state: State, action: Actions): State => {
 
 const MainContextProvider: FunctionComponent = ({ children }) => {
   const [state, dispatch] = useReducer(mainReducer, initialState);
+
+  logInit();
 
   const handleChangeEnabledItem: IMainContext['changeEnabledItem'] = useCallback(
     (item, enabled) => {

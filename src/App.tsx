@@ -9,7 +9,6 @@ import {
 import MapsLoadable from './containers/maps/loadable';
 import Menu from './containers/menu';
 import MainLoadable from './containers/main/loadable';
-import './util/logger';
 import MainContextProvider from './containers/main/MainContextProvider';
 import PatchNotes from './containers/patchnotes';
 
@@ -22,9 +21,25 @@ const theme = createMuiTheme({
     secondary: {
       main: colors.yellow[700],
     },
+    text: {
+      primary: '#FFFFFF',
+      secondary: colors.grey[100],
+    },
     background: {
       default: '#0E263E',
       paper: '#0E263E',
+    },
+  },
+  overrides: {
+    MuiFormControlLabel: {
+      label: {
+        color: '#FFFFFF',
+      },
+    },
+    MuiSvgIcon: {
+      colorPrimary: {
+        color: '#FFFFFF',
+      },
     },
   },
 });
@@ -33,33 +48,33 @@ function App() {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <MainContextProvider>
-          <div
-            style={{
-              width: '100vw',
-              height: '100vh',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <>
-              <Router>
-                <Switch>
-                  <Route path="/maps">
-                    <MapsLoadable />
-                  </Route>
-                  <Route path="/patchnotes">
-                    <PatchNotes />
-                  </Route>
-                  <Route path="/">
+        <div
+          style={{
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <>
+            <Router>
+              <Switch>
+                <Route path="/maps">
+                  <MapsLoadable />
+                </Route>
+                <Route path="/patchnotes">
+                  <PatchNotes />
+                </Route>
+                <Route path="/">
+                  <MainContextProvider>
                     <Menu />
                     <MainLoadable />
-                  </Route>
-                </Switch>
-              </Router>
-            </>
-          </div>
-        </MainContextProvider>
+                  </MainContextProvider>
+                </Route>
+              </Switch>
+            </Router>
+          </>
+        </div>
       </ThemeProvider>
     </CssBaseline>
   );

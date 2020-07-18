@@ -9,6 +9,7 @@ import openTarget from '../../util/openTarget';
 import { updaterCreateLocalCRC$ } from '../../util/updater';
 import rungame from '../../util/rungame';
 import { version } from '../../../package.json';
+import isDev from 'electron-is-dev';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -46,6 +47,12 @@ const Menu: FunctionComponent = () => {
         openTarget('iconmod');
       } else if (menu.id === 'help-patchnotes') {
         ipcRenderer.send('open-route', 'patchnotes');
+      } else if (menu.id === 'tools-maps') {
+        if (isDev) {
+          ipcRenderer.send('open-route', 'maps');
+        }
+      } else if (menu.id === 'help-maps') {
+        ipcRenderer.send('open-route', 'maps');
       }
     },
     [changeEnabledItem]
@@ -114,6 +121,11 @@ const Menu: FunctionComponent = () => {
                 label: 'Create CRC file',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('run'),
+              },
+              {
+                id: 'tools-maps',
+                label: 'Maps',
+                click: buttonCallback,
               },
             ],
           },
