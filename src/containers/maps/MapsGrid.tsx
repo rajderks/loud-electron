@@ -1,9 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(0, 4),
+  },
+}));
 
 const MapsGrid: FunctionComponent = ({ children }) => {
+  const classes = useStyles();
   return (
-    <Grid container alignContent="flex-start">
+    <Grid className={classes.root} container alignContent="flex-start">
       {children}
     </Grid>
   );
