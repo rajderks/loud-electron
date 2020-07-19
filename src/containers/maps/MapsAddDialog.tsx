@@ -58,6 +58,8 @@ const validate = ({
   mapToken,
   officialMap,
   adminToken,
+  author,
+  version,
 }: {
   file: File | null;
   image: File | null;
@@ -68,6 +70,8 @@ const validate = ({
   officialMap: boolean;
   adminToken: string | null;
   mapToken: string | null;
+  author: string;
+  version: string;
 }) => {
   if (updateMap && !mapToken?.length) {
     return false;
@@ -75,13 +79,23 @@ const validate = ({
   if (officialMap && !adminToken?.length) {
     return false;
   }
-  return file && image && name?.length && description?.length && players.length;
+  return (
+    file &&
+    image &&
+    author?.length &&
+    version?.length &&
+    name?.length &&
+    description?.length &&
+    players.length
+  );
 };
 
 const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [author, setAuthor] = useState('');
+  const [version, setVersion] = useState('');
   const [players, setPlayers] = useState('');
   const [size, setSize] = useState(0);
   const [file, setFile] = useState<File | null>(null);
@@ -112,6 +126,8 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
     setOfficialMap(false);
     setUpdateMap(false);
     setAdminToken('');
+    setAuthor('');
+    setVersion('');
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -130,6 +146,8 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
         mapToken,
         updateMap,
         officialMap,
+        author,
+        version,
       })
     ) {
       return;
@@ -137,14 +155,16 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
 
     setUploading(true);
 
+    formData.append('author', author);
     formData.append('file', file!);
     formData.append('image', image!);
     formData.append('name', name);
     formData.append('description', description);
     formData.append('players', players);
+    formData.append('version', version);
     formData.append('size', String(size));
     if (officialMap) {
-      formData.append('officialMap', String(officialMap));
+      formData.append('official', String(officialMap));
       formData.append('adminToken', adminToken);
     }
     if (updateMap) {
@@ -181,10 +201,13 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
         mapToken,
         updateMap,
         officialMap,
+        author,
+        version,
       })
     );
   }, [
     adminToken,
+    author,
     description,
     file,
     image,
@@ -193,6 +216,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
     officialMap,
     players,
     updateMap,
+    version,
   ]);
 
   return (
@@ -221,6 +245,17 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
                 setDescription(e.target.value);
               }}
             />
+            <TextField
+              multiline
+              disabled={uploading}
+              label="Author*"
+              InputLabelProps={{ shrink: true }}
+              placeholder="Enter your nickname"
+              value={author}
+              onChange={(e) => {
+                setAuthor(e.target.value);
+              }}
+            />
             <MapsPlayersTextField
               id="add-players-textfield"
               label="Players*"
@@ -228,21 +263,33 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
               onChange={setPlayers}
               value={players}
             />
-            <FormControl>
-              <InputLabel shrink id="add-size-select">
-                Size*
-              </InputLabel>
-              <MapsSizeSelect
-                id="add-size-select"
+            <div style={{ display: 'flex' }}>
+              <FormControl>
+                <InputLabel shrink id="add-size-select">
+                  Size*
+                </InputLabel>
+                <MapsSizeSelect
+                  id="add-size-select"
+                  disabled={uploading}
+                  classes={{ select: classes.sizeSelect }}
+                  onChange={setSize}
+                  value={size}
+                  defaultValue={size}
+                  disableAll
+                />
+                <SizeIcon className={classes.sizeIcon} />
+              </FormControl>
+              <TextField
                 disabled={uploading}
-                classes={{ select: classes.sizeSelect }}
-                onChange={setSize}
-                value={size}
-                defaultValue={size}
-                disableAll
+                label="Version*"
+                InputLabelProps={{ shrink: true }}
+                placeholder="v1.0.0"
+                value={version}
+                onChange={(e) => {
+                  setVersion(e.target.value);
+                }}
               />
-              <SizeIcon className={classes.sizeIcon} />
-            </FormControl>
+            </div>
             <FormControlLabel
               label="Official map (admin only)"
               control={

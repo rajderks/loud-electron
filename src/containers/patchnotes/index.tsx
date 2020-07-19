@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 const PatchNotes = () => {
   const classes = useStyles();
   const [retryTimestamp, setRetryTimestamp] = useState(0);
-  const [viewIdx, setViewIdx] = useState<0 | 1>(1);
+  const [viewIdx, setViewIdx] = useState<0 | 1>(0);
   const [patchNotes, setPatchNotes] = useState<PatchNote[] | null | undefined>(
     undefined
   );

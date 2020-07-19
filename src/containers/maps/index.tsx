@@ -8,7 +8,7 @@ import api from '../../api/api';
 import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
-import { makeStyles, Typography, darken } from '@material-ui/core';
+import { makeStyles, Typography, darken, Button, Box } from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
 import MapsAddDialog from './MapsAddDialog';
 import PageHeader from '../../components/PageHeader';
@@ -37,9 +37,10 @@ const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [maps, setMaps] = useState<MapAttr[] | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
-  const [mapsFailed, setMapsFailed] = useState(false);
+  const [mapsFailed, setMapsFailed] = useState(true);
   const [addOpen, setAddOpen] = useState(false);
   const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
+  const [refreshTimestamp, setRefreshTimestamp] = useState(0);
 
   useEffect(() => {
     api.get<MapAttr[]>('maps').subscribe(
@@ -53,7 +54,7 @@ const Maps: FunctionComponent<{}> = () => {
         setMapsFailed(true);
       }
     );
-  }, []);
+  }, [refreshTimestamp]);
 
   const handleFiltersChanged = useCallback(
     (filters: MapsFilter[]) => {
@@ -122,9 +123,9 @@ const Maps: FunctionComponent<{}> = () => {
           onAddClicked={handleAddOpen}
         />
         <div className={classes.gridWrapper}>
-          <MapsGrid>
-            {!mapsFailed ? (
-              mapsFiltered
+          {!mapsFailed ? (
+            <MapsGrid>
+              {mapsFiltered
                 ?.map((x, i) => ({ ...x, id: i }))
                 .map((mapAttr) => (
                   <MapsTile
@@ -134,13 +135,30 @@ const Maps: FunctionComponent<{}> = () => {
                       handleOnClickMap(mapAttr);
                     }}
                   />
-                ))
-            ) : (
-              <Typography>
-                Something went wrong. Refresh the page to try again
+                ))}
+            </MapsGrid>
+          ) : (
+            <Box
+              display="flex"
+              flex="1 1 100%"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography color="textPrimary" style={{ paddingBottom: 24 }}>
+                Something went wrong.
               </Typography>
-            )}
-          </MapsGrid>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  setRefreshTimestamp(Date.now().valueOf());
+                }}
+              >
+                Try again
+              </Button>
+            </Box>
+          )}
         </div>
       </div>
     </>
