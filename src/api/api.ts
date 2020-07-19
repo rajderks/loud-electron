@@ -2,13 +2,13 @@ import {} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
-const baseURI =
-  process.env.NODE_ENV === 'production'
+export const apiBaseURI =
+  process.env.NODE_ENV === 'production' || true
     ? process.env.REACT_APP_API_URI
     : process.env.REACT_APP_API_URI_DEV;
 
 const constructURI = (relativeURI: string) => {
-  return `${baseURI}/${relativeURI}`;
+  return `${apiBaseURI}/${relativeURI}`;
 };
 
 class API {

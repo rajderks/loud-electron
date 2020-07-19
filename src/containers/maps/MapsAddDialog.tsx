@@ -17,10 +17,12 @@ import {
   InputLabel,
   Typography,
   Box,
+  darken,
 } from '@material-ui/core';
 import MapsPlayersTextField from './MapsPlayersTextField';
 import MapsSizeSelect from './MapsSizeSelect';
 import SizeIcon from '@material-ui/icons/AspectRatio';
+import SuccessIcon from '@material-ui/icons/ThumbUp';
 import api from '../../api/api';
 import { retry } from 'rxjs/operators';
 import { ApiError } from '../../api/types';
@@ -41,11 +43,20 @@ const useStyles = makeStyles((theme) => ({
   sizeSelect: {
     marginLeft: 32,
   },
+  tokenBox: {
+    marginTop: theme.spacing(0.5),
+    backgroundColor: darken('#282C31', 0.35),
+    borderRadius: 99,
+    textAlign: 'center',
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+  },
 }));
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onAddedMap: () => void;
 }
 
 const validate = ({
@@ -90,7 +101,11 @@ const validate = ({
   );
 };
 
-const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
+const MapsAddDialog: FunctionComponent<Props> = ({
+  open,
+  setOpen,
+  onAddedMap,
+}) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -109,6 +124,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
   const [updateMap, setUpdateMap] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [disableAddButton, setDisableAddButton] = useState<boolean>(false);
+  const [successToken, setSuccessToken] = useState<string | null>(null);
 
   const reset = useCallback(() => {
     setName('');
@@ -128,6 +144,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
     setAdminToken('');
     setAuthor('');
     setVersion('');
+    setSuccessToken(null);
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -176,7 +193,8 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
       .pipe(retry(0))
       .subscribe(
         (n) => {
-          console.warn(n);
+          setSuccessToken(n.response.token);
+          onAddedMap();
         },
         (e) => {
           setUploading(false);
@@ -223,213 +241,254 @@ const MapsAddDialog: FunctionComponent<Props> = ({ open, setOpen }) => {
     <>
       <Dialog open={open} maxWidth="lg">
         <form action="" onSubmit={handleSubmit}>
-          <DialogContent classes={{ root: classes.contentRoot }}>
-            <TextField
-              disabled={uploading}
-              label="Map name*"
-              InputLabelProps={{ shrink: true }}
-              placeholder="Enter the map name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <TextField
-              multiline
-              disabled={uploading}
-              label="Description*"
-              InputLabelProps={{ shrink: true }}
-              placeholder="Enter a short description"
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
-            />
-            <TextField
-              multiline
-              disabled={uploading}
-              label="Author*"
-              InputLabelProps={{ shrink: true }}
-              placeholder="Enter your nickname"
-              value={author}
-              onChange={(e) => {
-                setAuthor(e.target.value);
-              }}
-            />
-            <MapsPlayersTextField
-              id="add-players-textfield"
-              label="Players*"
-              disabled={uploading}
-              onChange={setPlayers}
-              value={players}
-            />
-            <div style={{ display: 'flex' }}>
-              <FormControl>
-                <InputLabel shrink id="add-size-select">
-                  Size*
-                </InputLabel>
-                <MapsSizeSelect
-                  id="add-size-select"
-                  disabled={uploading}
-                  classes={{ select: classes.sizeSelect }}
-                  onChange={setSize}
-                  value={size}
-                  defaultValue={size}
-                  disableAll
+          {successToken ? (
+            <DialogContent classes={{ root: classes.contentRoot }}>
+              <div style={{ display: 'flex' }}>
+                <SuccessIcon
+                  color="secondary"
+                  fontSize="large"
+                  style={{ alignSelf: 'flex-end' }}
                 />
-                <SizeIcon className={classes.sizeIcon} />
-              </FormControl>
+                <div style={{ marginLeft: 16 }}>
+                  <Typography variant="body1">
+                    Below is your map token which you can use to update the map.
+                  </Typography>
+                  <Typography color="secondary" variant="h6" align="center">
+                    DO NOT LOSE THIS!
+                  </Typography>
+                  <div className={classes.tokenBox}>
+                    <Typography style={{ fontWeight: 'bold' }}>
+                      {successToken}
+                    </Typography>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          ) : (
+            <DialogContent classes={{ root: classes.contentRoot }}>
               <TextField
                 disabled={uploading}
-                label="Version*"
+                label="Map name*"
                 InputLabelProps={{ shrink: true }}
-                placeholder="v1.0.0"
-                value={version}
+                placeholder="Enter the map name"
+                value={name}
                 onChange={(e) => {
-                  setVersion(e.target.value);
+                  setName(e.target.value);
                 }}
               />
-            </div>
-            <FormControlLabel
-              label="Official map (admin only)"
-              control={
-                <Checkbox
-                  disabled={uploading}
-                  value={officialMap}
-                  onChange={(_e, checked) => {
-                    setOfficialMap(checked);
-                  }}
-                />
-              }
-            />
-            {officialMap ? (
-              <TextField
-                disabled={uploading}
-                label="Admin token (admin only)"
-                InputLabelProps={{ shrink: true }}
-                placeholder="Enter admin token"
-                type="password"
-                value={adminToken}
-                onChange={(e) => {
-                  setAdminToken(e.target.value);
-                }}
-              />
-            ) : null}
-            <FormControlLabel
-              label="Update map"
-              control={
-                <Checkbox
-                  disabled={uploading}
-                  value={officialMap}
-                  onChange={(_e, checked) => {
-                    setUpdateMap(checked);
-                  }}
-                />
-              }
-            />
-            {updateMap ? (
               <TextField
                 multiline
                 disabled={uploading}
-                placeholder="Enter map token"
-                value={mapToken}
+                label="Description*"
+                InputLabelProps={{ shrink: true }}
+                placeholder="Enter a short description"
+                value={description}
                 onChange={(e) => {
-                  setMapToken(e.target.value);
+                  setDescription(e.target.value);
                 }}
               />
-            ) : null}
-            <div>
-              <Button
-                variant="contained"
-                component="label"
-                color="secondary"
+              <TextField
+                multiline
                 disabled={uploading}
-              >
-                Select File (.scd)
-                <input
-                  name="file"
-                  type="file"
-                  accept=".scd"
-                  style={{ display: 'none' }}
+                label="Author*"
+                InputLabelProps={{ shrink: true }}
+                placeholder="Enter your nickname"
+                value={author}
+                onChange={(e) => {
+                  setAuthor(e.target.value);
+                }}
+              />
+              <MapsPlayersTextField
+                id="add-players-textfield"
+                label="Players*"
+                disabled={uploading}
+                onChange={setPlayers}
+                value={players}
+              />
+              <div style={{ display: 'flex' }}>
+                <FormControl>
+                  <InputLabel shrink id="add-size-select">
+                    Size*
+                  </InputLabel>
+                  <MapsSizeSelect
+                    id="add-size-select"
+                    disabled={uploading}
+                    classes={{ select: classes.sizeSelect }}
+                    onChange={setSize}
+                    value={size}
+                    defaultValue={size}
+                    disableAll
+                  />
+                  <SizeIcon className={classes.sizeIcon} />
+                </FormControl>
+                <TextField
                   disabled={uploading}
+                  label="Version*"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="v1.0.0"
+                  value={version}
                   onChange={(e) => {
-                    if (!e.target.files?.[0]) {
-                      setFile(null);
-                      setFileName(null);
-                      return;
-                    }
-                    setFile(e.target.files[0]!);
-                    const val = e.target.value;
-                    setFileName(
-                      val.split('\\').join('/').split('/').pop() ?? null
-                    );
+                    setVersion(e.target.value);
                   }}
                 />
-              </Button>
-              {fileName ? (
-                <Typography variant="body2">{fileName}</Typography>
-              ) : null}
-            </div>
-            <div>
-              <Button
-                variant="contained"
-                component="label"
-                color="secondary"
-                disabled={uploading}
-              >
-                Select Image
-                <input
-                  name="image"
-                  type="file"
-                  accept="image/*"
-                  style={{ display: 'none' }}
+              </div>
+              <FormControlLabel
+                label="Official map (admin only)"
+                control={
+                  <Checkbox
+                    disabled={uploading}
+                    value={officialMap}
+                    onChange={(_e, checked) => {
+                      setOfficialMap(checked);
+                    }}
+                  />
+                }
+              />
+              {officialMap ? (
+                <TextField
+                  disabled={uploading}
+                  label="Admin token (admin only)"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="Enter admin token"
+                  type="password"
+                  value={adminToken}
                   onChange={(e) => {
-                    if (!e.target.files?.[0]) {
-                      setImage(null);
-                      setImageName(null);
-                      return;
-                    }
-                    setImage(e.target.files[0]!);
-                    const val = e.target.value;
-                    setImageName(
-                      val.split('\\').join('/').split('/').pop() ?? null
-                    );
+                    setAdminToken(e.target.value);
                   }}
                 />
-              </Button>
-              {imageName ? (
-                <Typography variant="body2">{imageName}</Typography>
               ) : null}
-            </div>
-            <Typography variant="caption">*required</Typography>
-          </DialogContent>
+              <FormControlLabel
+                label="Update map"
+                control={
+                  <Checkbox
+                    disabled={uploading}
+                    value={officialMap}
+                    onChange={(_e, checked) => {
+                      setUpdateMap(checked);
+                    }}
+                  />
+                }
+              />
+              {updateMap ? (
+                <TextField
+                  multiline
+                  disabled={uploading}
+                  placeholder="Enter map token"
+                  value={mapToken}
+                  onChange={(e) => {
+                    setMapToken(e.target.value);
+                  }}
+                />
+              ) : null}
+              <div>
+                <Button
+                  variant="contained"
+                  component="label"
+                  color="secondary"
+                  disabled={uploading}
+                >
+                  Select File (.scd)
+                  <input
+                    name="file"
+                    type="file"
+                    accept=".scd"
+                    style={{ display: 'none' }}
+                    disabled={uploading}
+                    onChange={(e) => {
+                      if (!e.target.files?.[0]) {
+                        setFile(null);
+                        setFileName(null);
+                        return;
+                      }
+                      setFile(e.target.files[0]!);
+                      const val = e.target.value;
+                      setFileName(
+                        val.split('\\').join('/').split('/').pop() ?? null
+                      );
+                    }}
+                  />
+                </Button>
+                {fileName ? (
+                  <Typography variant="body2">{fileName}</Typography>
+                ) : null}
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  component="label"
+                  color="secondary"
+                  disabled={uploading}
+                >
+                  Select Image
+                  <input
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={(e) => {
+                      if (!e.target.files?.[0]) {
+                        setImage(null);
+                        setImageName(null);
+                        return;
+                      }
+                      setImage(e.target.files[0]!);
+                      const val = e.target.value;
+                      setImageName(
+                        val.split('\\').join('/').split('/').pop() ?? null
+                      );
+                    }}
+                  />
+                </Button>
+                {imageName ? (
+                  <Typography variant="body2">{imageName}</Typography>
+                ) : null}
+              </div>
+              <Typography variant="caption">*required</Typography>
+            </DialogContent>
+          )}
           <DialogActions style={{ marginBottom: 8 }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              type="submit"
-              disabled={disableAddButton || uploading}
-            >
-              ADD
-            </Button>
-            <Button
-              disabled={uploading}
-              onClick={() => {
-                reset();
-                setOpen(false);
-              }}
-            >
-              CANCEL
-            </Button>
+            {successToken ? (
+              <Button
+                disabled={uploading}
+                onClick={() => {
+                  reset();
+                  setOpen(false);
+                }}
+              >
+                CLOSE
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  disabled={disableAddButton || uploading}
+                >
+                  ADD
+                </Button>
+                <Button
+                  disabled={uploading}
+                  onClick={() => {
+                    reset();
+                    setOpen(false);
+                  }}
+                >
+                  CANCEL
+                </Button>
+              </>
+            )}
           </DialogActions>
         </form>
-        <Box px={3} py={1} maxWidth={300}>
-          {error?.length ? (
-            <Typography color="error" variant="body2">
-              Error: {error}
-            </Typography>
-          ) : null}
-        </Box>
+        {!successToken ? (
+          <Box px={3} py={1} maxWidth={300}>
+            {error?.length ? (
+              <Typography color="error" variant="body2">
+                Error: {error}
+              </Typography>
+            ) : null}
+          </Box>
+        ) : null}
       </Dialog>
     </>
   );

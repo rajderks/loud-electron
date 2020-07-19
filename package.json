@@ -68,7 +68,8 @@
     "start": "yarn react-start",
     "build": "yarn release",
     "test": "yarn react-test",
-    "dev": "yarn electron-dev"
+    "dev": "yarn electron-dev",
+    "dev:prod": "yarn electron-dev"
   },
   "eslintConfig": {
     "extends": "react-app"

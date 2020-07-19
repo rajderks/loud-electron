@@ -15,6 +15,11 @@ import PlayersIcon from '@material-ui/icons/Group';
 import AuthorIcon from '@material-ui/icons/Face';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
+import { fromFetch } from 'rxjs/fetch';
+import { ajax } from 'rxjs/ajax';
+import { apiBaseURI } from '../../api/api';
+import { switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -93,18 +98,7 @@ interface Props {
 }
 
 const MapsDetails: FunctionComponent<Props> = ({
-  mapAttr: {
-    image,
-    author,
-    description,
-    downloads,
-    file,
-    id,
-    name,
-    players,
-    size,
-    version,
-  },
+  mapAttr: { image, author, description, file, name, players, size, version },
 }) => {
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
@@ -112,7 +106,7 @@ const MapsDetails: FunctionComponent<Props> = ({
     <Card className={classes.card}>
       <div>
         <CardMedia
-          image={image}
+          image={`${apiBaseURI}/${image}`}
           className={classes.media}
           onMouseEnter={() => {
             setFocussed(true);
@@ -189,7 +183,42 @@ const MapsDetails: FunctionComponent<Props> = ({
         >
           {description ?? 'No description was given for this map'}
         </Typography>
-        <Button color="secondary" variant="contained">
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => {
+            fromFetch(`${apiBaseURI}/${file}`)
+              .pipe(
+                switchMap((response) => {
+                  if (response.ok) {
+                    // OK return data
+                    return response.arrayBuffer();
+                  } else {
+                    throw new Error('floepie');
+                  }
+                })
+              )
+              .subscribe(
+                (n) => {
+                  console.warn('buffa', n.byteLength);
+                },
+                (e) => {
+                  console.error(e);
+                }
+              );
+            // ajax
+            //   .get(`${apiBaseURI}/${file}`, { responseType: 'arraybuffer' })
+            //   .subscribe(
+            //     (n) => {
+            //       console.warn(n);
+            //       console.warn('response', n.xhr.response);
+            //     },
+            //     (e) => {
+            //       console.error(e);
+            //     }
+            //   );
+          }}
+        >
           Download
         </Button>
       </CardContent>

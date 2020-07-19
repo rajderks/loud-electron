@@ -113,7 +113,13 @@ const Maps: FunctionComponent<{}> = () => {
     <>
       <PageHeader title="Maps" />
       <div className={classes.root}>
-        <MapsAddDialog open={addOpen} setOpen={handleAddOpen} />
+        <MapsAddDialog
+          open={addOpen}
+          setOpen={handleAddOpen}
+          onAddedMap={() => {
+            setRefreshTimestamp(Date.now().valueOf());
+          }}
+        />
         <MapsDetailsDialog
           mapAttr={mapsDetailsAttr}
           onClose={handleMapsDetailsOnClose}

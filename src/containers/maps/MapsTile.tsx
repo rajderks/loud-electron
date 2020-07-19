@@ -10,10 +10,10 @@ import {
 } from '@material-ui/core';
 import PlayersIcon from '@material-ui/icons/Group';
 import SizeIcon from '@material-ui/icons/AspectRatio';
-// import ViewsIcon from '@material-ui/icons/Visibility';
-// import DownloadsIcon from '@material-ui/icons/GetApp';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
+import path from 'path';
+import { apiBaseURI } from '../../api/api';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -115,7 +115,7 @@ const MapsTile: FunctionComponent<Props> = ({
       }}
     >
       <Card square elevation={0} className={classes.root} onClick={onClick}>
-        <CardMedia image={image} className={classes.media} />
+        <CardMedia image={`${apiBaseURI}/${image}`} className={classes.media} />
         <div className={classes.titleBox}>
           <Typography
             style={{ fontWeight: 'bold', color: 'white' }}

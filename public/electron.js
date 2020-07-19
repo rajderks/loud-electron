@@ -20,6 +20,7 @@ ipcMain.on('open-route', (event, route, size) => {
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,
+      webSecurity: false,
     },
   });
   routeWindow.loadURL(
