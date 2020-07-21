@@ -37,6 +37,7 @@
     "mv": "^2.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hotkeys": "^2.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "rimraf": "^3.0.2",

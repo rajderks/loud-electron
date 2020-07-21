@@ -1,39 +1,37 @@
 import React, { FunctionComponent, useContext } from 'react';
-import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
+import {
+  makeStyles,
+  Button,
+  Typography,
+  IconButton,
+  darken,
+} from '@material-ui/core';
 import { UpdateStatus } from './constants';
 import MainUpdateStatus from './MainUpdateStatus';
 import MainContext from './MainContext';
+import { ReactComponent as DiscordLogo } from '../../assets/discord.svg';
+import { ReactComponent as PatreonLogo } from '../../assets/patreon.svg';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
     display: 'flex',
-    position: 'absolute',
-    top: '58.3%',
-    left: '12.70%',
     backgroundColor: 'transparent',
-    width: 442,
-    height: 40,
+    width: '100%',
+    height: 48,
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: theme.spacing(1),
+    transform: 'translateY(8px)',
   },
   updateButtonWrapper: {
     display: 'flex',
     width: 140,
-    height: 40,
     color: 'white',
     flexWrap: 'wrap',
-  },
-  button: {
-    height: 40,
-    display: 'flex',
-    flex: '0 0 140px',
-    border: '1px solid #EFEFEF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#2A2A2A',
-    color: 'white',
+    transform: 'translateY(-9px)',
   },
   updateButton: {
-    height: 25,
+    flex: '1 1 100%',
   },
   updateIndicator: {
     height: 15,
@@ -44,23 +42,42 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     position: 'relative',
     backgroundColor: '#FBFF3A',
+    borderRadius: 4,
+    marginBottom: 2,
   },
   buttonDisabled: {
     color: 'gray',
   },
-  paypalButton: {
-    position: 'absolute',
-    top: '58.3%',
-    left: '72.6%',
-    width: 140,
+  mainButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: '0.33 1 auto',
+    '& > *': {
+      margin: theme.spacing(0, 2, 0, 0),
+    },
+  },
+  rightButtonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyItems: 'flex-end',
+    '& > *': {
+      margin: theme.spacing(0, 2, 0, 0),
+    },
+  },
+  svgButtonWrapper: {
+    backgroundColor: darken('#282C31', 0.35),
+    borderRadius: 9999,
   },
 }));
 
 interface Props {
   onUpdate: () => void;
   onRun: () => void;
-  onLog: () => void;
+  onPatchNotes: () => void;
+  onMaps: () => void;
   onDonate: () => void;
+  onDiscord: () => void;
   updateStatus: UpdateStatus;
 }
 
@@ -78,8 +95,10 @@ const indicatorColor = (updateStatus: UpdateStatus) => {
 const MainButtons: FunctionComponent<Props> = ({
   onUpdate,
   onRun,
-  onLog,
+  onPatchNotes,
+  onMaps,
   onDonate,
+  onDiscord,
   updateStatus,
 }) => {
   const classes = useStyles();
@@ -87,60 +106,80 @@ const MainButtons: FunctionComponent<Props> = ({
   return (
     <>
       <div className={classes.buttonWrapper}>
-        <div className={classes.updateButtonWrapper}>
-          <ButtonBase
-            className={classes.button}
-            classes={{
-              root: classes.updateButton,
-              disabled: classes.buttonDisabled,
-            }}
-            onClick={onUpdate}
+        <div className={classes.mainButtonContainer}>
+          <div className={classes.updateButtonWrapper}>
+            <div
+              className={classes.updateIndicator}
+              style={{ backgroundColor: indicatorColor(updateStatus) }}
+            >
+              <MainUpdateStatus updateStatus={updateStatus} />
+            </div>
+            <Button
+              classes={{
+                root: classes.updateButton,
+                disabled: classes.buttonDisabled,
+              }}
+              onClick={onUpdate}
+              color="secondary"
+              variant="contained"
+            >
+              <Typography color="inherit" variant="body2">
+                <strong>Update</strong>
+              </Typography>
+            </Button>
+          </div>
+          <Button
+            classes={{ disabled: classes.buttonDisabled }}
+            onClick={onRun}
+            disabled={
+              (updateStatus !== UpdateStatus.UpToDate &&
+                updateStatus !== UpdateStatus.NotChecked) ||
+              !enabledItems.includes('run')
+            }
+            color="secondary"
+            variant="contained"
           >
             <Typography color="inherit" variant="body2">
-              Update
+              <strong>Run Game</strong>
             </Typography>
-          </ButtonBase>
-          <div
-            className={classes.updateIndicator}
-            style={{ backgroundColor: indicatorColor(updateStatus) }}
+          </Button>
+        </div>
+
+        <div className={classes.rightButtonContainer}>
+          <Button
+            classes={{ disabled: classes.buttonDisabled }}
+            onClick={onMaps}
+            disabled={!enabledItems.includes('log')}
+            color="secondary"
+            variant="contained"
           >
-            <MainUpdateStatus updateStatus={updateStatus} />
+            <Typography color="inherit" variant="body2">
+              <strong>Map library</strong>
+            </Typography>
+          </Button>
+          <Button
+            classes={{ disabled: classes.buttonDisabled }}
+            onClick={onPatchNotes}
+            disabled={!enabledItems.includes('log')}
+            color="secondary"
+            variant="contained"
+          >
+            <Typography color="inherit" variant="body2">
+              <strong>Patch Notes</strong>
+            </Typography>
+          </Button>
+          <div className={classes.svgButtonWrapper}>
+            <IconButton style={{ height: 78, width: 78 }} onClick={onDiscord}>
+              <DiscordLogo width="72" height="72" />
+            </IconButton>
+          </div>
+          <div className={classes.svgButtonWrapper}>
+            <IconButton style={{ height: 78, width: 78 }} onClick={onDonate}>
+              <PatreonLogo width="72" height="72" />
+            </IconButton>
           </div>
         </div>
-        <ButtonBase
-          className={classes.button}
-          classes={{ disabled: classes.buttonDisabled }}
-          onClick={onRun}
-          disabled={
-            (updateStatus !== UpdateStatus.UpToDate &&
-              updateStatus !== UpdateStatus.NotChecked) ||
-            !enabledItems.includes('run')
-          }
-        >
-          <Typography color="inherit" variant="body2">
-            Run Game
-          </Typography>
-        </ButtonBase>
-        <ButtonBase
-          className={classes.button}
-          classes={{ disabled: classes.buttonDisabled }}
-          onClick={onLog}
-          disabled={!enabledItems.includes('log')}
-        >
-          <Typography color="inherit" variant="body2">
-            Updater Log
-          </Typography>
-        </ButtonBase>
       </div>
-      <ButtonBase
-        className={classes.paypalButton}
-        classes={{ root: classes.button, disabled: classes.buttonDisabled }}
-        onClick={onDonate}
-      >
-        <Typography color="inherit" variant="body2">
-          Patreon
-        </Typography>
-      </ButtonBase>
     </>
   );
 };

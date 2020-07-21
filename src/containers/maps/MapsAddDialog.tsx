@@ -67,7 +67,7 @@ const validate = ({
   players,
   updateMap,
   mapToken,
-  officialMap,
+  // officialMap,
   adminToken,
   author,
   version,
@@ -78,7 +78,7 @@ const validate = ({
   description: string;
   players: string;
   updateMap: boolean;
-  officialMap: boolean;
+  // officialMap: boolean;
   adminToken: string | null;
   mapToken: string | null;
   author: string;
@@ -87,9 +87,12 @@ const validate = ({
   if (updateMap && !mapToken?.length) {
     return false;
   }
-  if (officialMap && !adminToken?.length) {
+  if (!adminToken?.length) {
     return false;
   }
+  // if (officialMap && !adminToken?.length) {
+  //   return false;
+  // }
   return (
     file &&
     image &&
@@ -120,7 +123,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
   const [mapToken, setMapToken] = useState<string>('');
   const [adminToken, setAdminToken] = useState<string>('');
   const [uploading, setUploading] = useState(false);
-  const [officialMap, setOfficialMap] = useState(false);
+  // const [officialMap, setOfficialMap] = useState(false);
   const [updateMap, setUpdateMap] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [disableAddButton, setDisableAddButton] = useState<boolean>(false);
@@ -139,7 +142,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
     setError(null);
     setDisableAddButton(false);
     setMapToken('');
-    setOfficialMap(false);
+    // setOfficialMap(false);
     setUpdateMap(false);
     setAdminToken('');
     setAuthor('');
@@ -162,7 +165,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
         adminToken,
         mapToken,
         updateMap,
-        officialMap,
+        // officialMap,
         author,
         version,
       })
@@ -180,10 +183,10 @@ const MapsAddDialog: FunctionComponent<Props> = ({
     formData.append('players', players);
     formData.append('version', version);
     formData.append('size', String(size));
-    if (officialMap) {
-      formData.append('official', String(officialMap));
-      formData.append('adminToken', adminToken);
-    }
+    // if (officialMap) {
+    formData.append('official', 'true');
+    formData.append('adminToken', adminToken);
+    // }
     if (updateMap) {
       formData.append('mapToken', mapToken);
     }
@@ -218,7 +221,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
         adminToken,
         mapToken,
         updateMap,
-        officialMap,
+        // officialMap,
         author,
         version,
       })
@@ -231,7 +234,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
     image,
     mapToken,
     name,
-    officialMap,
+    // officialMap,
     players,
     updateMap,
     version,
@@ -332,7 +335,7 @@ const MapsAddDialog: FunctionComponent<Props> = ({
                   }}
                 />
               </div>
-              <FormControlLabel
+              {/* <FormControlLabel
                 label="Official map (admin only)"
                 control={
                   <Checkbox
@@ -344,25 +347,25 @@ const MapsAddDialog: FunctionComponent<Props> = ({
                   />
                 }
               />
-              {officialMap ? (
-                <TextField
-                  disabled={uploading}
-                  label="Admin token (admin only)"
-                  InputLabelProps={{ shrink: true }}
-                  placeholder="Enter admin token"
-                  type="password"
-                  value={adminToken}
-                  onChange={(e) => {
-                    setAdminToken(e.target.value);
-                  }}
-                />
-              ) : null}
+              {officialMap ? ( */}
+              <TextField
+                disabled={uploading}
+                label="Admin token*"
+                InputLabelProps={{ shrink: true }}
+                placeholder="Enter admin token"
+                type="password"
+                value={adminToken}
+                onChange={(e) => {
+                  setAdminToken(e.target.value);
+                }}
+              />
+              {/* ) : null} */}
               <FormControlLabel
                 label="Update map"
                 control={
                   <Checkbox
                     disabled={uploading}
-                    value={officialMap}
+                    value={updateMap}
                     onChange={(_e, checked) => {
                       setUpdateMap(checked);
                     }}

@@ -9,7 +9,6 @@ import openTarget from '../../util/openTarget';
 import { updaterCreateLocalCRC$ } from '../../util/updater';
 import rungame from '../../util/rungame';
 import { version } from '../../../package.json';
-import isDev from 'electron-is-dev';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -34,12 +33,16 @@ const Menu: FunctionComponent = () => {
         const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
         openTarget(target);
       } else if (
-        menu.id === 'help-discord' ||
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
-        menu.id === 'help-gamelog'
+        menu.id === 'help-gamelog' ||
+        menu.id === 'help-log'
       ) {
-        const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
+        const target = menu.id.split('-')[1] as
+          | 'help'
+          | 'info'
+          | 'gamelog'
+          | 'log';
         openTarget(target);
       } else if (menu.id === 'create-crc') {
         updaterCreateLocalCRC$().subscribe();
@@ -47,12 +50,6 @@ const Menu: FunctionComponent = () => {
         openTarget('iconmod');
       } else if (menu.id === 'help-patchnotes') {
         ipcRenderer.send('open-route', 'patchnotes');
-      } else if (menu.id === 'tools-maps') {
-        if (isDev) {
-          ipcRenderer.send('open-route', 'maps', [1040, 680]);
-        }
-      } else if (menu.id === 'help-maps') {
-        ipcRenderer.send('open-route', 'maps');
       }
     },
     [changeEnabledItem]
@@ -122,11 +119,6 @@ const Menu: FunctionComponent = () => {
                 click: buttonCallback,
                 disabled: !enabledItems.includes('run'),
               },
-              {
-                id: 'tools-maps',
-                label: 'Maps',
-                click: buttonCallback,
-              },
             ],
           },
           {
@@ -134,14 +126,16 @@ const Menu: FunctionComponent = () => {
             click: buttonCallback,
             submenu: [
               {
-                id: 'help-patchnotes',
-                label: 'Patch notes',
+                id: 'help-gamelog',
+                label: 'View Game Log',
                 click: buttonCallback,
+                disabled: !enabledItems.includes('help-gamelog'),
               },
               {
-                id: 'help-discord',
-                label: 'Discord invite',
+                id: 'help-log',
+                label: 'View Client Log',
                 click: buttonCallback,
+                disabled: !enabledItems.includes('log'),
               },
               {
                 id: 'help-help',
@@ -154,12 +148,6 @@ const Menu: FunctionComponent = () => {
                 label: 'Game Info',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('help-info'),
-              },
-              {
-                id: 'help-gamelog',
-                label: 'View Game Log',
-                click: buttonCallback,
-                disabled: !enabledItems.includes('help-gamelog'),
               },
             ],
           },

@@ -6,18 +6,20 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import { makeStyles, Fab, Zoom } from '@material-ui/core';
+import { makeStyles, Fab, Zoom, darken } from '@material-ui/core';
 import Logger from '../../util/logger';
 import { filter, scan, debounceTime, buffer, map } from 'rxjs/operators';
 import PinDownIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
-    top: '66%',
     height: '29%',
+    minHeight: 150,
     padding: theme.spacing(1),
     width: '100%',
+    backgroundColor: darken('#282C31', 0.35),
+    borderTop: `${theme.palette.background.paper} solid 8px`,
+    borderBottom: `${theme.palette.background.paper} solid 24px`,
   },
   scroller: {
     height: '100%',
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   fabWrapper: {
     position: 'absolute',
     right: theme.spacing(3),
-    bottom: theme.spacing(1),
+    bottom: theme.spacing(4),
   },
 }));
 

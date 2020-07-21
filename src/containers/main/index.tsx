@@ -25,7 +25,7 @@ import MainLog from './MainLog';
 import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
-import electron from 'electron';
+import electron, { ipcRenderer } from 'electron';
 import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
 import MainContext from './MainContext';
@@ -54,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
   userContentLabel: {
     fontWeight: theme.typography.fontWeightLight,
     fontSize: theme.typography.fontSize * 0.9,
+  },
+  background: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url('${require('../../assets/LoudTerminator.png')}')`,
+    backgroundSize: 'cover',
+    flexDirection: 'column-reverse',
   },
 }));
 
@@ -236,12 +244,20 @@ const Main: FunctionComponent = () => {
     rungame();
   };
 
-  const handleLog = () => {
-    openTarget('log');
+  const handleMaps = () => {
+    ipcRenderer.send('open-route', 'maps', [1040, 680]);
+  };
+
+  const handlePatchNotes = () => {
+    ipcRenderer.send('open-route', 'patchnotes');
   };
 
   const handleDonate = () => {
     openTarget('patreon');
+  };
+
+  const handleDiscord = () => {
+    openTarget('discord');
   };
 
   useEffect(() => {
@@ -288,22 +304,17 @@ const Main: FunctionComponent = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundImage: `url('${require('../../assets/LoudTerminator.png')}')`,
-        backgroundSize: 'cover',
-      }}
-    >
+    <div className={classes.background}>
+      <MainLog key="main-log" />
       <MainButtons
         updateStatus={updateStatus}
         onUpdate={handleUpdate}
+        onPatchNotes={handlePatchNotes}
+        onMaps={handleMaps}
         onRun={handleRun}
-        onLog={handleLog}
         onDonate={handleDonate}
+        onDiscord={handleDiscord}
       />
-      <MainLog key="main-log" />
       <div className={classes.userContentWrapper}>
         <Typography
           display="inline"

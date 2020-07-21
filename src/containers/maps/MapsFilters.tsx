@@ -8,7 +8,6 @@ import {
   InputAdornment,
   IconButton,
   Icon,
-  Button,
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
@@ -205,14 +204,14 @@ const MapsFilters: FunctionComponent<Props> = ({
             }}
             value={search}
           />
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             classes={{ root: classes.addButton }}
             onClick={() => onAddClicked(true)}
           >
             ADD MAP
-          </Button>
+          </Button> */}
         </div>
         <div className={classes.filterWrapper}>
           <FormControl className={classes.formControl}>

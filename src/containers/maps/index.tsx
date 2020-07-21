@@ -25,6 +25,7 @@ import { logEntry } from '../../util/logger';
 import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
+import { GlobalHotKeys } from 'react-hotkeys';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const keyMap = {
+  addMap: 'ctrl+alt+p',
+};
+
 const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [maps, setMaps] = useState<MapAttr[] | null>(null);
@@ -61,6 +66,11 @@ const Maps: FunctionComponent<{}> = () => {
   const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
   const [refreshTimestamp, setRefreshTimestamp] = useState(0);
   const [userMapsEnabled, setUserMapsEnabled] = useState(false);
+  const handlers = {
+    addMap: () => {
+      setAddOpen(true);
+    },
+  };
 
   useEffect(() => {
     checkUserContent('maps').subscribe((n) => {
@@ -136,7 +146,7 @@ const Maps: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <>
+    <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
       <PageHeader title="Maps">
         <Divider
           orientation="vertical"
@@ -211,7 +221,7 @@ const Maps: FunctionComponent<{}> = () => {
           )}
         </div>
       </div>
-    </>
+    </GlobalHotKeys>
   );
 };
 
