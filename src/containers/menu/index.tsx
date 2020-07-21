@@ -23,7 +23,7 @@ const Menu: FunctionComponent = () => {
       } else if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
         const target = menu.id.split('-')[1] as 'maps' | 'mods';
         toggleUserContent(target).subscribe((n) => {
-          logEntry('Toggled user content');
+          logEntry(`Toggled user content | ${target} : ${n}`);
           changeEnabledItem(target, n);
         });
       } else if (

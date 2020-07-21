@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { MapAttr } from './types';
 import {
   makeStyles,
@@ -9,6 +9,7 @@ import {
   colors,
   Paper,
   Button,
+  CircularProgress,
 } from '@material-ui/core';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import PlayersIcon from '@material-ui/icons/Group';
@@ -18,8 +19,12 @@ import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
 import { ajax } from 'rxjs/ajax';
 import { apiBaseURI } from '../../api/api';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, buffer } from 'rxjs/operators';
 import { of } from 'rxjs';
+import checkMap$ from '../../util/checkMap';
+import path from 'path';
+import writeMap$ from '../../util/writeMap';
+import removeMap$ from '../../util/removeMap';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -97,11 +102,30 @@ interface Props {
   mapAttr: MapAttr;
 }
 
+enum MapState {
+  None,
+  Downloading,
+  Exists,
+}
+
 const MapsDetails: FunctionComponent<Props> = ({
   mapAttr: { image, author, description, file, name, players, size, version },
 }) => {
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
+  const [mapState, setMapState] = useState(MapState.None);
+
+  checkMap$(path.basename(file)).subscribe(
+    () => {
+      if (mapState === MapState.None) {
+        setMapState(MapState.Exists);
+      }
+    },
+    () => {
+      // setMapState(MapState.None);
+    }
+  );
+
   return (
     <Card className={classes.card}>
       <div>
@@ -187,39 +211,56 @@ const MapsDetails: FunctionComponent<Props> = ({
           color="secondary"
           variant="contained"
           onClick={() => {
+            if (mapState !== MapState.None && mapState !== MapState.Exists) {
+              return;
+            }
+            if (mapState === MapState.Exists) {
+              removeMap$(path.basename(file)).subscribe((n) => {
+                setMapState(MapState.None);
+              });
+              return;
+            }
+            setMapState(MapState.Downloading);
             fromFetch(`${apiBaseURI}/${file}`)
               .pipe(
-                switchMap((response) => {
+                switchMap(async (response) => {
                   if (response.ok) {
                     // OK return data
                     return response.arrayBuffer();
                   } else {
-                    throw new Error('floepie');
+                    const body = await response.json();
+                    throw new Error(body);
                   }
                 })
               )
               .subscribe(
                 (n) => {
-                  console.warn('buffa', n.byteLength);
+                  writeMap$(new Buffer(n), path.basename(file)).subscribe(
+                    () => {
+                      setMapState(MapState.Exists);
+                    },
+                    () => {
+                      setMapState(MapState.None);
+                    }
+                  );
                 },
                 (e) => {
                   console.error(e);
+                  setMapState(MapState.None);
                 }
               );
-            // ajax
-            //   .get(`${apiBaseURI}/${file}`, { responseType: 'arraybuffer' })
-            //   .subscribe(
-            //     (n) => {
-            //       console.warn(n);
-            //       console.warn('response', n.xhr.response);
-            //     },
-            //     (e) => {
-            //       console.error(e);
-            //     }
-            //   );
           }}
         >
-          Download
+          {(() => {
+            switch (mapState) {
+              case MapState.None:
+                return 'Install map';
+              case MapState.Downloading:
+                return <CircularProgress size="1.5rem" />;
+              case MapState.Exists:
+                return 'Uninstall map';
+            }
+          })()}
         </Button>
       </CardContent>
     </Card>

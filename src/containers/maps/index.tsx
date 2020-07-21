@@ -8,11 +8,24 @@ import api from '../../api/api';
 import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
-import { makeStyles, Typography, darken, Button, Box } from '@material-ui/core';
+import {
+  makeStyles,
+  Typography,
+  darken,
+  Button,
+  Box,
+  Chip,
+  Divider,
+} from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
 import MapsAddDialog from './MapsAddDialog';
 import PageHeader from '../../components/PageHeader';
 import MapsDetailsDialog from './MapsDetailsDialog';
+import { logEntry } from '../../util/logger';
+import toggleUserContent, {
+  checkUserContent,
+} from '../../util/toggleUserContent';
+import { openTargetCheck } from '../../util/openTarget';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
     marginBottom: theme.spacing(1),
   },
+  headerDivider: {
+    margin: theme.spacing(0, 2, 0.5, 2),
+    height: 47 - theme.spacing(0.5),
+  },
+  mapsChip: {
+    marginBottom: theme.spacing(0.5),
+  },
 }));
 
 const Maps: FunctionComponent<{}> = () => {
@@ -41,6 +61,13 @@ const Maps: FunctionComponent<{}> = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
   const [refreshTimestamp, setRefreshTimestamp] = useState(0);
+  const [userMapsEnabled, setUserMapsEnabled] = useState(false);
+
+  useEffect(() => {
+    checkUserContent('maps').subscribe((n) => {
+      setUserMapsEnabled(n);
+    });
+  }, []);
 
   useEffect(() => {
     api.get<MapAttr[]>('maps').subscribe(
@@ -111,7 +138,25 @@ const Maps: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <PageHeader title="Maps" />
+      <PageHeader title="Maps">
+        <Divider
+          orientation="vertical"
+          className={classes.headerDivider}
+          variant="middle"
+        />
+        <Chip
+          label={userMapsEnabled ? 'User maps enabled' : 'User maps disabled'}
+          size="small"
+          className={classes.mapsChip}
+          color={userMapsEnabled ? 'secondary' : 'default'}
+          onClick={() => {
+            toggleUserContent('maps').subscribe((n) => {
+              logEntry(`Toggled user content | maps : ${n}`);
+              setUserMapsEnabled(n);
+            });
+          }}
+        />
+      </PageHeader>
       <div className={classes.root}>
         <MapsAddDialog
           open={addOpen}
