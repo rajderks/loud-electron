@@ -25,7 +25,6 @@ import { logEntry } from '../../util/logger';
 import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
-import { openTargetCheck } from '../../util/openTarget';
 
 const useStyles = makeStyles((theme) => ({
   root: {

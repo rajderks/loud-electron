@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { MapAttr } from './types';
 import {
   makeStyles,
@@ -17,10 +17,8 @@ import AuthorIcon from '@material-ui/icons/Face';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
-import { ajax } from 'rxjs/ajax';
 import { apiBaseURI } from '../../api/api';
-import { switchMap, catchError, buffer } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import checkMap$ from '../../util/checkMap';
 import path from 'path';
 import writeMap$ from '../../util/writeMap';

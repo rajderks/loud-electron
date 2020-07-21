@@ -12,7 +12,6 @@ import PlayersIcon from '@material-ui/icons/Group';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
-import path from 'path';
 import { apiBaseURI } from '../../api/api';
 
 const useStyles = makeStyles((theme) => ({
