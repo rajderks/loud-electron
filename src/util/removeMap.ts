@@ -1,21 +1,22 @@
 import path from 'path';
 import fs from 'fs';
 import { DOC_DIR_SUPCOM_MAPS } from '../constants';
-import { from } from 'rxjs';
-import { logEntry } from './logger';
+import { EMPTY, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-const removeMap$ = (relativePath: string) => {
-  const absolutePath = path.normalize(`${DOC_DIR_SUPCOM_MAPS}/${relativePath}`);
-  return from(
-    new Promise((res, rej) => {
-      fs.unlink(absolutePath, (err) => {
-        if (err) {
-          logEntry(`${err.errno}:${err.message}`, 'error', ['log']);
-          rej(err);
-          return;
+const removeMap$ = (fileNames: string[]) => {
+  return of(fileNames).pipe(
+    map((n) => {
+      for (let file of n) {
+        try {
+          fs.unlinkSync(
+            path.normalize(`${DOC_DIR_SUPCOM_MAPS}${path.sep}${file}`)
+          );
+        } catch (e) {
+          throw e;
         }
-        res();
-      });
+      }
+      return EMPTY;
     })
   );
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { MapAttr } from './types';
 import {
   makeStyles,
@@ -23,6 +23,7 @@ import checkMap$ from '../../util/checkMap';
 import path from 'path';
 import writeMap$ from '../../util/writeMap';
 import removeMap$ from '../../util/removeMap';
+import { logEntry } from '../../util/logger';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -104,6 +105,7 @@ enum MapState {
   None,
   Downloading,
   Exists,
+  Outdated,
 }
 
 const MapsDetails: FunctionComponent<Props> = ({
@@ -113,16 +115,20 @@ const MapsDetails: FunctionComponent<Props> = ({
   const [focussed, setFocussed] = useState(false);
   const [mapState, setMapState] = useState(MapState.None);
 
-  checkMap$(path.basename(file)).subscribe(
-    () => {
-      if (mapState === MapState.None) {
-        setMapState(MapState.Exists);
+  useEffect(() => {
+    checkMap$(path.basename(file), version).subscribe(
+      ({ versionExists, versions }) => {
+        if (versionExists) {
+          setMapState(MapState.Exists);
+        } else if (versions.length > 0) {
+          setMapState(MapState.Outdated);
+        }
+      },
+      () => {
+        // setMapState(MapState.None);
       }
-    },
-    () => {
-      // setMapState(MapState.None);
-    }
-  );
+    );
+  }, [file, version]);
 
   return (
     <Card className={classes.card}>
@@ -209,13 +215,20 @@ const MapsDetails: FunctionComponent<Props> = ({
           color="secondary"
           variant="contained"
           onClick={() => {
-            if (mapState !== MapState.None && mapState !== MapState.Exists) {
+            if (mapState === MapState.Downloading) {
               return;
             }
             if (mapState === MapState.Exists) {
-              removeMap$(path.basename(file)).subscribe((n) => {
-                setMapState(MapState.None);
-              });
+              checkMap$(path.basename(file), version)
+                .pipe(switchMap(({ versions }) => removeMap$(versions)))
+                .subscribe(
+                  () => {
+                    setMapState(MapState.None);
+                  },
+                  (e) => {
+                    logEntry(e, 'error', ['log']);
+                  }
+                );
               return;
             }
             setMapState(MapState.Downloading);
@@ -229,21 +242,29 @@ const MapsDetails: FunctionComponent<Props> = ({
                     const body = await response.json();
                     throw new Error(body);
                   }
-                })
+                }),
+                switchMap((buffer) =>
+                  checkMap$(path.basename(file), version).pipe(
+                    switchMap(({ versions }) =>
+                      removeMap$(versions).pipe(
+                        switchMap(() =>
+                          writeMap$(
+                            new Buffer(buffer),
+                            path.basename(file),
+                            version
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
               )
               .subscribe(
-                (n) => {
-                  writeMap$(new Buffer(n), path.basename(file)).subscribe(
-                    () => {
-                      setMapState(MapState.Exists);
-                    },
-                    () => {
-                      setMapState(MapState.None);
-                    }
-                  );
+                () => {
+                  setMapState(MapState.Exists);
                 },
                 (e) => {
-                  console.error(e);
+                  logEntry(e, 'error', ['log']);
                   setMapState(MapState.None);
                 }
               );
@@ -257,6 +278,8 @@ const MapsDetails: FunctionComponent<Props> = ({
                 return <CircularProgress size="1.5rem" />;
               case MapState.Exists:
                 return 'Uninstall map';
+              case MapState.Outdated:
+                return 'Out of date';
             }
           })()}
         </Button>
