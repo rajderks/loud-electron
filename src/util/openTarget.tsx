@@ -26,6 +26,7 @@ export type Target =
   | 'help'
   | 'info'
   | 'loud'
+  | 'paypal'
   | 'patreon'
   | 'discord'
   | 'iconmod';
@@ -99,6 +100,8 @@ const openTarget = (target: Target) => {
         logEntry(`${err}`, 'error');
       }
     });
+  } else if (target === 'paypal') {
+    shell.openPath(`https://paypal.me/pools/c/8qCnWXDegw`);
   } else if (target === 'patreon') {
     shell.openPath('https://www.patreon.com/user?u=37869110');
   } else if (target === 'discord') {

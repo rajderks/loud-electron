@@ -1,5 +1,5 @@
 appId: com.theloudproject.client
-productName: LOUD_Client
+productName: SCFA_Updater
 copyright: Copyright © 2020 Roy Derks
 files: ['./build/**/*', './public/electron.js']
 directories:

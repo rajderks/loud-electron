@@ -253,7 +253,7 @@ const Main: FunctionComponent = () => {
   };
 
   const handleDonate = () => {
-    openTarget('patreon');
+    openTarget('paypal');
   };
 
   const handleDiscord = () => {

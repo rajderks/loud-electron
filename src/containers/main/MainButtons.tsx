@@ -10,7 +10,7 @@ import { UpdateStatus } from './constants';
 import MainUpdateStatus from './MainUpdateStatus';
 import MainContext from './MainContext';
 import { ReactComponent as DiscordLogo } from '../../assets/discord.svg';
-import { ReactComponent as PatreonLogo } from '../../assets/patreon.svg';
+import { ReactComponent as PaypalLogo } from '../../assets/paypal.svg';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -169,7 +169,7 @@ const MainButtons: FunctionComponent<Props> = ({
           </div>
           <div className={classes.svgButtonWrapper}>
             <IconButton style={{ height: 78, width: 78 }} onClick={onDonate}>
-              <PatreonLogo width="72" height="72" />
+              <PaypalLogo width="72" height="72" />
             </IconButton>
           </div>
         </div>
