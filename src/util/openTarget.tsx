@@ -29,7 +29,8 @@ export type Target =
   | 'paypal'
   | 'patreon'
   | 'discord'
-  | 'iconmod';
+  | 'iconmod'
+  | 'onedrive';
 
 const targetPath = (target: Target) => {
   switch (target) {
@@ -100,6 +101,8 @@ const openTarget = (target: Target) => {
         logEntry(`${err}`, 'error');
       }
     });
+  } else if (target === 'onedrive') {
+    shell.openPath(`https://1drv.ms/u/s!AubmcwAIEAlzn2TwHzibrMTRySVj?e=MCevjP`);
   } else if (target === 'paypal') {
     shell.openPath(`https://paypal.me/pools/c/8qCnWXDegw`);
   } else if (target === 'patreon') {

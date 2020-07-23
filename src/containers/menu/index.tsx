@@ -36,13 +36,15 @@ const Menu: FunctionComponent = () => {
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
         menu.id === 'help-gamelog' ||
-        menu.id === 'help-log'
+        menu.id === 'help-log' ||
+        menu.id === 'help-onedrive'
       ) {
         const target = menu.id.split('-')[1] as
           | 'help'
           | 'info'
           | 'gamelog'
-          | 'log';
+          | 'log'
+          | 'onedrive';
         openTarget(target);
       } else if (menu.id === 'create-crc') {
         updaterCreateLocalCRC$().subscribe();
@@ -136,6 +138,11 @@ const Menu: FunctionComponent = () => {
                 label: 'View Client Log',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('log'),
+              },
+              {
+                id: 'help-onedrive',
+                label: 'Download from OneDrive',
+                click: buttonCallback,
               },
               {
                 id: 'help-help',
