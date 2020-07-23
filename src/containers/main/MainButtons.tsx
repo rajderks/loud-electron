@@ -149,7 +149,7 @@ const MainButtons: FunctionComponent<Props> = ({
           <Button
             classes={{ disabled: classes.buttonDisabled }}
             onClick={onMaps}
-            disabled={!enabledItems.includes('log')}
+            disabled={true}
             color="secondary"
             variant="contained"
           >
@@ -157,13 +157,7 @@ const MainButtons: FunctionComponent<Props> = ({
               <strong>Map library</strong>
             </Typography>
           </Button>
-          <Button
-            classes={{ disabled: classes.buttonDisabled }}
-            onClick={onPatchNotes}
-            disabled={!enabledItems.includes('log')}
-            color="secondary"
-            variant="contained"
-          >
+          <Button onClick={onPatchNotes} color="secondary" variant="contained">
             <Typography color="inherit" variant="body2">
               <strong>Patch Notes</strong>
             </Typography>
