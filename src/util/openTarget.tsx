@@ -96,7 +96,7 @@ export const openTargetCheck = (target: Target) =>
 
 const openTarget = (target: Target) => {
   if (target === 'iconmod') {
-    exec(`${FILE_URI_ICONMOD}`, (err) => {
+    exec(`"${FILE_URI_ICONMOD}"`, (err) => {
       if (err) {
         logEntry(`${err}`, 'error');
       }
