@@ -1,10 +1,9 @@
-import {} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
 export const apiBaseURI =
   process.env.NODE_ENV === 'production' || true
-    ? process.env.REACT_APP_API_URI
+    ? 'http://www.theloudproject.org:8080'
     : process.env.REACT_APP_API_URI_DEV;
 
 const constructURI = (relativeURI: string) => {
