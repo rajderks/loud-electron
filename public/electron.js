@@ -34,7 +34,7 @@ ipcMain.on('open-route', (event, route, size) => {
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 960,
-    height: 544,
+    height: 592,
     frame: false,
     fullscreenable: false,
     maximizable: false,
