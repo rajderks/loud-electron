@@ -149,7 +149,6 @@ const MainButtons: FunctionComponent<Props> = ({
           <Button
             classes={{ disabled: classes.buttonDisabled }}
             onClick={onMaps}
-            disabled={true}
             color="secondary"
             variant="contained"
           >

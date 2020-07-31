@@ -120,7 +120,7 @@ const MapsTile: FunctionComponent<Props> = ({
             style={{ fontWeight: 'bold', color: 'white' }}
             variant="body2"
           >
-            {`${name} (v${version})`}
+            {`${name} (${version})`}
           </Typography>
         </div>
         <Paper

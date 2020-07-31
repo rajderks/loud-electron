@@ -177,7 +177,7 @@ const MapsDetails: FunctionComponent<Props> = ({
       </div>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.title} variant="h6">
-          {`${name} (v${version})`}
+          {`${name} (${version})`}
         </Typography>
 
         <div className={classes.flexer}>
