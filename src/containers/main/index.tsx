@@ -103,6 +103,13 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(() => {
+    if (
+      updateStatus !== UpdateStatus.Failed &&
+      updateStatus !== UpdateStatus.NotChecked &&
+      updateStatus !== UpdateStatus.UpToDate
+    ) {
+      return;
+    }
     MainLogDownloadFilePercentageStatusSubject.next(0);
     MainLogDownloadFileProgressStatusSubject.next([0, 0]);
     let fileInfos: RemoteFileInfo[] | null = null;
@@ -118,7 +125,6 @@ const Main: FunctionComponent = () => {
         }),
         tap((n) => {
           if (n.length === 0) {
-            // set the fileinfos out of scope so that we can use them in the complete handler, messy but effective.
             setUpdateStatus(UpdateStatus.UpToDate);
           } else if (n.length >= 1) {
             logEntry(`Files out of sync:\r\n${n.map((m) => `${m.path}\r\n`)}`);
@@ -238,7 +244,7 @@ const Main: FunctionComponent = () => {
           }, 1500);
         }
       );
-  }, [changeEnabledItem]);
+  }, [changeEnabledItem, updateStatus]);
 
   const handleRun = () => {
     rungame();
