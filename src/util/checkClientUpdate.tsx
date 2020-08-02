@@ -8,13 +8,23 @@ const checkClientUpdate$ = () =>
   ajax
     .get(`http://api.github.com/repos/RAJDerks/loud-electron/releases/latest`)
     .pipe(
-      map(({ response: { tag_name, html_url } }) => {
-        const result = compare(version, tag_name);
-        if (result < 0) {
-          return html_url;
+      map(
+        ({
+          response: { tag_name, assets },
+        }: {
+          response: {
+            tag_name: string;
+            assets: { name: string; browser_download_url: string }[];
+          };
+        }) => {
+          const result = compare(version, tag_name);
+          if (result < 0) {
+            const exeUrl = assets.find((asset) => asset.name.endsWith('.exe'));
+            return exeUrl?.browser_download_url ?? null;
+          }
+          return null;
         }
-        return null;
-      })
+      )
     );
 
 export default checkClientUpdate$;

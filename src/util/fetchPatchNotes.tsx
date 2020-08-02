@@ -12,6 +12,7 @@ export enum PatchNotesURL {
 const fetchPatchNotes$ = (url: PatchNotesURL): Observable<PatchNote[] | null> =>
   ajax.get(url).pipe(
     map(({ response }) => {
+      console.warn(response);
       if (Array.isArray(response)) {
         if (response.length === 0) {
           return null;
