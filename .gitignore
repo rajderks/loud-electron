@@ -17,6 +17,7 @@ out
 .env
 .env*
 .DS_Store
+*.bat
 loud_log.txt
 jest_log.txt
 loud

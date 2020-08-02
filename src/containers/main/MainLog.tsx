@@ -13,8 +13,9 @@ import PinDownIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '29%',
-    minHeight: 150,
+    height: 180,
+    maxHeight: 180,
+    minHeight: 180,
     padding: theme.spacing(1),
     width: '100%',
     backgroundColor: darken('#282C31', 0.35),

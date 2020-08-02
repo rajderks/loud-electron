@@ -8,8 +8,8 @@ import {
   InputAdornment,
   IconButton,
   Icon,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -83,13 +83,13 @@ interface Props {
 }
 
 const MapsFilters: FunctionComponent<Props> = ({
-  onAddClicked,
+  // onAddClicked,
   onChangeFilters,
 }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(-1);
-  const [official, setOfficial] = useState(true);
+  const [official] = useState(false);
   const [sizeComparator, setSizeComparator] = useState<MapsFilterComparator>(
     '='
   );
@@ -262,7 +262,7 @@ const MapsFilters: FunctionComponent<Props> = ({
               value={playersComparator}
             />
           </FormControl>
-          <FormControlLabel
+          {/* <FormControlLabel
             className={classes.officialFormLabel}
             label="Official only"
             control={
@@ -273,7 +273,7 @@ const MapsFilters: FunctionComponent<Props> = ({
                 }}
               />
             }
-          />
+          /> */}
         </div>
       </div>
     </div>
