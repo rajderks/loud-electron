@@ -32,6 +32,7 @@ interface Props {
 const MainUpdateDialog = () => {
   const classes = useStyles();
   const [updateURL, setUpdateURL] = useState<string | null>(null);
+  const [waitRestart, setWaitRestart] = useState(false);
   useEffect(() => {
     checkClientUpdate$().subscribe(
       (n) => {
@@ -52,7 +53,12 @@ const MainUpdateDialog = () => {
         async (n) => {
           const blob = await n.arrayBuffer();
           try {
-            updateRestart(new Buffer(new Uint8Array(blob)));
+            setWaitRestart(true);
+            setTimeout(() => {
+              setWaitRestart(false);
+              setUpdateURL(null);
+              updateRestart(new Buffer(new Uint8Array(blob)));
+            }, 3000);
           } catch (_) {
             setUpdateURL(null);
           }
@@ -75,7 +81,9 @@ const MainUpdateDialog = () => {
       open={!!updateURL}
     >
       <Typography>
-        Updating to latest version, this may take a few minutes
+        {!waitRestart
+          ? `Updating to latest version, this may take a few minutes`
+          : 'Restarting...'}
       </Typography>
       <LinearProgress className={classes.bar} color="secondary" />
     </Dialog>

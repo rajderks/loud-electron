@@ -53,7 +53,7 @@ const updateRestart = (buffer: Buffer) => {
           'log',
         ]);
         logEntry(
-          'Could not auto-update. Please post the loud_log.txt in Discords #bug-report channel.'
+          'Could not write auto-update file. Please post the loud_log.txt in Discords #bug-report channel.'
         );
         throw new Error();
       }
