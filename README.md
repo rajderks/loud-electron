@@ -14,7 +14,6 @@ In the releases tab you can find the latest public release of the client.
 
 1. [Installation](#installation)
 2. [Features](#features)
-3. [Known Issues](#known-issues)
 
 ## Installation
 
