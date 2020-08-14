@@ -34,7 +34,7 @@ These are the primary features of the client:
 - Several buttons to locate all the logging that goes on (usefull for bug reports)
 - A [Discord invitation](https://discord.gg/8CsTDq2), you're absolutely welcome to join the community over there!
 - Toggle options for loading in Maps/Mods from the C:\Users\%username%\My Games\Gas Powered Games\Maps / Mods folders (do not put any additional content in the LOUD folder, it will be removed!)
-- A handy popup whenever an update to the client is available
+- A handy auto updater
 
 ## Contributing
 
