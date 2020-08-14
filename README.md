@@ -35,6 +35,7 @@ These are the primary features of the client:
 - A [Discord invitation](https://discord.gg/8CsTDq2), you're absolutely welcome to join the community over there!
 - Toggle options for loading in Maps/Mods from the C:\Users\%username%\My Games\Gas Powered Games\Maps / Mods folders (do not put any additional content in the LOUD folder, it will be removed!)
 - A handy auto updater
+- A map library where you can download LOUD approved maps
 
 ## Contributing
 
