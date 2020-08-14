@@ -12,7 +12,8 @@ export type MainContextItems =
   | 'help-gamelog'
   | 'log'
   | 'iconmod'
-  | 'run';
+  | 'run'
+  | 'shortcut';
 
 export interface IMainContext {
   enabledItems: MainContextItems[];

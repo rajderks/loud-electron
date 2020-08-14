@@ -41,6 +41,8 @@ const FILE_URI_ICONMOD = `${BASE_URI}/LOUD/bin/Advanced Strategic Icons Mod Inst
   /\//g,
   '\\'
 );
+const FILE_URI_ICON = `${BASE_URI}/LOUD/bin/loud.ico`;
+const FILE_URI_SHORTCUT = `${BASE_URI}/LOUD/bin/shortcut.vbs`;
 
 export {
   BASE_URI,
@@ -56,4 +58,6 @@ export {
   FILE_URI_INFO,
   FILE_URI_LOUDDATAPATHLUA,
   FILE_URI_ICONMOD,
+  FILE_URI_ICON,
+  FILE_URI_SHORTCUT,
 };

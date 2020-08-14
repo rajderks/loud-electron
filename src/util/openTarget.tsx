@@ -11,6 +11,7 @@ import {
   FILE_URI_HELP,
   FILE_URI_LOUDDATAPATHLUA,
   FILE_URI_ICONMOD,
+  FILE_URI_SHORTCUT,
 } from '../constants';
 import { from } from 'rxjs';
 import { logEntry } from './logger';
@@ -30,7 +31,8 @@ export type Target =
   | 'patreon'
   | 'discord'
   | 'iconmod'
-  | 'onedrive';
+  | 'onedrive'
+  | 'shortcut';
 
 const targetPath = (target: Target) => {
   switch (target) {
@@ -76,6 +78,8 @@ export const targetURI = (target: Target) => {
       return DIR_LOUD_GAMEDATA;
     case 'iconmod':
       return FILE_URI_ICONMOD;
+    case 'shortcut':
+      return FILE_URI_SHORTCUT;
     default:
       throw new Error('invalid target');
   }

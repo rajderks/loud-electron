@@ -118,6 +118,9 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
         );
       }
     });
+    openTargetCheck('shortcut').subscribe((n) => {
+      handleChangeEnabledItem('shortcut', n);
+    });
     openTargetCheck('log').subscribe((n) => {
       handleChangeEnabledItem('log', n);
     });

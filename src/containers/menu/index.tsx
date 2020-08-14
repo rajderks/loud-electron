@@ -9,6 +9,7 @@ import openTarget from '../../util/openTarget';
 import { updaterCreateLocalCRC$ } from '../../util/updater';
 import rungame from '../../util/rungame';
 import { version } from '../../../package.json';
+import createShortcuts from '../../util/createShortcuts';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -19,6 +20,8 @@ const Menu: FunctionComponent = () => {
     (menu) => {
       if (menu.id === 'game-run') {
         rungame();
+      } else if (menu.id === 'create-shortcuts') {
+        createShortcuts();
       } else if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
         const target = menu.id.split('-')[1] as 'maps' | 'mods';
         toggleUserContent(target).subscribe((n) => {
@@ -79,6 +82,12 @@ const Menu: FunctionComponent = () => {
           {
             label: 'Tools',
             submenu: [
+              {
+                id: 'create-shortcuts',
+                label: 'Create Shortcuts',
+                click: buttonCallback,
+                disabled: !enabledItems.includes('shortcut'),
+              },
               {
                 id: 'run-iconmod',
                 label: 'Icons Mod Installer',
