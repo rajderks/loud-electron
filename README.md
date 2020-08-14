@@ -36,29 +36,6 @@ These are the primary features of the client:
 - Toggle options for loading in Maps/Mods from the C:\Users\%username%\My Games\Gas Powered Games\Maps / Mods folders (do not put any additional content in the LOUD folder, it will be removed!)
 - A handy popup whenever an update to the client is available
 
-## Known issues
-
-### Shortcuts
-
-If you have the old client installed and used it to create shortcuts on your desktop, these will still work.
-If you haven't done this, follow the Game Shortcut section below.
-
-#### Game Shortcut
-
-If you decide to create new shortcuts or have not used the old client to do this for you, you can create a shortcut to `<root supcome dir>/bin/SupremeCommander.exe`, drag this to your desktop and add some arguments to target. `/log "..\LOUD\bin\Loud.log" /init "..\LOUD\bin\LoudDataPath.lua`
-
-The result should look like so:
-
-`"C:\SteamLibrary\steamapps\common\Supreme Commander Forged Alliance\bin\SupremeCommander.exe" /log "..\LOUD\bin\Loud.log" /init "..\LOUD\bin\LoudDataPath.lua"`
-
-![createshortcut](createshortcut.PNG?raw=true)
-![shortcut](shortcut.PNG?raw=true)
-
-#### Linux
-
-Although the **SCFA_Updater.exe** is primarily to be used on the Windows OS, Linux should be able to update the mod using this client.
-Feel free to hang in our Discord if it doesn't, as there is no way for myself to test this right now.
-
 ## Contributing
 
 If you want to contribute to this Client or the Mod itself, feel free to post a message in our Discord.
