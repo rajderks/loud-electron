@@ -51,6 +51,20 @@ const MainUpdateDialog = () => {
     if (updateURL) {
       fromFetch(`${apiBaseURI}/release`).subscribe(
         async (n) => {
+          if (n.status !== 200) {
+            logEntry(
+              `Auto-update failed: ${n.status} ${n.statusText}`,
+              'error',
+              ['file', 'log']
+            );
+            logEntry(
+              'Could not auto-update. Please post the loud_log.txt in Discords #bug-report channel.',
+              'error',
+              ['main']
+            );
+            setUpdateURL(null);
+            return;
+          }
           const blob = await n.arrayBuffer();
           try {
             setWaitRestart(true);
