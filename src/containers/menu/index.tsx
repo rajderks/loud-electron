@@ -15,7 +15,7 @@ import {
 import rungame from '../../util/rungame';
 import { version } from '../../../package.json';
 import createShortcuts from '../../util/createShortcuts';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { BASE_URI } from '../../constants';
 
 const currentWindow = remote.getCurrentWindow();
