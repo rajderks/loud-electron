@@ -6,10 +6,17 @@ import toggleUserContent from '../../util/toggleUserContent';
 import { logEntry } from '../../util/logger';
 import MainContext from '../main/MainContext';
 import openTarget from '../../util/openTarget';
-import { updaterCreateLocalCRC$ } from '../../util/updater';
+import {
+  updaterCreateLocalCRC$,
+  updaterGetCRCInfo$,
+  updaterCollectOutOfSyncFiles$,
+  updaterParseRemoteFileContent,
+} from '../../util/updater';
 import rungame from '../../util/rungame';
 import { version } from '../../../package.json';
 import createShortcuts from '../../util/createShortcuts';
+import { switchMap, tap } from 'rxjs/operators';
+import { BASE_URI } from '../../constants';
 
 const currentWindow = remote.getCurrentWindow();
 
@@ -51,6 +58,34 @@ const Menu: FunctionComponent = () => {
         openTarget(target);
       } else if (menu.id === 'create-crc') {
         updaterCreateLocalCRC$().subscribe();
+      } else if (menu.id === 'list-updates') {
+        updaterGetCRCInfo$({ channels: [] })
+          .pipe(
+            switchMap((crcInfo) => {
+              const fis = updaterParseRemoteFileContent(crcInfo);
+              return updaterCollectOutOfSyncFiles$(fis, BASE_URI, {
+                channels: ['file'],
+              });
+            })
+          )
+          .subscribe((n) => {
+            logEntry('Files that are outdated:', 'log', [
+              'main',
+              'log',
+              'file',
+            ]);
+            logEntry(
+              n.length === 0
+                ? 'All files are up to date'
+                : n.reduce(
+                    (acc, fi) =>
+                      acc.length > 0 ? `${acc}\r\n${fi.path}` : fi.path,
+                    ''
+                  ),
+              'log',
+              ['main', 'log', 'file']
+            );
+          });
       } else if (menu.id === 'run-iconmod') {
         openTarget('iconmod');
       } else if (menu.id === 'help-patchnotes') {
@@ -123,6 +158,12 @@ const Menu: FunctionComponent = () => {
                 label: 'Toggle user mods',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
+              },
+              {
+                id: 'list-updates',
+                label: 'List updates',
+                click: buttonCallback,
+                disabled: !enabledItems.includes('run'),
               },
               {
                 id: 'create-crc',
