@@ -32,7 +32,7 @@ const DOC_URI_GAMEPREFS = path.resolve(
 );
 
 const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
-const FILE_URI_LOG = `${BASE_URI}/loud_log.txt`;
+const FILE_URI_LOG = `${BASE_URI}/SCFA_Updater.log`;
 const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
 const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
 const FILE_URI_INFO = `${BASE_URI}/LOUD/doc/info.txt`;

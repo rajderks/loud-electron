@@ -14,8 +14,8 @@ cd "${BASE_URI}"
 
 TASKKILL /F /IM "SCFA_Updater.exe"
 
-RENAME ".\\SCFA_updater.exe" "SCFA_Updater_BACKUP"
-RENAME ".\\SCFA_updater_UPDATE" "SCFA_updater.exe"
+RENAME ".\\SCFA_Updater.exe" "SCFA_Updater_BACKUP"
+RENAME ".\\SCFA_Updater_UPDATE" "SCFA_Updater.exe"
 
 START "" ".\\SCFA_Updater.exe"
 

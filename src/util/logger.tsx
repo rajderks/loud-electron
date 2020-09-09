@@ -13,6 +13,8 @@ const LOG_URI =
     : './jest_log.txt';
 
 export const logInit = () => {
+  // Legacy fix
+  fs.unlink(`${BASE_URI}/loud_log.txt`, () => {});
   fs.unlink(LOG_URI, () => {});
   fs.writeFile(LOG_URI, '', () => {});
 };
