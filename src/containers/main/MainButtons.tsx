@@ -151,6 +151,7 @@ const MainButtons: FunctionComponent<Props> = ({
             onClick={onMaps}
             color="secondary"
             variant="contained"
+            disabled
           >
             <Typography color="inherit" variant="body2">
               <strong>Map library</strong>

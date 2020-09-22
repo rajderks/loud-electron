@@ -607,6 +607,14 @@ const updaterCleanupGameData$ = (
         }
         const falseEntries = entries.filter((e) => !gamedataInCRC.includes(e));
         for (let entry of falseEntries) {
+          if (entry.toLowerCase().includes('advanced strategic icons')) {
+            logEntry(
+              `updaterCleanupGamedata$:mv:: Skipping Advanced strategic icons`,
+              'log',
+              ['file', 'log']
+            );
+            continue;
+          }
           fs.unlink(`${BASE_URI}/LOUD/gamedata/${entry}`, (errMv) => {
             if (errMv) {
               logEntry(`updaterCleanupGamedata$:mv:: ${errMv}`);

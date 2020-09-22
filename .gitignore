@@ -29,3 +29,4 @@ yarn-error.log*
 src/util/__tests__/LOUD/**/*
 quokka
 quokka-scratch.ts
+*.log
