@@ -3,7 +3,7 @@ import { BASE_URI } from '../constants';
 import { logEntry } from './logger';
 
 const createUserDirectories = () => {
-  fs.stat(`${BASE_URI}/LOUD/usermaps`, (err, stats) => {
+  fs.stat(`${BASE_URI}/LOUD/usermaps`, (err) => {
     if (err) {
       fs.mkdir(`${BASE_URI}/LOUD/usermaps`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
@@ -38,7 +38,7 @@ const createUserDirectories = () => {
       });
     }
   });
-  fs.stat(`${BASE_URI}/LOUD/usermods`, (err, stats) => {
+  fs.stat(`${BASE_URI}/LOUD/usermods`, (err) => {
     if (err) {
       fs.mkdir(`${BASE_URI}/LOUD/usermods`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
@@ -65,7 +65,7 @@ const createUserDirectories = () => {
         }
         if (files.length) {
           logEntry(
-            `*** Warning *** Files found in 'usermods' directory and will be loaded as maps`,
+            `*** Warning *** Files found in 'usermods' directory and will be loaded as mods`,
             'log',
             ['log', 'file']
           );

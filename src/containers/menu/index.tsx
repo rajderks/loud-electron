@@ -149,13 +149,13 @@ const Menu: FunctionComponent = () => {
               },
               {
                 id: 'toggle-maps',
-                label: 'Toggle user maps',
+                label: 'Toggle user maps (FAF/Vanilla)',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },
               {
                 id: 'toggle-mods',
-                label: 'Toggle user mods',
+                label: 'Toggle user mods (FAF/Vanilla)',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },

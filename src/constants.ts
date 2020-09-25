@@ -32,6 +32,8 @@ const DOC_URI_GAMEPREFS = path.resolve(
 );
 
 const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
+const DIR_LOUD_USERMAPS = `${BASE_URI}/LOUD/usermaps`;
+const DIR_LOUD_USERMODS = `${BASE_URI}/LOUD/usermods`;
 const FILE_URI_LOG = `${BASE_URI}/SCFA_Updater.log`;
 const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
 const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
@@ -60,4 +62,6 @@ export {
   FILE_URI_ICONMOD,
   FILE_URI_ICON,
   FILE_URI_SHORTCUT,
+  DIR_LOUD_USERMAPS,
+  DIR_LOUD_USERMODS,
 };

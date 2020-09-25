@@ -2,8 +2,6 @@ import fs from 'fs';
 import { spawn, exec } from 'child_process';
 import {
   DIR_LOUD_GAMEDATA,
-  DOC_DIR_SUPCOM_MAPS,
-  DOC_DIR_SUPCOM_MODS,
   DOC_DIR_SUPCOM_REPLAYS,
   FILE_URI_LOG,
   FILE_URI_INFO,
@@ -12,6 +10,8 @@ import {
   FILE_URI_LOUDDATAPATHLUA,
   FILE_URI_ICONMOD,
   FILE_URI_SHORTCUT,
+  DIR_LOUD_USERMODS,
+  DIR_LOUD_USERMAPS,
 } from '../constants';
 import { from } from 'rxjs';
 import { logEntry } from './logger';
@@ -61,9 +61,9 @@ export const targetURI = (target: Target) => {
     case 'datapathlua':
       return FILE_URI_LOUDDATAPATHLUA;
     case 'maps':
-      return DOC_DIR_SUPCOM_MAPS;
+      return DIR_LOUD_USERMAPS.replace(/\//g, '\\');
     case 'mods':
-      return DOC_DIR_SUPCOM_MODS;
+      return DIR_LOUD_USERMODS.replace(/\//g, '\\');
     case 'replays':
       return DOC_DIR_SUPCOM_REPLAYS;
     case 'log':

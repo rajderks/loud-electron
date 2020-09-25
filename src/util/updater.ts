@@ -482,10 +482,12 @@ const updaterCollectOutOfSyncFiles$ = (
  */
 const excludeCRC = [
   'louddatapath.lua',
+  '.unsupported',
   'usermaps',
   'usermods',
   'usergamedata',
   'loud.log',
+  '.scfareplay',
 ];
 
 /**
