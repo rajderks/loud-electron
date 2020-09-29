@@ -24,7 +24,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
-import { BASE_URI, DIR_LOUD_GAMEDATA } from '../../constants';
+import { BASE_URI } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
 import electron, { ipcRenderer } from 'electron';
