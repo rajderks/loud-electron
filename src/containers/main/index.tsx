@@ -5,6 +5,8 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
+import fs from 'fs';
+import path from 'path';
 import MainButtons from './MainButtons';
 import {
   updaterCollectOutOfSyncFiles$,
@@ -22,7 +24,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
-import { BASE_URI } from '../../constants';
+import { BASE_URI, DIR_LOUD_GAMEDATA } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
 import electron, { ipcRenderer } from 'electron';
@@ -37,6 +39,9 @@ import {
   MainLogDownloadFileProgressStatusSubject,
 } from './observables';
 import MainUpdateDialog from './MainUpdateDialog';
+import toggleUserContent, {
+  checkUserContent,
+} from '../../util/toggleUserContent';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -101,7 +106,7 @@ const Main: FunctionComponent = () => {
     createUserDirectories();
   }, []);
 
-  const handleUpdate = useCallback(() => {
+  const handleUpdate = useCallback(async () => {
     if (
       updateStatus !== UpdateStatus.Failed &&
       updateStatus !== UpdateStatus.NotChecked &&
@@ -109,6 +114,9 @@ const Main: FunctionComponent = () => {
     ) {
       return;
     }
+    const beforeUpdateMapsToggled = await checkUserContent('maps').toPromise();
+    const beforeUpdateModsToggled = await checkUserContent('mods').toPromise();
+
     MainLogDownloadFilePercentageStatusSubject.next(0);
     MainLogDownloadFileProgressStatusSubject.next([0, 0]);
     let fileInfos: RemoteFileInfo[] | null = null;
@@ -118,6 +126,24 @@ const Main: FunctionComponent = () => {
         switchMap((crcInfo) => {
           const fis = updaterParseRemoteFileContent(crcInfo);
           fileInfos = fis.slice();
+          try {
+            fs.unlinkSync(
+              path.join(
+                BASE_URI,
+                'LOUD',
+                fileInfos.find((f) =>
+                  f.path
+                    .toLowerCase()
+                    .includes('LoudDataPath.lua'.toLowerCase())
+                )!.path
+              )
+            );
+          } catch (e) {
+            logEntry(`Could not delete bin/LoudDataPath.lua! ${e}`, 'error', [
+              'log',
+              'file',
+            ]);
+          }
           return updaterCollectOutOfSyncFiles$(fis, BASE_URI, {
             channels: ['file'],
           });
@@ -182,6 +208,16 @@ const Main: FunctionComponent = () => {
                 );
               }
             );
+          }
+          try {
+            if (beforeUpdateMapsToggled) {
+              toggleUserContent('maps');
+            }
+            if (beforeUpdateModsToggled) {
+              toggleUserContent('mods');
+            }
+          } catch (e) {
+            logEntry(e, 'error', ['file', 'log', 'main']);
           }
           setUpdateStatus(UpdateStatus.UpToDate);
           openTargetCheck('datapathlua').subscribe((n) => {
