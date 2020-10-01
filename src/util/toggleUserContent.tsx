@@ -60,19 +60,27 @@ const toggleUserContent = (subject: 'maps' | 'mods') =>
     })
   );
 
-export const checkUserContent = (subject: Subject) =>
+export const checkUserContent = (subject: Subject, suppressLog = false) =>
   from<Promise<boolean>>(
     new Promise((res, rej) => {
       const luaFilePath = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
       fs.stat(luaFilePath, (errLua, data) => {
         if (errLua) {
-          logEntry(`toggleUserContent:luaFile:: does not exist`);
+          logEntry(
+            `toggleUserContent:luaFile:: does not exist`,
+            'error',
+            suppressLog ? ['file', 'log'] : ['main', 'log', 'file']
+          );
           rej();
           return;
         }
         fs.readFile(luaFilePath, (errRead, data) => {
           if (errRead) {
-            logEntry(`toggleUserConrent:read:: could not read ${luaFilePath}`);
+            logEntry(
+              `toggleUserConrent:read:: could not read ${luaFilePath}`,
+              'error',
+              suppressLog ? ['file', 'log'] : ['main', 'log', 'file']
+            );
             rej();
             return;
           }

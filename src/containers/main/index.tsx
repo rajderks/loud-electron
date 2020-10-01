@@ -114,8 +114,12 @@ const Main: FunctionComponent = () => {
     ) {
       return;
     }
-    const beforeUpdateMapsToggled = await checkUserContent('maps').toPromise();
-    const beforeUpdateModsToggled = await checkUserContent('mods').toPromise();
+    const beforeUpdateMapsToggled = await checkUserContent('maps', true)
+      .toPromise()
+      .catch(() => false);
+    const beforeUpdateModsToggled = await checkUserContent('mods', true)
+      .toPromise()
+      .catch(() => false);
 
     MainLogDownloadFilePercentageStatusSubject.next(0);
     MainLogDownloadFileProgressStatusSubject.next([0, 0]);
