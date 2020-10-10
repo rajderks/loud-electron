@@ -98,7 +98,7 @@ export const openTargetCheck = (target: Target) =>
     })
   );
 
-const openTarget = (target: Target) => {
+const openTarget = (target: Target, extra?: string) => {
   if (target === 'iconmod') {
     exec(`"${FILE_URI_ICONMOD}"`, (err) => {
       if (err) {
@@ -111,8 +111,8 @@ const openTarget = (target: Target) => {
     shell.openPath(`https://paypal.me/pools/c/8qCnWXDegw`);
   } else if (target === 'patreon') {
     shell.openPath('https://www.patreon.com/user?u=37869110');
-  } else if (target === 'discord') {
-    shell.openPath('https://discord.gg/SMMctVZ');
+  } else if (target === 'discord' && extra) {
+    shell.openPath(extra);
   } else {
     let path = targetPath(target);
     let targetArgs: string[] = [targetURI(target)];

@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   makeStyles,
   Button,
@@ -11,6 +16,9 @@ import MainUpdateStatus from './MainUpdateStatus';
 import MainContext from './MainContext';
 import { ReactComponent as DiscordLogo } from '../../assets/discord.svg';
 import { ReactComponent as PaypalLogo } from '../../assets/paypal.svg';
+import api from '../../api/api';
+import { logEntry } from '../../util/logger';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -69,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: darken('#282C31', 0.35),
     borderRadius: 9999,
   },
+  disabledFilter: {
+    filter: 'grayscale(100%)',
+  },
 }));
 
 interface Props {
@@ -77,7 +88,7 @@ interface Props {
   onPatchNotes: () => void;
   onMaps: () => void;
   onDonate: () => void;
-  onDiscord: () => void;
+  onDiscord: (url: string) => void;
   updateStatus: UpdateStatus;
 }
 
@@ -103,6 +114,33 @@ const MainButtons: FunctionComponent<Props> = ({
 }) => {
   const classes = useStyles();
   const { enabledItems } = useContext(MainContext);
+  const [discordURL, setDiscordURL] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<string>('static/discord', { responseType: 'text' })
+      .subscribe(
+        (n) => {
+          if (!n || !n.includes('//discord.gg/')) {
+            logEntry(`Discord URL could not be fetched`, 'error', [
+              'log',
+              'main',
+              'file',
+            ]);
+          }
+          setDiscordURL(n);
+        },
+        (e) => {
+          logEntry(`Discord URL could not be fetched`, 'error', [
+            'log',
+            'main',
+            'file',
+          ]);
+          setDiscordURL(null);
+        }
+      );
+  }, []);
+
   return (
     <>
       <div className={classes.buttonWrapper}>
@@ -162,8 +200,21 @@ const MainButtons: FunctionComponent<Props> = ({
               <strong>Patch Notes</strong>
             </Typography>
           </Button>
-          <div className={classes.svgButtonWrapper}>
-            <IconButton style={{ height: 78, width: 78 }} onClick={onDiscord}>
+          <div
+            className={clsx(
+              { [classes.disabledFilter]: !discordURL },
+              classes.svgButtonWrapper
+            )}
+          >
+            <IconButton
+              disabled={!discordURL}
+              style={{ height: 78, width: 78 }}
+              onClick={() => {
+                if (discordURL) {
+                  onDiscord(discordURL);
+                }
+              }}
+            >
               <DiscordLogo width="72" height="72" />
             </IconButton>
           </div>

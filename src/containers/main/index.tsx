@@ -301,8 +301,8 @@ const Main: FunctionComponent = () => {
     openTarget('paypal');
   };
 
-  const handleDiscord = () => {
-    openTarget('discord');
+  const handleDiscord = (url: string) => {
+    openTarget('discord', url);
   };
 
   useEffect(() => {

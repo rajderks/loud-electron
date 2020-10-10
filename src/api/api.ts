@@ -1,5 +1,6 @@
 import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
+import { AjaxRequest } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 export const apiBaseURI =
   process.env.NODE_ENV === 'production' || true
@@ -11,10 +12,13 @@ const constructURI = (relativeURI: string) => {
 };
 
 class API {
-  get = <T>(relativeURI: string) => {
-    return ajax
-      .get(constructURI(relativeURI))
-      .pipe(map((response) => response.response as T));
+  get = <T>(relativeURI: string, opts?: AjaxRequest) => {
+    return ajax({
+      url: constructURI(relativeURI),
+      responseType: 'json',
+      method: 'get',
+      ...opts,
+    }).pipe(map((response) => response.response as T));
   };
 
   post = <T>(relativeURI: string, data: any) => {
