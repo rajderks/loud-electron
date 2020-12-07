@@ -42,6 +42,7 @@ import MainUpdateDialog from './MainUpdateDialog';
 import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
+import { GlobalHotKeys } from 'react-hotkeys';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -68,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column-reverse',
   },
 }));
+
+const keyMap = {
+  openMap: 'ctrl+alt+p',
+};
 
 const Main: FunctionComponent = () => {
   const classes = useStyles();
@@ -285,6 +290,12 @@ const Main: FunctionComponent = () => {
       );
   }, [changeEnabledItem, updateStatus]);
 
+  const handlers = {
+    openMap: () => {
+      handleMaps();
+    },
+  };
+
   const handleRun = () => {
     rungame();
   };
@@ -322,41 +333,43 @@ const Main: FunctionComponent = () => {
   }, [updateStatus]);
 
   return (
-    <div className={classes.background}>
-      <MainUpdateDialog />
-      <MainLog key="main-log" />
-      <MainButtons
-        updateStatus={updateStatus}
-        onUpdate={handleUpdate}
-        onPatchNotes={handlePatchNotes}
-        onMaps={handleMaps}
-        onRun={handleRun}
-        onDonate={handleDonate}
-        onDiscord={handleDiscord}
-      />
-      <div className={classes.userContentWrapper}>
-        <Typography
-          display="inline"
-          variant="body2"
-          className={classes.userContentLabel}
-          style={{
-            color: enabledItems.includes('maps') ? 'red' : 'white',
-          }}
-        >{`User maps: ${
-          enabledItems.includes('maps') ? 'enabled' : 'disabled'
-        }`}</Typography>
-        <Typography
-          display="inline"
-          variant="body2"
-          className={classes.userContentLabel}
-          style={{
-            color: enabledItems.includes('mods') ? 'red' : 'white',
-          }}
-        >{`User mods: ${
-          enabledItems.includes('mods') ? 'enabled' : 'disabled'
-        }`}</Typography>
+    <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
+      <div className={classes.background}>
+        <MainUpdateDialog />
+        <MainLog key="main-log" />
+        <MainButtons
+          updateStatus={updateStatus}
+          onUpdate={handleUpdate}
+          onPatchNotes={handlePatchNotes}
+          onMaps={handleMaps}
+          onRun={handleRun}
+          onDonate={handleDonate}
+          onDiscord={handleDiscord}
+        />
+        <div className={classes.userContentWrapper}>
+          <Typography
+            display="inline"
+            variant="body2"
+            className={classes.userContentLabel}
+            style={{
+              color: enabledItems.includes('maps') ? 'red' : 'white',
+            }}
+          >{`User maps: ${
+            enabledItems.includes('maps') ? 'enabled' : 'disabled'
+          }`}</Typography>
+          <Typography
+            display="inline"
+            variant="body2"
+            className={classes.userContentLabel}
+            style={{
+              color: enabledItems.includes('mods') ? 'red' : 'white',
+            }}
+          >{`User mods: ${
+            enabledItems.includes('mods') ? 'enabled' : 'disabled'
+          }`}</Typography>
+        </div>
       </div>
-    </div>
+    </GlobalHotKeys>
   );
 };
 

@@ -18,14 +18,12 @@ import {
   Divider,
 } from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
-import MapsAddDialog from './MapsAddDialog';
 import PageHeader from '../../components/PageHeader';
 import MapsDetailsDialog from './MapsDetailsDialog';
 import { logEntry } from '../../util/logger';
 import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
-import { GlobalHotKeys } from 'react-hotkeys';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,24 +51,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const keyMap = {
-  addMap: 'ctrl+alt+p',
-};
-
 const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [maps, setMaps] = useState<MapAttr[] | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(true);
-  const [addOpen, setAddOpen] = useState(false);
   const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
   const [refreshTimestamp, setRefreshTimestamp] = useState(0);
   const [userMapsEnabled, setUserMapsEnabled] = useState(false);
-  const handlers = {
-    addMap: () => {
-      setAddOpen(true);
-    },
-  };
 
   useEffect(() => {
     checkUserContent('maps').subscribe((n) => {
@@ -133,10 +121,6 @@ const Maps: FunctionComponent<{}> = () => {
     [maps]
   );
 
-  const handleAddOpen = useCallback((open) => {
-    setAddOpen(open);
-  }, []);
-
   const handleOnClickMap = useCallback((mapAttr: MapAttr) => {
     setMapsDetailsAttr(mapAttr);
   }, []);
@@ -146,7 +130,7 @@ const Maps: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
+    <>
       <PageHeader title="Maps">
         <Divider
           orientation="vertical"
@@ -167,21 +151,11 @@ const Maps: FunctionComponent<{}> = () => {
         />
       </PageHeader>
       <div className={classes.root}>
-        <MapsAddDialog
-          open={addOpen}
-          setOpen={handleAddOpen}
-          onAddedMap={() => {
-            setRefreshTimestamp(Date.now().valueOf());
-          }}
-        />
         <MapsDetailsDialog
           mapAttr={mapsDetailsAttr}
           onClose={handleMapsDetailsOnClose}
         />
-        <MapsFilters
-          onChangeFilters={handleFiltersChanged}
-          onAddClicked={handleAddOpen}
-        />
+        <MapsFilters onChangeFilters={handleFiltersChanged} />
         <div className={classes.gridWrapper}>
           {!mapsFailed ? (
             <MapsGrid>
@@ -221,7 +195,7 @@ const Maps: FunctionComponent<{}> = () => {
           )}
         </div>
       </div>
-    </GlobalHotKeys>
+    </>
   );
 };
 

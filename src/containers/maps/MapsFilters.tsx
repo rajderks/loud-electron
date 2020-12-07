@@ -78,14 +78,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  onAddClicked: (open: boolean) => void;
   onChangeFilters: (filters: MapsFilter[]) => void;
 }
 
-const MapsFilters: FunctionComponent<Props> = ({
-  // onAddClicked,
-  onChangeFilters,
-}) => {
+const MapsFilters: FunctionComponent<Props> = ({ onChangeFilters }) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(-1);
