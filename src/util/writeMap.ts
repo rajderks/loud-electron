@@ -1,24 +1,22 @@
 import path from 'path';
 import fs from 'fs';
-import { DOC_DIR_SUPCOM_MAPS } from '../constants';
+import { DIR_LOUD_USERMAPS } from '../constants';
 import { from } from 'rxjs';
+import ExtractZip from 'extract-zip';
 import { logEntry } from './logger';
 
-const writeMap$ = (buffer: Buffer, relativePath: string, version: string) => {
-  const fileName = relativePath.split('.').slice(0, -1).join('.');
-  const absolutePath = path.normalize(
-    `${DOC_DIR_SUPCOM_MAPS}/${fileName}.${version}${path.extname(relativePath)}`
-  );
+const writeMap$ = (buffer: Buffer, fileName: string) => {
   return from(
-    new Promise((res, rej) => {
-      fs.writeFile(absolutePath, buffer, (err) => {
-        if (err) {
-          logEntry(`${err.errno}:${err.message}`, 'error', ['log']);
-          rej(err);
-          return;
-        }
-        res();
-      });
+    new Promise(async (res) => {
+      const SCDPath = path.join(DIR_LOUD_USERMAPS, fileName);
+      fs.writeFileSync(SCDPath, buffer);
+
+      logEntry(`scd written: ${SCDPath}`, 'log', ['file']);
+      logEntry(`unpacking: ${SCDPath}`, 'log', ['file']);
+      await ExtractZip(SCDPath, { dir: DIR_LOUD_USERMAPS });
+      res();
+      logEntry(`removing scd: ${SCDPath}`, 'log', ['file']);
+      fs.unlinkSync(SCDPath);
     })
   );
 };

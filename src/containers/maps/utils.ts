@@ -24,4 +24,22 @@ const mapSizeToString = (size: number, short = false) => {
   }
 };
 
-export { mapSizeToString };
+
+const mapSizeToValue = (size: number): number | null => {
+  switch (size) {
+    case 256:
+      return 0;
+    case 512:
+      return 1;
+    case 1024:
+      return 2;
+    case 2048:
+      return 3;
+    case 4096:
+      return 4;
+    default:
+      return null;
+  }
+};
+
+export { mapSizeToString, mapSizeToValue };

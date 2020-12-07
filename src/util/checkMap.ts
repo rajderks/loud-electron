@@ -1,40 +1,52 @@
 import fs from 'fs';
-import { DOC_DIR_SUPCOM_MAPS } from '../constants';
+import { DIR_LOUD_USERMAPS } from '../constants';
 import { from } from 'rxjs';
+import path from 'path';
+import parseScenario from './parseScenario';
 
-const checkMap$ = (relativePath: string, version?: string) => {
-  const fileChunks = relativePath.split('.').reverse();
-  if (fileChunks.length < 2) {
-    throw new Error(`Invalid map lookup, ${relativePath}, ${version}`);
+const checkMap$ = (mapName: string, version?: string) => {
+  let mapDir = mapName;
+  if (mapDir.endsWith('.scd')) {
+    mapDir = mapDir.replace('.scd', '');
   }
-  fileChunks.splice(1, 0, version ?? '1');
-  return from(
-    new Promise<{ versionExists: boolean; versions: string[] }>((res, rej) => {
-      fs.readdir(DOC_DIR_SUPCOM_MAPS, (err, files) => {
-        if (err) {
-          rej(err);
-          return;
-        }
 
-        let versionExists = false;
-        const versions = files
-          .filter((f) => {
-            const fChunks = f.split('.').reverse();
-            if (
-              fChunks[0] === 'scd' &&
-              fChunks[fChunks.length - 1] === fileChunks[fileChunks.length - 1]
-            ) {
-              if (fChunks[1] === version) {
-                versionExists = true;
-              }
-              return true;
+  return from(
+    new Promise<{ mapDir: string; versionExists: boolean; version?: string }>(
+      (res, rej) => {
+        fs.stat(path.join(DIR_LOUD_USERMAPS, mapDir), (err) => {
+          if (err) {
+            console.error(err);
+            res({ versionExists: false, mapDir });
+            return;
+          }
+          console.log('dir exists');
+
+          fs.readdir(path.join(DIR_LOUD_USERMAPS, mapDir), (err, files) => {
+            if (err) {
+              rej(err);
+              return;
             }
-            return false;
-          })
-          .map((fileName) => fileName.split('.').join('.'));
-        res({ versionExists, versions });
-      });
-    })
+            const scenarioFile = files.find((f) => f.endsWith('_scenario.lua'));
+            if (!scenarioFile) {
+              res({ versionExists: false, mapDir });
+              return;
+            }
+            try {
+              const scenario = parseScenario(
+                path.join(DIR_LOUD_USERMAPS, mapDir, scenarioFile)
+              );
+              res({
+                versionExists: scenario.map_version === version,
+                version: scenario.map_version,
+                mapDir: mapDir,
+              });
+            } catch (e) {
+              rej(e);
+            }
+          });
+        });
+      }
+    )
   );
 };
 

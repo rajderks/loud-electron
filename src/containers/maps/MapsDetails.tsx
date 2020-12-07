@@ -117,14 +117,16 @@ const MapsDetails: FunctionComponent<Props> = ({
 
   useEffect(() => {
     checkMap$(path.basename(file), version).subscribe(
-      ({ versionExists, versions }) => {
+      ({ versionExists, version }) => {
+        console.warn('initial map check', versionExists, version);
         if (versionExists) {
           setMapState(MapState.Exists);
-        } else if (versions.length > 0) {
+        } else if (version !== undefined) {
           setMapState(MapState.Outdated);
         }
       },
-      () => {
+      (e) => {
+        console.error(e);
         // setMapState(MapState.None);
       }
     );
@@ -220,15 +222,10 @@ const MapsDetails: FunctionComponent<Props> = ({
             }
             if (mapState === MapState.Exists) {
               checkMap$(path.basename(file), version)
-                .pipe(switchMap(({ versions }) => removeMap$(versions)))
-                .subscribe(
-                  () => {
-                    setMapState(MapState.None);
-                  },
-                  (e) => {
-                    logEntry(e, 'error', ['log']);
-                  }
-                );
+                .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
+                .subscribe(() => {
+                  setMapState(MapState.None);
+                });
               return;
             }
             setMapState(MapState.Downloading);
@@ -245,14 +242,10 @@ const MapsDetails: FunctionComponent<Props> = ({
                 }),
                 switchMap((buffer) =>
                   checkMap$(path.basename(file), version).pipe(
-                    switchMap(({ versions }) =>
-                      removeMap$(versions).pipe(
+                    switchMap(({ mapDir }) =>
+                      removeMap$(mapDir).pipe(
                         switchMap(() =>
-                          writeMap$(
-                            new Buffer(buffer),
-                            path.basename(file),
-                            version
-                          )
+                          writeMap$(Buffer.from(buffer), path.basename(file))
                         )
                       )
                     )
@@ -264,7 +257,7 @@ const MapsDetails: FunctionComponent<Props> = ({
                   setMapState(MapState.Exists);
                 },
                 (e) => {
-                  logEntry(e, 'error', ['log']);
+                  logEntry(e, 'error', ['log', 'file']);
                   setMapState(MapState.None);
                 }
               );
