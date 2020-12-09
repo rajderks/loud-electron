@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { ajax } from 'rxjs/ajax';
 import { map } from 'rxjs/operators';
 import { PatchNote } from './types';
 import { Observable } from 'rxjs';
@@ -16,7 +15,7 @@ const fetchPatchNotes$ = (url: PatchNotesURL): Observable<PatchNote[] | null> =>
     url,
     responseType: url === PatchNotesURL.LOUD ? 'text' : 'json',
   }).pipe(
-    map(({ response }) => {
+    map(({ response }: any) => {
       console.warn(response);
       if (url === PatchNotesURL.LOUD) {
         return [
