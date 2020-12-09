@@ -170,7 +170,7 @@ const PatchNotes = () => {
                     <div className={classes.noteHeader}>
                       <Typography variant="h6">{note.name}</Typography>
                       <Typography variant="caption" color="textSecondary">
-                        {note.published_at.format('LL')}
+                        {note.published_at?.format('LL') ?? ''}
                       </Typography>
                     </div>
                     <Typography className={classes.noteBody} variant="body2">

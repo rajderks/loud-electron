@@ -209,9 +209,22 @@ const MapsDetails: FunctionComponent<Props> = ({
             marginBottom: 20,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            whiteSpace: 'pre-line',
           }}
         >
-          {description ?? 'No description was given for this map'}
+          {description
+            ?.replace(/\\r/gim, '')
+            .split('\\n')
+            .map(function (item, i) {
+              return (
+                <span key={i}>
+                  {item}
+                  <br />
+                </span>
+              );
+            }) ??
+            description ??
+            'No description was given for this map'}
         </Typography>
         <Button
           color="secondary"
