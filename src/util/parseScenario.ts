@@ -6,44 +6,43 @@ const parseScenario = (source: string): ScenarioLUA => {
   const scenarioInfo = fs.readFileSync(source).toString();
   console.warn(scenarioInfo);
   const author = /author\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1];
-  const description =
-    /description\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1] ?? null;
-  const map_version =
-    /map_version\s*=\s*["']*([^"'}{,]*),?\n?/gim.exec(scenarioInfo)?.[1] ??
-    null;
-  const name = /name\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1] ?? null;
-  const size = /size\s*=\s*"?{(\d*)/gim.exec(scenarioInfo)?.[1] ?? null;
+  const description = /description\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1];
+  const map_version = String(
+    /map_version\s*=\s*["']*([^"'}{,]*),?\n?/gim.exec(scenarioInfo)?.[1]
+  );
+  const name = /name\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1];
+  const size = /size\s*=\s*"?{(\d*)/gim.exec(scenarioInfo)?.[1];
 
-  const players =
-    /armies.*{([a-zA-Z0-9|\s|\w|\S]*?)}/gim.exec(scenarioInfo)?.[1]?.split(',')
-      ?.length ?? null;
+  const players = /armies.*{([a-zA-Z0-9|\s|\w|\S]*?)}/gim
+    .exec(scenarioInfo)?.[1]
+    ?.split(',')?.length;
 
   // if (!author) {
   //   throw new Error(`author missing. ${author}`);
   // }
 
-  if (!description) {
-    throw new Error(`author missing. ${description}`);
-  }
+  // if (!description) {
+  //   throw new Error(`author missing. ${description}`);
+  // }
 
-  if (!map_version) {
-    throw new Error(`map_version missing. ${map_version}`);
-  }
+  // if (!map_version) {
+  //   throw new Error(`map_version missing. ${map_version}`);
+  // }
 
-  if (!name) {
-    throw new Error(`name missing. ${name}`);
-  }
+  // if (!name) {
+  //   throw new Error(`name missing. ${name}`);
+  // }
 
-  if (!size) {
-    throw new Error(`size missing. ${size}`);
-  }
-  const sizeValue = mapSizeToValue(Number.parseInt(size));
+  // if (!size) {
+  //   throw new Error(`size missing. ${size}`);
+  // }
+  const sizeValue = mapSizeToValue(Number.parseInt(size ?? '256')) ?? undefined;
   if (!sizeValue) {
-    throw new Error(`Invalid size. ${size}, ${sizeValue}`);
+    // throw new Error(`Invalid size. ${size}, ${sizeValue}`);
   }
 
-  if (!players) {
-    throw new Error(`Could not determine player amount ${players}`);
+  if (!map_version?.length) {
+    throw new Error(`Could not determine map_version ${source}`);
   }
 
   const result: ScenarioLUA = {

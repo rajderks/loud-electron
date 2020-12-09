@@ -32,7 +32,7 @@ const Menu: FunctionComponent = () => {
       } else if (menu.id === 'toggle-maps' || menu.id === 'toggle-mods') {
         const target = menu.id.split('-')[1] as 'maps' | 'mods';
         toggleUserContent(target).subscribe((n) => {
-          logEntry(`Toggled user content | ${target} : ${n}`);
+          logEntry(`Toggled External content | ${target} : ${n}`);
           changeEnabledItem(target, n);
         });
       } else if (
@@ -149,13 +149,13 @@ const Menu: FunctionComponent = () => {
               },
               {
                 id: 'toggle-maps',
-                label: 'Toggle user maps (FAF/Vanilla)',
+                label: 'Toggle External maps (FAF/Vanilla)',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },
               {
                 id: 'toggle-mods',
-                label: 'Toggle user mods (FAF/Vanilla)',
+                label: 'Toggle External mods (FAF/Vanilla)',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('louddatapathlua'),
               },

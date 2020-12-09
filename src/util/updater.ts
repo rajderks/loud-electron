@@ -661,7 +661,7 @@ const updaterCleanupMaps$ = (
             logConfig.channels
           );
           logEntry(
-            'User maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'External maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
             'warn',
             logConfig.channels
           );
@@ -708,7 +708,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
         const entries = fs.readdirSync(`${BASE_URI}/LOUD/mods`);
         if (entries.length) {
           logEntry(
-            'User maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
+            'External maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
             'warn',
             logConfig.channels
           );

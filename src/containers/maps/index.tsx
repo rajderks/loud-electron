@@ -12,10 +12,10 @@ import {
   makeStyles,
   Typography,
   darken,
-  Button,
   Box,
   Chip,
   Divider,
+  Fab,
 } from '@material-ui/core';
 import { MapsFilter, MapAttr } from './types';
 import PageHeader from '../../components/PageHeader';
@@ -24,6 +24,7 @@ import { logEntry } from '../../util/logger';
 import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
+import { RefreshRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -129,6 +130,10 @@ const Maps: FunctionComponent<{}> = () => {
     setMapsDetailsAttr(null);
   }, []);
 
+  const handleRefresh = useCallback(() => {
+    setRefreshTimestamp(Date.now().valueOf());
+  }, []);
+
   return (
     <>
       <PageHeader title="Maps">
@@ -138,13 +143,15 @@ const Maps: FunctionComponent<{}> = () => {
           variant="middle"
         />
         <Chip
-          label={userMapsEnabled ? 'User maps enabled' : 'User maps disabled'}
+          label={
+            userMapsEnabled ? 'External maps enabled' : 'External maps disabled'
+          }
           size="small"
           className={classes.mapsChip}
           color={userMapsEnabled ? 'secondary' : 'default'}
           onClick={() => {
             toggleUserContent('maps').subscribe((n) => {
-              logEntry(`Toggled user content | maps : ${n}`);
+              logEntry(`Toggled External content | maps : ${n}`);
               setUserMapsEnabled(n);
             });
           }}
@@ -155,7 +162,10 @@ const Maps: FunctionComponent<{}> = () => {
           mapAttr={mapsDetailsAttr}
           onClose={handleMapsDetailsOnClose}
         />
-        <MapsFilters onChangeFilters={handleFiltersChanged} />
+        <MapsFilters
+          onChangeFilters={handleFiltersChanged}
+          onRefresh={handleRefresh}
+        />
         <div className={classes.gridWrapper}>
           {!mapsFailed ? (
             <MapsGrid>
@@ -182,15 +192,15 @@ const Maps: FunctionComponent<{}> = () => {
               <Typography color="textPrimary" style={{ paddingBottom: 24 }}>
                 Something went wrong.
               </Typography>
-              <Button
+              <Fab
+                size="small"
                 color="secondary"
-                variant="contained"
                 onClick={() => {
                   setRefreshTimestamp(Date.now().valueOf());
                 }}
               >
-                Try again
-              </Button>
+                <RefreshRounded />
+              </Fab>
             </Box>
           )}
         </div>

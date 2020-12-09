@@ -8,6 +8,7 @@ import {
   InputAdornment,
   IconButton,
   Icon,
+  Fab,
   // FormControlLabel,
   // Checkbox,
 } from '@material-ui/core';
@@ -19,6 +20,7 @@ import { debounceTime } from 'rxjs/operators';
 import MapsSizeSelect from './MapsSizeSelect';
 import MapsPlayersTextField from './MapsPlayersTextField';
 import MapsComparatorSelect from './MapsComparatorSelect';
+import { RefreshRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,9 +81,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   onChangeFilters: (filters: MapsFilter[]) => void;
+  onRefresh: () => void;
 }
 
-const MapsFilters: FunctionComponent<Props> = ({ onChangeFilters }) => {
+const MapsFilters: FunctionComponent<Props> = ({
+  onChangeFilters,
+  onRefresh,
+}) => {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(-1);
@@ -200,14 +206,20 @@ const MapsFilters: FunctionComponent<Props> = ({ onChangeFilters }) => {
             }}
             value={search}
           />
-          {/* <Button
-            variant="contained"
+          <Fab
+            size="small"
             color="secondary"
-            classes={{ root: classes.addButton }}
-            onClick={() => onAddClicked(true)}
+            onClick={() => {
+              setSearch('');
+              onRefresh();
+              setSize(-1);
+              setPlayers('');
+              setSizeComparator('=');
+              setPlayers('=');
+            }}
           >
-            ADD MAP
-          </Button> */}
+            <RefreshRounded />
+          </Fab>
         </div>
         <div className={classes.filterWrapper}>
           <FormControl className={classes.formControl}>

@@ -259,6 +259,10 @@ const MapsDetails: FunctionComponent<Props> = ({
                 (e) => {
                   logEntry(e, 'error', ['log', 'file']);
                   setMapState(MapState.None);
+                  checkMap$(path.basename(file), version)
+                    .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
+                    .subscribe(() => {});
+                  return;
                 }
               );
           }}

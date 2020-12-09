@@ -23,7 +23,7 @@ const toggleUserContent = (subject: 'maps' | 'mods') =>
       fs.stat(FILE_URI_LOUDDATAPATHLUA, (errLua) => {
         if (errLua) {
           logEntry(
-            `toggleUserContent:luaFile:: LOUD/bin/LoudDataPath.lua file does not exist, unable to enable/disable user maps and mods`,
+            `toggleUserContent:luaFile:: LOUD/bin/LoudDataPath.lua file does not exist, unable to enable/disable External maps and mods`,
             'error'
           );
           rej();

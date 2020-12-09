@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: theme.spacing(0.5),
     color: 'white',
-    width: 250,
+    width: 290,
     height: 24,
     display: 'flex',
     alignItems: 'center',
@@ -354,7 +354,7 @@ const Main: FunctionComponent = () => {
             style={{
               color: enabledItems.includes('maps') ? 'red' : 'white',
             }}
-          >{`User maps: ${
+          >{`External maps: ${
             enabledItems.includes('maps') ? 'enabled' : 'disabled'
           }`}</Typography>
           <Typography
@@ -364,7 +364,7 @@ const Main: FunctionComponent = () => {
             style={{
               color: enabledItems.includes('mods') ? 'red' : 'white',
             }}
-          >{`User mods: ${
+          >{`External mods: ${
             enabledItems.includes('mods') ? 'enabled' : 'disabled'
           }`}</Typography>
         </div>
