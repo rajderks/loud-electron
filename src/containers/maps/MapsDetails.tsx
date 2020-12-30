@@ -10,10 +10,12 @@ import {
   Paper,
   Button,
   CircularProgress,
+  ButtonBase,
 } from '@material-ui/core';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import PlayersIcon from '@material-ui/icons/Group';
 import AuthorIcon from '@material-ui/icons/Face';
+import ZoomOutMap from '@material-ui/icons/ZoomOutMap';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
@@ -24,6 +26,7 @@ import path from 'path';
 import writeMap$ from '../../util/writeMap';
 import removeMap$ from '../../util/removeMap';
 import { logEntry } from '../../util/logger';
+import openTarget from '../../util/openTarget';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -47,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     width: 240,
     height: 240,
+    position: 'relative',
   },
   contentRoot: {
     display: 'flex',
@@ -95,6 +99,31 @@ const useStyles = makeStyles((theme) => ({
   boxTextColor: {
     color: 'rgba(0, 0, 0, 0.87)',
   },
+  enlargeWrapper: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    background: 'rgba(0,0,0,0.67)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  enlargeButton: {
+    padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+  },
+  enlargeText: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  enlargeIcon: {
+    fontSize: 24,
+    marginRight: 8,
+  },
 }));
 
 interface Props {
@@ -132,6 +161,10 @@ const MapsDetails: FunctionComponent<Props> = ({
     );
   }, [file, version]);
 
+  const openEnlargePreview = () => {
+    openTarget('url', `${apiBaseURI}/${image}`);
+  };
+
   return (
     <Card className={classes.card}>
       <div>
@@ -144,10 +177,28 @@ const MapsDetails: FunctionComponent<Props> = ({
           onMouseLeave={() => {
             setFocussed(false);
           }}
-        />
+        >
+          <div
+            className={classes.enlargeWrapper}
+            style={{
+              opacity: focussed ? 1 : 0,
+            }}
+          >
+            <ButtonBase
+              className={classes.enlargeButton}
+              onClick={openEnlargePreview}
+            >
+              <Typography noWrap className={classes.enlargeText}>
+                <ZoomOutMap className={classes.enlargeIcon} />
+                View full size preview
+              </Typography>
+            </ButtonBase>
+          </div>
+        </CardMedia>
+
         <div
           className={classes.infoWrapper}
-          style={{ opacity: focussed ? 0 : 1 }}
+          style={{ opacity: focussed ? 0 : 1, pointerEvents: 'none' }}
         >
           <Paper className={classes.infoBox}>
             <PlayersIcon

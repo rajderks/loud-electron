@@ -32,7 +32,8 @@ export type Target =
   | 'discord'
   | 'iconmod'
   | 'onedrive'
-  | 'shortcut';
+  | 'shortcut'
+  | 'url';
 
 const targetPath = (target: Target) => {
   switch (target) {
@@ -105,6 +106,8 @@ const openTarget = (target: Target, extra?: string) => {
         logEntry(`${err}`, 'error');
       }
     });
+  } else if (target === 'url' && typeof extra === 'string') {
+    shell.openPath(extra);
   } else if (target === 'onedrive') {
     shell.openPath(`https://1drv.ms/u/s!AubmcwAIEAlzn2TwHzibrMTRySVj?e=MCevjP`);
   } else if (target === 'paypal') {
