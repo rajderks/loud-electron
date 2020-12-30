@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import PlayersIcon from '@material-ui/icons/Group';
 import SizeIcon from '@material-ui/icons/AspectRatio';
+import DownloadIcon from '@material-ui/icons/GetAppRounded';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { apiBaseURI } from '../../api/api';
@@ -78,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
     '&': { width: 24 },
     marginRight: theme.spacing(0.5),
   },
+  downloadsBox: {
+    top: theme.spacing(7.5),
+    left: theme.spacing(0.5),
+  },
   boxTextColor: {
     color: 'rgba(0, 0, 0, 0.87)',
   },
@@ -88,6 +93,7 @@ interface Props extends MapAttr {
 }
 
 const MapsTile: FunctionComponent<Props> = ({
+  downloads,
   image,
   name,
   onClick,
@@ -165,6 +171,28 @@ const MapsTile: FunctionComponent<Props> = ({
             style={{ fontWeight: 'bold' }}
           >
             {mapSizeToString(size, !focussed)}km
+          </Typography>
+        </Paper>
+        <Paper
+          className={clsx([
+            classes.infoBox,
+            classes.downloadsBox,
+            focussed && classes.sizeBoxHover,
+          ])}
+        >
+          <DownloadIcon
+            className={clsx([
+              classes.infoBoxIcon,
+              focussed && classes.sizeBoxIconHover,
+            ])}
+            fontSize="small"
+          />
+          <Typography
+            variant="caption"
+            className={classes.boxTextColor}
+            style={{ fontWeight: 'bold' }}
+          >
+            {downloads}
           </Typography>
         </Paper>
       </Card>

@@ -15,7 +15,8 @@ import {
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import PlayersIcon from '@material-ui/icons/Group';
 import AuthorIcon from '@material-ui/icons/Face';
-import ZoomOutMap from '@material-ui/icons/ZoomOutMap';
+import EnlargeIcon from '@material-ui/icons/ZoomOutMap';
+import DownloadsIcon from '@material-ui/icons/GetAppRounded';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
@@ -96,6 +97,10 @@ const useStyles = makeStyles((theme) => ({
   sizeBox: {
     marginTop: theme.spacing(0.5),
   },
+  downloadsBox: {
+    marginTop: theme.spacing(0.5),
+    width: 'fit-content',
+  },
   boxTextColor: {
     color: 'rgba(0, 0, 0, 0.87)',
   },
@@ -138,7 +143,17 @@ enum MapState {
 }
 
 const MapsDetails: FunctionComponent<Props> = ({
-  mapAttr: { image, author, description, file, name, players, size, version },
+  mapAttr: {
+    image,
+    author,
+    description,
+    downloads,
+    file,
+    name,
+    players,
+    size,
+    version,
+  },
 }) => {
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
@@ -189,7 +204,7 @@ const MapsDetails: FunctionComponent<Props> = ({
               onClick={openEnlargePreview}
             >
               <Typography noWrap className={classes.enlargeText}>
-                <ZoomOutMap className={classes.enlargeIcon} />
+                <EnlargeIcon className={classes.enlargeIcon} />
                 View full size preview
               </Typography>
             </ButtonBase>
@@ -224,6 +239,19 @@ const MapsDetails: FunctionComponent<Props> = ({
               style={{ fontWeight: 'bold' }}
             >
               {mapSizeToString(size)}km
+            </Typography>
+          </Paper>
+          <Paper className={clsx([classes.infoBox, classes.downloadsBox])}>
+            <DownloadsIcon
+              className={clsx([classes.infoBoxIcon])}
+              fontSize="small"
+            />
+            <Typography
+              variant="caption"
+              className={classes.boxTextColor}
+              style={{ fontWeight: 'bold' }}
+            >
+              {downloads}
             </Typography>
           </Paper>
         </div>
