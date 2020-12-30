@@ -130,7 +130,7 @@ const MapsFilters: FunctionComponent<Props> = ({
               comparator: sizeComparator,
             });
           }
-          if (players.length) {
+          if (players.length >= 1) {
             filters.push({
               key: 'players',
               value: Number.parseInt(players),
@@ -215,7 +215,7 @@ const MapsFilters: FunctionComponent<Props> = ({
               setSize(-1);
               setPlayers('');
               setSizeComparator('=');
-              setPlayers('=');
+              setPlayersComparator('=');
             }}
           >
             <RefreshRounded />
