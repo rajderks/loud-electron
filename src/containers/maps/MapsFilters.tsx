@@ -9,8 +9,6 @@ import {
   IconButton,
   Icon,
   Fab,
-  // FormControlLabel,
-  // Checkbox,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
