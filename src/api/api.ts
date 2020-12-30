@@ -2,10 +2,8 @@ import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { AjaxRequest } from 'rxjs/internal/observable/dom/AjaxObservable';
 
-export const apiBaseURI =
-  process.env.NODE_ENV === 'production' || true
-    ? 'https://theloudproject.org:8081'
-    : process.env.REACT_APP_API_URI_DEV;
+export const apiBaseURI = 'https://theloudproject.org:8081';
+// export const apiBaseURI = process.env.REACT_APP_API_URI_DEV;
 
 const constructURI = (relativeURI: string) => {
   return `${apiBaseURI}/${relativeURI}`;
