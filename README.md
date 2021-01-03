@@ -42,5 +42,5 @@ If you want to contribute to this Client or the Mod itself, feel free to post a 
 
 ```
 requirements: node, yarn, electron, npm install eslint@^7.0.2 -g
-development: yarn install && yarn dev
+development: yarn && yarn dev
 ```
