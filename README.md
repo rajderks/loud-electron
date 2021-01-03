@@ -41,6 +41,6 @@ These are the primary features of the client:
 If you want to contribute to this Client or the Mod itself, feel free to post a message in our Discord.
 
 ```
-requirements: node, yarn, electron, npm install eslint@^7.0.2 -g
+requirements: node, yarn, npm install eslint@^7.0.2 -g
 development: yarn && yarn dev
 ```
