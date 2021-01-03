@@ -24,7 +24,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { iif, EMPTY } from 'rxjs';
 import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
-import { BASE_URI } from '../../constants';
+import { BASE_URI, DIR_LOUD_USERMAPS } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
 import electron, { ipcRenderer } from 'electron';
@@ -43,6 +43,7 @@ import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
 import { GlobalHotKeys } from 'react-hotkeys';
+import mapSync$ from '../../util/mapSync';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -109,6 +110,17 @@ const Main: FunctionComponent = () => {
       }
     );
     createUserDirectories();
+    mapSync$(DIR_LOUD_USERMAPS).subscribe(
+      (syncMap) => {
+        console.warn(syncMap);
+      },
+      (e) => {
+        console.error(e);
+      },
+      () => {
+        console.log('mapSync:: Complete');
+      }
+    );
   }, []);
 
   const handleUpdate = useCallback(async () => {

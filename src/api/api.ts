@@ -20,7 +20,9 @@ class API {
   };
 
   post = <T>(relativeURI: string, data: any) => {
-    return ajax.post(constructURI(relativeURI), data);
+    return ajax.post(constructURI(relativeURI), data, {
+      'Content-Type': 'application/json',
+    });
   };
 
   put = <T>(relativeURI: string, data: Record<string, any>) => {

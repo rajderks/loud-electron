@@ -4,7 +4,7 @@ import { ScenarioLUA } from './types';
 
 const parseScenario = (source: string): ScenarioLUA => {
   const scenarioInfo = fs.readFileSync(source).toString();
-  console.warn(scenarioInfo);
+  // console.warn(scenarioInfo);
   const author = /author\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1];
   const description = /description\s*=\s*"?([^"]*)/gim.exec(scenarioInfo)?.[1];
   const map_version = String(
@@ -53,7 +53,7 @@ const parseScenario = (source: string): ScenarioLUA => {
     players,
     size: sizeValue,
   };
-  console.warn(result);
+  // console.warn(result);
   return result;
 };
 
