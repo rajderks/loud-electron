@@ -51,7 +51,6 @@ const mapSync$ = (dirPath: string) =>
       for (let [key, value] of syncMap) {
         mapSyncArr.push({ identifier: key, version: value });
       }
-      console.warn('mapSyncArr', mapSyncArr);
       return mapSyncArr;
     }),
     switchMap((syncObj) => api.post('maps/sync', syncObj))

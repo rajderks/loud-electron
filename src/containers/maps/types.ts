@@ -18,4 +18,5 @@ export interface MapAttr {
   size: number;
   version: string;
   views: number;
+  identifier: string;
 }

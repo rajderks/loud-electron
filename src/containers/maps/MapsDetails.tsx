@@ -21,13 +21,16 @@ import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
 import { apiBaseURI } from '../../api/api';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import checkMap$ from '../../util/checkMap';
 import path from 'path';
 import writeMap$ from '../../util/writeMap';
 import removeMap$ from '../../util/removeMap';
 import { logEntry } from '../../util/logger';
 import openTarget from '../../util/openTarget';
+import mapSync$ from '../../util/mapSync';
+import { DIR_LOUD_USERMAPS } from '../../constants';
+import mapSyncWrite$ from '../../util/mapSyncWrite';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -317,6 +320,17 @@ const MapsDetails: FunctionComponent<Props> = ({
                 .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
                 .subscribe(() => {
                   setMapState(MapState.None);
+                  mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                    (syncMap) => {
+                      mapSyncWrite$(syncMap.response).subscribe();
+                    },
+                    (e) => {
+                      console.error(e);
+                    },
+                    () => {
+                      console.log('mapSync:: Complete');
+                    }
+                  );
                 });
               return;
             }
@@ -337,7 +351,24 @@ const MapsDetails: FunctionComponent<Props> = ({
                     switchMap(({ mapDir }) =>
                       removeMap$(mapDir).pipe(
                         switchMap(() =>
-                          writeMap$(Buffer.from(buffer), path.basename(file))
+                          writeMap$(
+                            Buffer.from(buffer),
+                            path.basename(file)
+                          ).pipe(
+                            tap(() => {
+                              mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                                (syncMap) => {
+                                  mapSyncWrite$(syncMap.response).subscribe();
+                                },
+                                (e) => {
+                                  console.error(e);
+                                },
+                                () => {
+                                  console.log('mapSync:: Complete');
+                                }
+                              );
+                            })
+                          )
                         )
                       )
                     )
@@ -353,7 +384,19 @@ const MapsDetails: FunctionComponent<Props> = ({
                   setMapState(MapState.None);
                   checkMap$(path.basename(file), version)
                     .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
-                    .subscribe(() => {});
+                    .subscribe(() => {
+                      mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                        (syncMap) => {
+                          mapSyncWrite$(syncMap.response).subscribe();
+                        },
+                        (e) => {
+                          console.error(e);
+                        },
+                        () => {
+                          console.log('mapSync:: Complete');
+                        }
+                      );
+                    });
                   return;
                 }
               );

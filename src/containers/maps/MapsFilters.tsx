@@ -9,6 +9,8 @@ import {
   IconButton,
   Icon,
   Fab,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -89,7 +91,6 @@ const MapsFilters: FunctionComponent<Props> = ({
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [size, setSize] = useState(-1);
-  const [official] = useState(false);
   const [sizeComparator, setSizeComparator] = useState<MapsFilterComparator>(
     '='
   );
@@ -97,6 +98,7 @@ const MapsFilters: FunctionComponent<Props> = ({
   const [playersComparator, setPlayersComparator] = useState<
     MapsFilterComparator
   >('=');
+  const [outdated, setOutdated] = useState<boolean>(false);
   const subjectRef = useRef<
     Subject<{
       search: typeof search;
@@ -104,7 +106,7 @@ const MapsFilters: FunctionComponent<Props> = ({
       sizeComparator: typeof sizeComparator;
       playersComparator: typeof playersComparator;
       players: typeof players;
-      official: typeof official;
+      outdated: typeof outdated;
     }>
   >(new Subject());
 
@@ -135,9 +137,9 @@ const MapsFilters: FunctionComponent<Props> = ({
               comparator: playersComparator,
             });
           }
-          if (official) {
+          if (outdated) {
             filters.push({
-              key: 'official',
+              key: 'outdated',
               value: 1,
               comparator: '=',
             });
@@ -159,9 +161,9 @@ const MapsFilters: FunctionComponent<Props> = ({
       players,
       sizeComparator,
       playersComparator,
-      official,
+      outdated,
     });
-  }, [players, playersComparator, search, size, sizeComparator, official]);
+  }, [players, playersComparator, search, size, sizeComparator, outdated]);
 
   return (
     <div className={classes.root}>
@@ -268,18 +270,18 @@ const MapsFilters: FunctionComponent<Props> = ({
               value={playersComparator}
             />
           </FormControl>
-          {/* <FormControlLabel
+          <FormControlLabel
             className={classes.officialFormLabel}
-            label="Official only"
+            label="Newer versions only"
             control={
               <Checkbox
-                checked={official}
+                checked={outdated}
                 onChange={(e) => {
-                  setOfficial(e.target.checked);
+                  setOutdated(e.target.checked);
                 }}
               />
             }
-          /> */}
+          />
         </div>
       </div>
     </div>

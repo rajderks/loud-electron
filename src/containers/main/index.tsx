@@ -44,6 +44,7 @@ import toggleUserContent, {
 } from '../../util/toggleUserContent';
 import { GlobalHotKeys } from 'react-hotkeys';
 import mapSync$ from '../../util/mapSync';
+import mapSyncWrite$ from '../../util/mapSyncWrite';
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -112,7 +113,14 @@ const Main: FunctionComponent = () => {
     createUserDirectories();
     mapSync$(DIR_LOUD_USERMAPS).subscribe(
       (syncMap) => {
-        console.warn(syncMap);
+        mapSyncWrite$(syncMap.response).subscribe();
+        if (Object.keys(syncMap).length > 0) {
+          logEntry(
+            'You have some maps that have a newer version in the map library!',
+            'log',
+            ['log', 'file', 'main']
+          );
+        }
       },
       (e) => {
         console.error(e);

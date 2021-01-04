@@ -8,6 +8,7 @@ import {
   Typography,
   Paper,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import PlayersIcon from '@material-ui/icons/Group';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import DownloadIcon from '@material-ui/icons/GetAppRounded';
@@ -86,10 +87,18 @@ const useStyles = makeStyles((theme) => ({
   boxTextColor: {
     color: 'rgba(0, 0, 0, 0.87)',
   },
+  outdatedAlert: {
+    position: 'absolute',
+    top: -theme.spacing(8),
+    left: theme.spacing(1),
+    right: theme.spacing(1),
+    padding: theme.spacing(0.25, 1),
+  },
 }));
 
 interface Props extends MapAttr {
   onClick: () => void;
+  outdated: boolean;
 }
 
 const MapsTile: FunctionComponent<Props> = ({
@@ -100,6 +109,7 @@ const MapsTile: FunctionComponent<Props> = ({
   size,
   version,
   players,
+  outdated,
 }) => {
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
@@ -121,7 +131,13 @@ const MapsTile: FunctionComponent<Props> = ({
     >
       <Card square elevation={0} className={classes.root} onClick={onClick}>
         <CardMedia image={`${apiBaseURI}/${image}`} className={classes.media} />
+
         <div className={classes.titleBox}>
+          {outdated && (
+            <Alert className={classes.outdatedAlert} severity="warning">
+              New version available!
+            </Alert>
+          )}
           <Typography
             style={{ fontWeight: 'bold', color: 'white' }}
             variant="body2"

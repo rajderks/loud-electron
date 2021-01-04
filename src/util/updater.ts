@@ -573,6 +573,7 @@ const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
               'log',
               logConfig.channels
             );
+            // @ts-ignore
             res();
           }
         );
@@ -612,6 +613,17 @@ const updaterCleanupGameData$ = (
           if (entry.toLowerCase().includes('advanced strategic icons')) {
             logEntry(
               `updaterCleanupGamedata$:mv:: Skipping Advanced strategic icons`,
+              'log',
+              ['file', 'log']
+            );
+            continue;
+          }
+          if (
+            entry.toLowerCase().includes('lua') &&
+            !entry.toLowerCase().includes('.scd')
+          ) {
+            logEntry(
+              `updaterCleanupGamedata$:mv:: Skipping generated LUA`,
               'log',
               ['file', 'log']
             );
@@ -667,6 +679,7 @@ const updaterCleanupMaps$ = (
           );
         }
         if (!falseEntries.length) {
+          // @ts-ignore
           res();
           return;
         }
@@ -699,6 +712,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
       fs.stat(`${BASE_URI}/LOUD/mods`, (err) => {
         if (err) {
           if (err.message.includes('ENOENT')) {
+            // @ts-ignore
             res();
             return;
           }
@@ -751,6 +765,7 @@ const updaterCleanupUserprefs$ = (logConfig = defaultLogConfig) => {
       fileStr = fileStr.replace(/texture_level = \d/g, 'texture_level = 2');
       fileStr = fileStr.replace(/level_of_detail = \d/g, 'level_of_detail = 2');
       fs.writeFileSync(DOC_URI_GAMEPREFS, fileStr);
+      // @ts-ignore
       res();
     })
   );

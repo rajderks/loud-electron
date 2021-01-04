@@ -12,6 +12,7 @@ import { BASE_URI } from '../../constants';
 import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
 import { targetURI, openTargetCheck } from '../../util/openTarget';
 import electron from 'electron';
+import { version } from '../../../package.json';
 
 interface State {
   enabledItems: MainContextItems[];
@@ -89,6 +90,7 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
 
   /* Startup checks */
   useEffect(() => {
+    logEntry(`#### version: ${version}`, 'log', ['file']);
     logEntry(
       `base uri: ${BASE_URI} (if this doesn't match your SupCom directory, file a bug report in discord and quit the client)`,
       'log',

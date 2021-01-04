@@ -25,6 +25,8 @@ import toggleUserContent, {
   checkUserContent,
 } from '../../util/toggleUserContent';
 import { RefreshRounded } from '@material-ui/icons';
+import mapSync$ from '../../util/mapSync';
+import { DIR_LOUD_USERMAPS } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,10 +57,15 @@ const useStyles = makeStyles((theme) => ({
 const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [maps, setMaps] = useState<MapAttr[] | null>(null);
+  const [mapsOutOfSync, setMapsOutOfSync] = useState<Record<
+    string,
+    string
+  > | null>(null);
   const [mapsFiltered, setMapsFiltered] = useState<MapAttr[] | null>(maps);
   const [mapsFailed, setMapsFailed] = useState(true);
   const [mapsDetailsAttr, setMapsDetailsAttr] = useState<MapAttr | null>(null);
   const [refreshTimestamp, setRefreshTimestamp] = useState(0);
+  const [outOfSyncTimestamp, setOutOfSyncTimestamp] = useState(0);
   const [userMapsEnabled, setUserMapsEnabled] = useState(false);
 
   useEffect(() => {
@@ -81,6 +88,17 @@ const Maps: FunctionComponent<{}> = () => {
     );
   }, [refreshTimestamp]);
 
+  useEffect(() => {
+    mapSync$(DIR_LOUD_USERMAPS).subscribe(
+      (syncMap) => {
+        setMapsOutOfSync(syncMap?.response ?? null);
+      },
+      () => {
+        setMapsOutOfSync(null);
+      }
+    );
+  }, [refreshTimestamp, outOfSyncTimestamp]);
+
   const handleFiltersChanged = useCallback(
     (filters: MapsFilter[]) => {
       if (!maps) {
@@ -102,6 +120,10 @@ const Maps: FunctionComponent<{}> = () => {
                 map.author.toLowerCase().includes(String(filter.value))
               );
             }
+
+            if (filter.key === 'outdated') {
+              return mapsOutOfSync?.[map.identifier] !== undefined;
+            }
             const mapVal = map[filter.key as keyof MapAttr];
 
             if (typeof mapVal !== typeof filter.value) {
@@ -119,7 +141,7 @@ const Maps: FunctionComponent<{}> = () => {
         )
       );
     },
-    [maps]
+    [maps, mapsOutOfSync]
   );
 
   const handleOnClickMap = useCallback((mapAttr: MapAttr) => {
@@ -128,6 +150,7 @@ const Maps: FunctionComponent<{}> = () => {
 
   const handleMapsDetailsOnClose = useCallback(() => {
     setMapsDetailsAttr(null);
+    setOutOfSyncTimestamp(new Date().valueOf());
   }, []);
 
   const handleRefresh = useCallback(() => {
@@ -174,6 +197,7 @@ const Maps: FunctionComponent<{}> = () => {
                 .map((mapAttr) => (
                   <MapsTile
                     {...mapAttr}
+                    outdated={mapsOutOfSync?.[mapAttr.identifier] !== undefined}
                     key={mapAttr.id}
                     onClick={() => {
                       handleOnClickMap(mapAttr);
