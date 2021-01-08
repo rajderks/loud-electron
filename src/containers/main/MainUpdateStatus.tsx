@@ -14,8 +14,10 @@ const useStyles = makeStyles(() => ({
   updateIndicatorWrapper: {
     position: 'absolute',
     flex: '1 1 100%',
+    maxWidth: 140,
     height: '100%',
     backgroundColor: '#FBFF3A',
+    borderRadius: 4,
   },
   updateIndicatorText: {
     fontWeight: 'bold',

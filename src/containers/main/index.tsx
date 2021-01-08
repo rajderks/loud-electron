@@ -114,7 +114,7 @@ const Main: FunctionComponent = () => {
     mapSync$(DIR_LOUD_USERMAPS).subscribe(
       (syncMap) => {
         mapSyncWrite$(syncMap.response).subscribe();
-        if (Object.keys(syncMap).length > 0) {
+        if (Object.keys(syncMap.response).length > 0) {
           logEntry(
             'You have some maps that have a newer version in the map library!',
             'log',
