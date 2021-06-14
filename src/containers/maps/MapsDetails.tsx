@@ -11,6 +11,7 @@ import {
   Button,
   CircularProgress,
   ButtonBase,
+  LinearProgress,
 } from '@material-ui/core';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import PlayersIcon from '@material-ui/icons/Group';
@@ -163,6 +164,7 @@ const MapsDetails: FunctionComponent<Props> = ({
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
   const [mapState, setMapState] = useState(MapState.None);
+  const [progressState, setProgressState] = useState(0);
 
   useEffect(() => {
     checkMap$(path.basename(file), version).subscribe(
@@ -310,6 +312,11 @@ const MapsDetails: FunctionComponent<Props> = ({
             description ??
             'No description was given for this map'}
         </Typography>
+
+        {progressState === 0 ? null : (
+          <LinearProgress variant="determinate" value={progressState} />
+        )}
+
         <Button
           color="secondary"
           variant="contained"
@@ -341,9 +348,9 @@ const MapsDetails: FunctionComponent<Props> = ({
               .get(`${apiBaseURI}/${file}`)
               .on('downloadProgress', (progress) => {
                 console.log(progress);
+                setProgressState(progress.percent * 100);
               })
               .then((res) => {
-                console.warn(res);
                 of(res.rawBody.buffer)
                   .pipe(
                     switchMap((buffer) =>
@@ -364,8 +371,10 @@ const MapsDetails: FunctionComponent<Props> = ({
                                     },
                                     (e) => {
                                       console.error(e);
+                                      setProgressState(0);
                                     },
                                     () => {
+                                      setProgressState(0);
                                       console.log('mapSync:: Complete');
                                     }
                                   );
@@ -380,8 +389,10 @@ const MapsDetails: FunctionComponent<Props> = ({
                   .subscribe(
                     () => {
                       setMapState(MapState.Exists);
+                      setProgressState(0);
                     },
                     (e) => {
+                      setProgressState(0);
                       logEntry(e, 'error', ['log', 'file']);
                       setMapState(MapState.None);
                       checkMap$(path.basename(file), version)
@@ -392,10 +403,12 @@ const MapsDetails: FunctionComponent<Props> = ({
                               mapSyncWrite$(syncMap.response).subscribe();
                             },
                             (e) => {
+                              setProgressState(0);
                               console.error(e);
                             },
                             () => {
                               console.log('mapSync:: Complete');
+                              setProgressState(0);
                             }
                           );
                         });
