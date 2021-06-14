@@ -11,6 +11,7 @@ import {
   Button,
   CircularProgress,
   ButtonBase,
+  LinearProgress,
 } from '@material-ui/core';
 import SizeIcon from '@material-ui/icons/AspectRatio';
 import PlayersIcon from '@material-ui/icons/Group';
@@ -31,6 +32,8 @@ import openTarget from '../../util/openTarget';
 import mapSync$ from '../../util/mapSync';
 import { DIR_LOUD_USERMAPS } from '../../constants';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
+import got from 'got';
+import { from, of } from 'rxjs';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -161,6 +164,7 @@ const MapsDetails: FunctionComponent<Props> = ({
   const classes = useStyles();
   const [focussed, setFocussed] = useState(false);
   const [mapState, setMapState] = useState(MapState.None);
+  const [progressState, setProgressState] = useState(0);
 
   useEffect(() => {
     checkMap$(path.basename(file), version).subscribe(
@@ -308,10 +312,15 @@ const MapsDetails: FunctionComponent<Props> = ({
             description ??
             'No description was given for this map'}
         </Typography>
+
+        {progressState === 0 ? null : (
+          <LinearProgress variant="determinate" value={progressState} />
+        )}
+
         <Button
           color="secondary"
           variant="contained"
-          onClick={() => {
+          onClick={async () => {
             if (mapState === MapState.Downloading) {
               return;
             }
@@ -335,71 +344,78 @@ const MapsDetails: FunctionComponent<Props> = ({
               return;
             }
             setMapState(MapState.Downloading);
-            fromFetch(`${apiBaseURI}/${file}`)
-              .pipe(
-                switchMap(async (response) => {
-                  if (response.ok) {
-                    // OK return data
-                    return response.arrayBuffer();
-                  } else {
-                    const body = await response.json();
-                    throw new Error(body);
-                  }
-                }),
-                switchMap((buffer) =>
-                  checkMap$(path.basename(file), version).pipe(
-                    switchMap(({ mapDir }) =>
-                      removeMap$(mapDir).pipe(
-                        switchMap(() =>
-                          writeMap$(
-                            Buffer.from(buffer),
-                            path.basename(file)
-                          ).pipe(
-                            tap(() => {
-                              mapSync$(DIR_LOUD_USERMAPS).subscribe(
-                                (syncMap) => {
-                                  mapSyncWrite$(syncMap.response).subscribe();
-                                },
-                                (e) => {
-                                  console.error(e);
-                                },
-                                () => {
-                                  console.log('mapSync:: Complete');
-                                }
-                              );
-                            })
+            await got
+              .get(`${apiBaseURI}/${file}`)
+              .on('downloadProgress', (progress) => {
+                console.log(progress);
+                setProgressState(progress.percent * 100);
+              })
+              .then((res) => {
+                of(res.rawBody.buffer)
+                  .pipe(
+                    switchMap((buffer) =>
+                      checkMap$(path.basename(file), version).pipe(
+                        switchMap(({ mapDir }) =>
+                          removeMap$(mapDir).pipe(
+                            switchMap(() =>
+                              writeMap$(
+                                Buffer.from(buffer),
+                                path.basename(file)
+                              ).pipe(
+                                tap(() => {
+                                  mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                                    (syncMap) => {
+                                      mapSyncWrite$(
+                                        syncMap.response
+                                      ).subscribe();
+                                    },
+                                    (e) => {
+                                      console.error(e);
+                                      setProgressState(0);
+                                    },
+                                    () => {
+                                      setProgressState(0);
+                                      console.log('mapSync:: Complete');
+                                    }
+                                  );
+                                })
+                              )
+                            )
                           )
                         )
                       )
                     )
                   )
-                )
-              )
-              .subscribe(
-                () => {
-                  setMapState(MapState.Exists);
-                },
-                (e) => {
-                  logEntry(e, 'error', ['log', 'file']);
-                  setMapState(MapState.None);
-                  checkMap$(path.basename(file), version)
-                    .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
-                    .subscribe(() => {
-                      mapSync$(DIR_LOUD_USERMAPS).subscribe(
-                        (syncMap) => {
-                          mapSyncWrite$(syncMap.response).subscribe();
-                        },
-                        (e) => {
-                          console.error(e);
-                        },
-                        () => {
-                          console.log('mapSync:: Complete');
-                        }
-                      );
-                    });
-                  return;
-                }
-              );
+                  .subscribe(
+                    () => {
+                      setMapState(MapState.Exists);
+                      setProgressState(0);
+                    },
+                    (e) => {
+                      setProgressState(0);
+                      logEntry(e, 'error', ['log', 'file']);
+                      setMapState(MapState.None);
+                      checkMap$(path.basename(file), version)
+                        .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
+                        .subscribe(() => {
+                          mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                            (syncMap) => {
+                              mapSyncWrite$(syncMap.response).subscribe();
+                            },
+                            (e) => {
+                              setProgressState(0);
+                              console.error(e);
+                            },
+                            () => {
+                              console.log('mapSync:: Complete');
+                              setProgressState(0);
+                            }
+                          );
+                        });
+                      return;
+                    }
+                  );
+              });
           }}
         >
           {(() => {
