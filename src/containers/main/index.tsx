@@ -155,24 +155,6 @@ const Main: FunctionComponent = () => {
         switchMap((crcInfo) => {
           const fis = updaterParseRemoteFileContent(crcInfo);
           fileInfos = fis.slice();
-          try {
-            fs.unlinkSync(
-              path.join(
-                BASE_URI,
-                'LOUD',
-                fileInfos.find((f) =>
-                  f.path
-                    .toLowerCase()
-                    .includes('LoudDataPath.lua'.toLowerCase())
-                )!.path
-              )
-            );
-          } catch (e) {
-            logEntry(`Could not delete bin/LoudDataPath.lua! ${e}`, 'error', [
-              'log',
-              'file',
-            ]);
-          }
           return updaterCollectOutOfSyncFiles$(fis, BASE_URI, {
             channels: ['file'],
           });
