@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import TitleBar from 'frameless-titlebar';
 import { Typography, makeStyles, colors } from '@material-ui/core';
-import { remote } from 'electron';
+const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
   title: {

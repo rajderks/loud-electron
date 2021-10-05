@@ -1,4 +1,4 @@
-import { remote, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import React, { FunctionComponent, useCallback, useContext } from 'react';
 import TitleBar from 'frameless-titlebar';
 import { MenuItem } from 'frameless-titlebar/dist/title-bar/typings';
@@ -17,6 +17,7 @@ import { version } from '../../../package.json';
 import createShortcuts from '../../util/createShortcuts';
 import { switchMap } from 'rxjs/operators';
 import { BASE_URI } from '../../constants';
+const remote = require('@electron/remote');
 
 const currentWindow = remote.getCurrentWindow();
 

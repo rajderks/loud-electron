@@ -27,7 +27,7 @@ import MainLog from './MainLog';
 import { BASE_URI, DIR_LOUD_USERMAPS } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
-import electron, { ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import testWrite from '../../util/testWrite';
 import createUserDirectories from '../../util/createUserDirectories';
 import MainContext from './MainContext';
@@ -45,6 +45,7 @@ import toggleUserContent, {
 import { GlobalHotKeys } from 'react-hotkeys';
 import mapSync$ from '../../util/mapSync';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
+const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
   userContentWrapper: {
@@ -90,11 +91,11 @@ const Main: FunctionComponent = () => {
       },
       (e) => {
         logEntry('Client is not in correct folder', 'error', ['file']);
-        electron.remote.dialog.showErrorBox(
+        remote.dialog.showErrorBox(
           'Error!',
           'Please put the client in the root of your Supreme Commander folder i.e. C:\\SteamLibrary\\steamapps\\common\\Supreme Commander Forged Alliance'
         );
-        electron.remote.app.quit();
+        remote.app.quit();
       }
     );
     testWrite().subscribe(
@@ -103,11 +104,11 @@ const Main: FunctionComponent = () => {
       },
       (e) => {
         logEntry(`Could not write/unlink test file ${e}`, 'error', ['file']);
-        electron.remote.dialog.showErrorBox(
+        remote.dialog.showErrorBox(
           'Error!',
           'Could not write test file. Please run the client as administrator and/or make sure the game folder is not read-only'
         );
-        electron.remote.app.quit();
+        remote.app.quit();
       }
     );
     createUserDirectories();
@@ -231,7 +232,7 @@ const Main: FunctionComponent = () => {
               },
               (e) => {
                 logEntry(e, 'error');
-                electron.remote.dialog.showErrorBox(
+                remote.dialog.showErrorBox(
                   'Error!',
                   'Could not patch Game.prefs. Make sure you create a profile first by starting vanilla Supreme Commander, than run the updater once more. If you have a profile, ignore this message and set the texture details to low in the options menu ingame'
                 );
@@ -246,6 +247,7 @@ const Main: FunctionComponent = () => {
               toggleUserContent('mods');
             }
           } catch (e) {
+            // @ts-ignore
             logEntry(e, 'error', ['file', 'log', 'main']);
           }
           setUpdateStatus(UpdateStatus.UpToDate);

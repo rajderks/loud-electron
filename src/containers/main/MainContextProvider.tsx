@@ -11,8 +11,8 @@ import { logEntry, logInit } from '../../util/logger';
 import { BASE_URI } from '../../constants';
 import createDocumentsDirectories$ from '../../util/createDocumentsDirectories';
 import { targetURI, openTargetCheck } from '../../util/openTarget';
-import electron from 'electron';
 import { version } from '../../../package.json';
+const remote = require('@electron/remote');
 
 interface State {
   enabledItems: MainContextItems[];
@@ -96,7 +96,7 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
       'log',
       ['log', 'file', 'main']
     );
-    logEntry(`Doc uri is ${electron.remote.app.getPath('documents')}`);
+    logEntry(`Doc uri is ${remote.app.getPath('documents')}`);
     createDocumentsDirectories$().subscribe(([target, created]) => {
       if (target === 'maps') {
         handleChangeEnabledItem('open-maps', created);

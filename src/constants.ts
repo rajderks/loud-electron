@@ -1,5 +1,5 @@
-import { remote } from 'electron';
 import path from 'path';
+const remote = require('@electron/remote');
 
 const isJest = process.env.JEST_WORKER_ID !== undefined;
 

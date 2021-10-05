@@ -1,5 +1,6 @@
 const electron = require('electron');
-const { app, BrowserWindow, ipcMain } = electron;
+require('@electron/remote/main').initialize();
+const { app, ipcMain, BrowserWindow } = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -24,6 +25,7 @@ ipcMain.on('open-route', (event, route, size) => {
       webSecurity: false,
     },
   });
+  require('@electron/remote/main').enable(routeWindow.webContents);
   routeWindow.loadURL(
     isDev
       ? `http://localhost:3000/index.tsx#/${route}`
@@ -48,6 +50,7 @@ function createWindow() {
       contextIsolation: false,
     },
   });
+  require('@electron/remote/main').enable(mainWindow.webContents);
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
