@@ -181,7 +181,7 @@ const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
  * @param client
  * @param logConfig
  */
- const updaterGetRemoteFile$ = (
+const updaterGetRemoteFile$ = (
   fileInfo: RemoteFileInfo,
   client: FTP,
   logConfig: LogConfig = defaultLogConfig
