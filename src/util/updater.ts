@@ -203,12 +203,19 @@ const updaterGetRemoteFile$ = (
           logConfig.channels
         );
         MainLogDownloadFilePercentageStatusSubject.next(0);
-        let buffer = Buffer.from('');
+        let bufferPercent = 0;
+        let bufferLength  = 0;
+        const buffer: Buffer[] = [];
         socket.on('data', (d) => {
-          buffer = Buffer.concat([buffer, d]);
-          MainLogDownloadFilePercentageStatusSubject.next(
-            Math.floor((buffer.byteLength / fileInfo.size) * 100)
-          );
+          buffer.push(d);
+          
+          bufferLength += d.byteLength
+          let newBufferPercent = Math.floor((bufferLength / fileInfo.size) * 100);
+          if(newBufferPercent !== bufferPercent)
+          {
+            bufferPercent = newBufferPercent;
+            MainLogDownloadFilePercentageStatusSubject.next(bufferPercent);
+          }
         });
 
         socket.on('close', (errClose) => {
@@ -220,7 +227,7 @@ const updaterGetRemoteFile$ = (
             );
             throw errClose;
           }
-          res(buffer);
+          res(Buffer.concat(buffer));
         });
         socket.resume();
       });
