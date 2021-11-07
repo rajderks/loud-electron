@@ -110,10 +110,10 @@ const openTarget = (target: Target, extra?: string) => {
     shell.openPath(extra);
   } else if (target === 'onedrive') {
     shell.openPath(`https://1drv.ms/u/s!AubmcwAIEAlzn2TwHzibrMTRySVj?e=MCevjP`);
-  } else if (target === 'paypal') {
-    shell.openPath(`https://paypal.me/pools/c/8qCnWXDegw`);
   } else if (target === 'patreon') {
     shell.openPath('https://www.patreon.com/user?u=37869110');
+  } else if (target === 'paypal' && extra) {
+    shell.openPath(extra);
   } else if (target === 'discord' && extra) {
     shell.openPath(extra);
   } else {

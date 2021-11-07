@@ -87,7 +87,7 @@ interface Props {
   onRun: () => void;
   onPatchNotes: () => void;
   onMaps: () => void;
-  onDonate: () => void;
+  onDonate: (url: string) => void;
   onDiscord: (url: string) => void;
   updateStatus: UpdateStatus;
 }
@@ -115,6 +115,7 @@ const MainButtons: FunctionComponent<Props> = ({
   const classes = useStyles();
   const { enabledItems } = useContext(MainContext);
   const [discordURL, setDiscordURL] = useState<string | null>(null);
+  const [paypalURL, setPaypalURL] = useState<string | null>(null);
 
   useEffect(() => {
     api
@@ -137,6 +138,31 @@ const MainButtons: FunctionComponent<Props> = ({
             'file',
           ]);
           setDiscordURL(null);
+        }
+      );
+  }, []);
+
+  useEffect(() => {
+    api
+      .get<string>('static/paypal', { responseType: 'text' })
+      .subscribe(
+        (n) => {
+          if (!n || !n.includes('//paypal')) {
+            logEntry(`Paypal URL could not be fetched`, 'error', [
+              'log',
+              'main',
+              'file',
+            ]);
+          }
+          setPaypalURL(n);
+        },
+        (e) => {
+          logEntry(`Paypal URL could not be fetched`, 'error', [
+            'log',
+            'main',
+            'file',
+          ]);
+          setPaypalURL(null);
         }
       );
   }, []);
@@ -218,7 +244,14 @@ const MainButtons: FunctionComponent<Props> = ({
             </IconButton>
           </div>
           <div className={classes.svgButtonWrapper}>
-            <IconButton style={{ height: 78, width: 78 }} onClick={onDonate}>
+            <IconButton
+              style={{ height: 78, width: 78 }}
+              onClick={() => {
+                if (paypalURL) {
+                  onDonate(paypalURL);
+                }
+              }}
+            >
               <PaypalLogo width="72" height="72" />
             </IconButton>
           </div>

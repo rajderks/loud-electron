@@ -330,8 +330,8 @@ const Main: FunctionComponent = () => {
     ipcRenderer.send('open-route', 'patchnotes');
   };
 
-  const handleDonate = () => {
-    openTarget('paypal');
+  const handleDonate = (url: string) => {
+    openTarget('paypal', url);
   };
 
   const handleDiscord = (url: string) => {
