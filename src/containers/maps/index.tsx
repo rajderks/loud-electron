@@ -27,6 +27,7 @@ import toggleUserContent, {
 import { RefreshRounded } from '@material-ui/icons';
 import mapSync$ from '../../util/mapSync';
 import { DIR_LOUD_USERMAPS } from '../../constants';
+import { Pagination } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +69,12 @@ const Maps: FunctionComponent<{}> = () => {
   const [outOfSyncTimestamp, setOutOfSyncTimestamp] = useState(0);
   const [userMapsEnabled, setUserMapsEnabled] = useState(false);
 
+  const [page, setPage] = useState(1);
+
+  const onChangePage = (_event: any, value: number) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     checkUserContent('maps').subscribe((n) => {
       setUserMapsEnabled(n);
@@ -108,6 +115,7 @@ const Maps: FunctionComponent<{}> = () => {
         setMapsFiltered(maps.slice());
         return;
       }
+      setPage(1);
       setMapsFiltered(
         maps.slice().filter((map) =>
           filters.every((filter) => {
@@ -191,20 +199,35 @@ const Maps: FunctionComponent<{}> = () => {
         />
         <div className={classes.gridWrapper}>
           {!mapsFailed ? (
-            <MapsGrid>
-              {mapsFiltered
-                ?.map((x, i) => ({ ...x, id: i }))
-                .map((mapAttr) => (
-                  <MapsTile
-                    {...mapAttr}
-                    outdated={mapsOutOfSync?.[mapAttr.identifier] !== undefined}
-                    key={mapAttr.id}
-                    onClick={() => {
-                      handleOnClickMap(mapAttr);
-                    }}
-                  />
-                ))}
-            </MapsGrid>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Pagination
+                page={page}
+                onChange={onChangePage}
+                count={Math.ceil((mapsFiltered?.length ?? 0) / 20)}
+              />
+              <MapsGrid>
+                {mapsFiltered
+                  ?.slice((page - 1) * 20, (page - 1) * 20 + 20)
+                  ?.map((x, i) => ({ ...x, id: i }))
+                  .map((mapAttr) => (
+                    <MapsTile
+                      {...mapAttr}
+                      outdated={
+                        mapsOutOfSync?.[mapAttr.identifier] !== undefined
+                      }
+                      key={mapAttr.id}
+                      onClick={() => {
+                        handleOnClickMap(mapAttr);
+                      }}
+                    />
+                  ))}
+              </MapsGrid>
+              <Pagination
+                page={page}
+                onChange={onChangePage}
+                count={Math.ceil((mapsFiltered?.length ?? 0) / 20)}
+              />
+            </Box>
           ) : (
             <Box
               display="flex"
