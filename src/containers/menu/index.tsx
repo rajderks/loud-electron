@@ -44,6 +44,15 @@ const Menu: FunctionComponent = () => {
         const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
         openTarget(target);
       } else if (
+        menu.id === 'icons-small-classic' ||
+        menu.id === 'icons-small' ||
+        menu.id === 'icons-medium-classic' ||
+        menu.id === 'icons-medium' ||
+        menu.id === 'icons-large-classic' ||
+        menu.id === 'icons-large'
+      ) {
+        logEntry(menu.id, 'log', ['main']);
+      } else if (
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
         menu.id === 'help-gamelog' ||
@@ -171,6 +180,72 @@ const Menu: FunctionComponent = () => {
                 label: 'Create CRC file',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('run'),
+              },
+            ],
+          },
+          {
+            label: 'Icons',
+            click: buttonCallback,
+            submenu: [
+              {
+                id: 'icons-small-menu',
+                label: 'Small',
+                click: buttonCallback,
+                disabled: false,
+                submenu: [
+                  {
+                    id: 'icons-small-classic',
+                    label: 'Small classic',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                  {
+                    id: 'icons-small',
+                    label: 'Small',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                ],
+              },
+              {
+                id: 'icons-medium-menu',
+                label: 'Medium',
+                click: buttonCallback,
+                disabled: false,
+                submenu: [
+                  {
+                    id: 'icons-medium-classic',
+                    label: 'Medium classic',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                  {
+                    id: 'icons-medium',
+                    label: 'Medium',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                ],
+              },
+              {
+                id: 'icons-large-menu',
+                label: 'Large',
+                click: buttonCallback,
+                disabled: false,
+                submenu: [
+                  {
+                    id: 'icons-large-classic',
+                    label: 'Large classic',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                  {
+                    id: 'icons-large',
+                    label: 'Large',
+                    click: buttonCallback,
+                    disabled: false,
+                  },
+                ],
               },
             ],
           },
