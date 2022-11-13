@@ -35,7 +35,7 @@
 		"electron-is-dev": "^1.2.0",
 		"extract-zip": "^2.0.1",
 		"frameless-titlebar": "^2.1.3",
-		"got": "^11.8.2",
+		"got": "^11.8.5",
 		"jsftp": "^2.1.3",
 		"moment": "^2.26.0",
 		"mv": "^2.1.1",
