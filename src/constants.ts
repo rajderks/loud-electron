@@ -36,7 +36,9 @@ const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
 const DIR_LOUD_USERMAPS = `${BASE_URI}/LOUD/usermaps`;
 const DIR_LOUD_USERMODS = `${BASE_URI}/LOUD/usermods`;
 const FILE_URI_LOG = `${BASE_URI}/SCFA_Updater.log`;
+const FILE_URI_LOG_FOLDER = `${BASE_URI}`;
 const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
+const FILE_URI_GAMELOG_FOLDER = `${BASE_URI}/LOUD/bin`.replace(/\//g, '\\');
 const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
 const FILE_URI_INFO = `${BASE_URI}/LOUD/doc/info.txt`;
 const FILE_URI_LOUDDATAPATHLUA = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
@@ -66,4 +68,6 @@ export {
   FILE_URI_SHORTCUT,
   DIR_LOUD_USERMAPS,
   DIR_LOUD_USERMODS,
+  FILE_URI_LOG_FOLDER,
+  FILE_URI_GAMELOG_FOLDER,
 };

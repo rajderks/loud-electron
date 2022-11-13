@@ -12,6 +12,8 @@ import {
   FILE_URI_SHORTCUT,
   DIR_LOUD_USERMODS,
   DIR_LOUD_USERMAPS,
+  FILE_URI_LOG_FOLDER,
+  FILE_URI_GAMELOG_FOLDER,
 } from '../constants';
 import { from } from 'rxjs';
 import { logEntry } from './logger';
@@ -23,7 +25,9 @@ export type Target =
   | 'mods'
   | 'replays'
   | 'log'
+  | 'logFolder'
   | 'gamelog'
+  | 'gamelogFolder'
   | 'help'
   | 'info'
   | 'loud'
@@ -42,6 +46,10 @@ const targetPath = (target: Target) => {
     case 'mods':
       return `C:/Windows/explorer.exe`;
     case 'replays':
+      return `C:/Windows/explorer.exe`;
+    case 'logFolder':
+      return `C:/Windows/explorer.exe`;
+    case 'gamelogFolder':
       return `C:/Windows/explorer.exe`;
     case 'log':
       return `notepad.exe`;
@@ -69,8 +77,12 @@ export const targetURI = (target: Target) => {
       return DOC_DIR_SUPCOM_REPLAYS;
     case 'log':
       return FILE_URI_LOG;
+    case 'logFolder':
+      return FILE_URI_LOG_FOLDER;
     case 'gamelog':
       return FILE_URI_GAMELOG;
+    case 'gamelogFolder':
+      return FILE_URI_GAMELOG_FOLDER;
     case 'help':
       return FILE_URI_HELP;
     case 'info':

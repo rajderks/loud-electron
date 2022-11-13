@@ -51,14 +51,18 @@ const Menu: FunctionComponent = () => {
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
         menu.id === 'help-gamelog' ||
+        menu.id === 'help-gamelogFolder' ||
         menu.id === 'help-log' ||
+        menu.id === 'help-logFolder' ||
         menu.id === 'help-onedrive'
       ) {
         const target = menu.id.split('-')[1] as
           | 'help'
           | 'info'
           | 'gamelog'
+          | 'gamelogFolder'
           | 'log'
+          | 'logFolder'
           | 'onedrive';
         openTarget(target);
       } else if (menu.id === 'create-crc') {
@@ -261,8 +265,21 @@ const Menu: FunctionComponent = () => {
                 disabled: !enabledItems.includes('help-gamelog'),
               },
               {
+                id: 'help-gamelogFolder',
+                label: 'View Game Log Folder',
+                click: buttonCallback,
+                disabled: !enabledItems.includes('help-gamelog'),
+              },
+              {
                 id: 'help-log',
                 label: 'View Client Log',
+                click: buttonCallback,
+                disabled: !enabledItems.includes('log'),
+              },
+
+              {
+                id: 'help-logFolder',
+                label: 'View Client Log Folder',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('log'),
               },
