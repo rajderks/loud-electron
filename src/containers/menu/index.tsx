@@ -17,6 +17,7 @@ import { version } from '../../../package.json';
 import createShortcuts from '../../util/createShortcuts';
 import { switchMap } from 'rxjs/operators';
 import { BASE_URI } from '../../constants';
+import moveIcons, { IconSet } from '../../util/moveIcons';
 const remote = require('@electron/remote');
 
 const currentWindow = remote.getCurrentWindow();
@@ -43,15 +44,10 @@ const Menu: FunctionComponent = () => {
       ) {
         const target = menu.id.split('-')[1] as 'maps' | 'mods' | 'replays';
         openTarget(target);
-      } else if (
-        menu.id === 'icons-small-classic' ||
-        menu.id === 'icons-small' ||
-        menu.id === 'icons-medium-classic' ||
-        menu.id === 'icons-medium' ||
-        menu.id === 'icons-large-classic' ||
-        menu.id === 'icons-large'
-      ) {
-        logEntry(menu.id, 'log', ['main']);
+      } else if (String(menu.id).startsWith('iconset')) {
+        const iconSet = String(menu.id).split('-').pop();
+        logEntry(`${menu.id} + ' ' + ${iconSet}`, 'log', ['main']);
+        moveIcons(Number(iconSet) as IconSet);
       } else if (
         menu.id === 'help-help' ||
         menu.id === 'help-info' ||
@@ -188,19 +184,25 @@ const Menu: FunctionComponent = () => {
             click: buttonCallback,
             submenu: [
               {
+                id: 'iconset-classic',
+                label: 'Classic',
+                click: buttonCallback,
+                disabled: false,
+              },
+              {
                 id: 'icons-small-menu',
                 label: 'Small',
                 click: buttonCallback,
                 disabled: false,
                 submenu: [
                   {
-                    id: 'icons-small-classic',
+                    id: `iconset-small-classic-${IconSet.SmallClassic}`,
                     label: 'Small classic',
                     click: buttonCallback,
                     disabled: false,
                   },
                   {
-                    id: 'icons-small',
+                    id: `iconset-small-${IconSet.Small}`,
                     label: 'Small',
                     click: buttonCallback,
                     disabled: false,
@@ -214,13 +216,13 @@ const Menu: FunctionComponent = () => {
                 disabled: false,
                 submenu: [
                   {
-                    id: 'icons-medium-classic',
+                    id: `iconset-medium-classic-${IconSet.MediumClassic}`,
                     label: 'Medium classic',
                     click: buttonCallback,
                     disabled: false,
                   },
                   {
-                    id: 'icons-medium',
+                    id: `iconset-medium-${IconSet.Medium}`,
                     label: 'Medium',
                     click: buttonCallback,
                     disabled: false,
@@ -234,13 +236,13 @@ const Menu: FunctionComponent = () => {
                 disabled: false,
                 submenu: [
                   {
-                    id: 'icons-large-classic',
+                    id: `iconset-large-classic-${IconSet.LargeClassic}`,
                     label: 'Large classic',
                     click: buttonCallback,
                     disabled: false,
                   },
                   {
-                    id: 'icons-large',
+                    id: `iconset-large-${IconSet.Large}`,
                     label: 'Large',
                     click: buttonCallback,
                     disabled: false,

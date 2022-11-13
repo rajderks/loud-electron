@@ -4,7 +4,7 @@ import { from } from 'rxjs';
 
 const testWrite = () => {
   return from(
-    new Promise((res, rej) => {
+    new Promise<void>((res, rej) => {
       fs.writeFile(
         `${BASE_URI}/.test.txt`,
         'You can safely remove this file',

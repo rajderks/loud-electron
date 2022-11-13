@@ -31,6 +31,7 @@ const DOC_URI_GAMEPREFS = path.resolve(
   )
 );
 
+const DIR_LOUD_BIN = `${BASE_URI}/LOUD/bin`;
 const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
 const DIR_LOUD_USERMAPS = `${BASE_URI}/LOUD/usermaps`;
 const DIR_LOUD_USERMODS = `${BASE_URI}/LOUD/usermods`;
@@ -48,6 +49,7 @@ const FILE_URI_SHORTCUT = `${BASE_URI}/LOUD/bin/shortcut.vbs`;
 
 export {
   BASE_URI,
+  DIR_LOUD_BIN,
   DIR_LOUD_GAMEDATA,
   DOC_DIR,
   DOC_URI_GAMEPREFS,

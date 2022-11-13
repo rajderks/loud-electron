@@ -7,7 +7,7 @@ import { logEntry } from './logger';
 
 const writeMap$ = (buffer: Buffer, fileName: string) => {
   return from(
-    new Promise(async (res) => {
+    new Promise<void>(async (res) => {
       const SCDPath = path.join(DIR_LOUD_USERMAPS, fileName);
       fs.writeFileSync(SCDPath, buffer);
 
