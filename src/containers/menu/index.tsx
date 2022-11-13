@@ -128,12 +128,12 @@ const Menu: FunctionComponent = () => {
                 click: buttonCallback,
                 disabled: !enabledItems.includes('shortcut'),
               },
-              {
-                id: 'run-iconmod',
-                label: 'Icons Mod Installer',
-                click: buttonCallback,
-                disabled: !enabledItems.includes('iconmod'),
-              },
+              // {
+              //   id: 'run-iconmod',
+              //   label: 'Icons Mod Installer',
+              //   click: buttonCallback,
+              //   disabled: !enabledItems.includes('iconmod'),
+              // },
               {
                 id: 'open-maps',
                 label: 'Open Maps folder',
