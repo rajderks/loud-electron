@@ -46,7 +46,6 @@ const Menu: FunctionComponent = () => {
         openTarget(target);
       } else if (String(menu.id).startsWith('iconset')) {
         const iconSet = String(menu.id).split('-').pop();
-        logEntry(`${menu.id} + ' ' + ${iconSet}`, 'log', ['main']);
         moveIcons(Number(iconSet) as IconSet);
       } else if (
         menu.id === 'help-help' ||
