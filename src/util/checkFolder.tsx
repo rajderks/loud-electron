@@ -4,7 +4,7 @@ import { from } from 'rxjs';
 
 const checkFolder = () =>
   from(
-    new Promise((res, rej) => {
+    new Promise<void>((res, rej) => {
       fs.stat(`${BASE_URI}/bin/SupremeCommander.exe`, (errSC) => {
         if (errSC) {
           fs.stat(`${BASE_URI}/bin/ForgedAlliance.exe`, (errFA) => {
