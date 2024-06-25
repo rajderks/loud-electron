@@ -45,6 +45,7 @@ import toggleUserContent, {
 import { GlobalHotKeys } from 'react-hotkeys';
 import mapSync$ from '../../util/mapSync';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
+import fetchMirror from '../../util/fetchMirror';
 const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
@@ -133,6 +134,8 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(async () => {
+    fetchMirror().subscribe();
+    return;
     if (
       updateStatus !== UpdateStatus.Failed &&
       updateStatus !== UpdateStatus.NotChecked &&
