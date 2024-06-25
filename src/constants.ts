@@ -49,6 +49,16 @@ const FILE_URI_ICONMOD = `${BASE_URI}/LOUD/bin/Advanced Strategic Icons Mod Inst
 const FILE_URI_ICON = `${BASE_URI}/LOUD/bin/loud.ico`;
 const FILE_URI_SHORTCUT = `${BASE_URI}/LOUD/bin/shortcut.vbs`;
 
+/**
+ * wget -q --show-progress -N https://eu.theloudproject.org/7z.dll
+   wget -q --show-progress -N https://eu.theloudproject.org/7z.exe
+   wget -q --show-progress -N https://eu.theloudproject.org/LOUD.7z
+ */
+const URI_EU_MIRROR = 'https://eu.theloudproject.org/';
+const URI_EU_MIRROR_7ZIP_DLL = `${URI_EU_MIRROR}7z.dll`;
+const URI_EU_MIRROR_7ZIP_EXE = `${URI_EU_MIRROR}7z.exe`;
+const URI_EU_MIRROR_LOUD = `${URI_EU_MIRROR}LOUD.exe`;
+
 export {
   BASE_URI,
   DIR_LOUD_BIN,
@@ -70,4 +80,8 @@ export {
   DIR_LOUD_USERMODS,
   FILE_URI_LOG_FOLDER,
   FILE_URI_GAMELOG_FOLDER,
+  URI_EU_MIRROR,
+  URI_EU_MIRROR_7ZIP_DLL,
+  URI_EU_MIRROR_7ZIP_EXE,
+  URI_EU_MIRROR_LOUD,
 };
