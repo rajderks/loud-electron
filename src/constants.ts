@@ -57,7 +57,7 @@ const FILE_URI_SHORTCUT = `${BASE_URI}/LOUD/bin/shortcut.vbs`;
 const URI_EU_MIRROR = 'https://eu.theloudproject.org/';
 const URI_EU_MIRROR_7ZIP_DLL = `${URI_EU_MIRROR}7z.dll`;
 const URI_EU_MIRROR_7ZIP_EXE = `${URI_EU_MIRROR}7z.exe`;
-const URI_EU_MIRROR_LOUD = `${URI_EU_MIRROR}LOUD.exe`;
+const URI_EU_MIRROR_LOUD = `${URI_EU_MIRROR}LOUD.7z`;
 
 export {
   BASE_URI,
