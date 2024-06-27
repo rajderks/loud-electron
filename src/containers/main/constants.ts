@@ -4,4 +4,6 @@ export enum UpdateStatus {
   CRC = 1,
   Updating = 2,
   UpToDate = 3,
+  CleanInstall = 4,
+  Unpacking = 5,
 }

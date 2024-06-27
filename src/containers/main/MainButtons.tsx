@@ -188,7 +188,11 @@ const MainButtons: FunctionComponent<Props> = ({
               variant="contained"
             >
               <Typography color="inherit" variant="body2">
-                <strong>Update</strong>
+                <strong>
+                  {updateStatus === UpdateStatus.CleanInstall
+                    ? 'Install'
+                    : 'Update'}
+                </strong>
               </Typography>
             </Button>
           </div>

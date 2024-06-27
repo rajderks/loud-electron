@@ -47,6 +47,7 @@ import mapSync$ from '../../util/mapSync';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
 import fetchMirror from '../../util/fetchMirror';
 import unpackMirror from '../../util/unpackMirror';
+import checkCleanInstall from '../../util/checkCleanInstall';
 const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
@@ -87,6 +88,14 @@ const Main: FunctionComponent = () => {
   );
 
   useEffect(() => {
+    checkCleanInstall().subscribe(
+      () => {
+        setUpdateStatus(UpdateStatus.NotChecked);
+      },
+      (e) => {
+        setUpdateStatus(UpdateStatus.CleanInstall);
+      }
+    );
     checkFolder().subscribe(
       () => {
         logEntry('Client is in correct folder', 'log', ['file']);
@@ -135,12 +144,45 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(async () => {
-    await fetchMirror(() => {
-      unpackMirror(() => {
-        logEntry('Finished installing clean install');
-      });
-    });
-    return;
+    if (updateStatus === UpdateStatus.CleanInstall) {
+      MainLogDownloadFilePercentageStatusSubject.next(0);
+      MainLogDownloadFileProgressStatusSubject.next([0, 1]);
+      setUpdateStatus(UpdateStatus.Updating);
+      await fetchMirror(
+        (_, perc) => {
+          MainLogDownloadFilePercentageStatusSubject.next(perc ?? undefined);
+        },
+        () => {
+          setUpdateStatus(UpdateStatus.Unpacking);
+          unpackMirror(() => {
+            setUpdateStatus(UpdateStatus.UpToDate);
+            openTargetCheck('datapathlua').subscribe((n) => {
+              changeEnabledItem('louddatapathlua', n);
+            });
+            openTargetCheck('loud').subscribe((n) => {
+              changeEnabledItem('run', n);
+            });
+            openTargetCheck('log').subscribe((n) => {
+              changeEnabledItem('log', n);
+            });
+            openTargetCheck('gamelog').subscribe((n) => {
+              changeEnabledItem('help-gamelog', n);
+            });
+            openTargetCheck('help').subscribe((n) => {
+              changeEnabledItem('help-help', n);
+            });
+            openTargetCheck('info').subscribe((n) => {
+              changeEnabledItem('help-info', n);
+            });
+            openTargetCheck('datapathlua').subscribe((n) => {
+              changeEnabledItem('louddatapathlua', n);
+            });
+            logEntry('Finished installing clean install');
+          });
+        }
+      );
+      return;
+    }
     if (
       updateStatus !== UpdateStatus.Failed &&
       updateStatus !== UpdateStatus.NotChecked &&

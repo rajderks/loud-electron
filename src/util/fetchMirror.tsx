@@ -6,26 +6,42 @@ import {
   URI_EU_MIRROR_LOUD,
 } from '../constants';
 import { logEntry } from './logger';
-import unpackMirror from './unpackMirror';
 
-const fetchMirror = async (onComplete?: () => void) => {
-  download(URI_EU_MIRROR_7ZIP_DLL, `${BASE_URI}/7z.dll`, (_, perc, done) => {
-    logEntry(`${BASE_URI}/7z.dll: ${perc}/100 ${BASE_URI}`, 'log', [
-      'log',
-      'main',
-    ]);
+const verbose = false;
+
+type ProgressCallback = (
+  bytes: number,
+  perc: number | null,
+  done: boolean
+) => void;
+
+const fetchMirror = async (
+  onProgress: ProgressCallback,
+  onComplete?: () => void
+) => {
+  download(URI_EU_MIRROR_7ZIP_DLL, `${BASE_URI}/7z.dll`, (_, perc) => {
+    if (verbose)
+      logEntry(`${BASE_URI}/7z.dll: ${perc}/100 ${BASE_URI}`, 'log', [
+        'log',
+        'main',
+      ]);
   });
-  download(URI_EU_MIRROR_7ZIP_EXE, `${BASE_URI}/7z.exe`, (_, perc, done) => {
-    logEntry(`${BASE_URI}/7z.exe: ${perc}/100 ${BASE_URI}`, 'log', [
-      'log',
-      'main',
-    ]);
+  download(URI_EU_MIRROR_7ZIP_EXE, `${BASE_URI}/7z.exe`, (_, perc) => {
+    if (verbose)
+      logEntry(`${BASE_URI}/7z.exe: ${perc}/100 ${BASE_URI}`, 'log', [
+        'log',
+        'main',
+      ]);
   });
-  download(URI_EU_MIRROR_LOUD, `${BASE_URI}/LOUD.7z`, (_, perc, done) => {
-    logEntry(`${BASE_URI}/LOUD.7z: ${perc}/100 ${BASE_URI}`, 'log', [
-      'log',
-      'main',
-    ]);
+  download(URI_EU_MIRROR_LOUD, `${BASE_URI}/LOUD.7z`, (bytes, perc, done) => {
+    if (verbose)
+      logEntry(`${BASE_URI}/LOUD.7z: ${perc}/100 ${BASE_URI}`, 'log', [
+        'log',
+        'main',
+      ]);
+    if (onProgress) {
+      onProgress(bytes, perc, done);
+    }
     if (done && onComplete) {
       onComplete();
     }
@@ -35,11 +51,7 @@ const fetchMirror = async (onComplete?: () => void) => {
 async function download(
   sourceUrl: string,
   targetFile: string,
-  progressCallback?: (
-    bytes: number,
-    perc: number | null,
-    done: boolean
-  ) => void,
+  progressCallback?: ProgressCallback,
   length?: number
 ) {
   const request = new Request(sourceUrl, {
@@ -80,7 +92,7 @@ async function streamWithProgress(
   length: number,
   reader: ReadableStreamDefaultReader,
   writer: WriteStream,
-  progressCallback?: (bytes: number, perc: number | null, done: boolean) => void
+  progressCallback?: ProgressCallback
 ) {
   let bytesDone = 0;
   let previousPercent = 0;

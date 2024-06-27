@@ -31,6 +31,10 @@ const updateStatusMessage = (
   progress: string | null
 ) => {
   switch (updateStatus) {
+    case UpdateStatus.CleanInstall:
+      return 'Clean install';
+    case UpdateStatus.Unpacking:
+      return 'Unpacking';
     case UpdateStatus.Failed:
       return 'Failed';
     case UpdateStatus.UpToDate:

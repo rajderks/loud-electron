@@ -7,6 +7,7 @@ import { logEntry } from './logger';
 const uri7ZDLL = `${BASE_URI}/7z.dll`;
 const uri7Z = `${BASE_URI}/7z.exe`;
 const uriLoud = `${BASE_URI}/LOUD.7z`;
+const faultySCFAUpdater = `${BASE_URI}/LOUD/SCFA_Updater.exe`;
 const uriTarget = `${BASE_URI}/`;
 
 const unpackMirror = (onComplete?: () => void) =>
@@ -36,12 +37,22 @@ const unpackMirror = (onComplete?: () => void) =>
             fs.unlinkSync(uri7Z);
             fs.unlinkSync(uri7ZDLL);
             fs.unlinkSync(uriLoud);
+            try {
+              fs.unlinkSync(faultySCFAUpdater);
+            } catch (e) {
+              logEntry(String(e), 'warn', ['log', 'file']);
+            }
             rej();
           } else {
             fs.unlinkSync(uri7Z);
             fs.unlinkSync(uri7ZDLL);
             fs.unlinkSync(uriLoud);
             if (onComplete) {
+              try {
+                fs.unlinkSync(faultySCFAUpdater);
+              } catch (e) {
+                logEntry(String(e), 'warn', ['log', 'file']);
+              }
               onComplete();
             }
             res();
