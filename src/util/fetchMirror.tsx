@@ -1,36 +1,115 @@
-import { tap } from 'rxjs/operators';
+import fs, { WriteStream } from 'fs';
 import {
+  BASE_URI,
   URI_EU_MIRROR_7ZIP_DLL,
   URI_EU_MIRROR_7ZIP_EXE,
   URI_EU_MIRROR_LOUD,
 } from '../constants';
-import { Observable, from } from 'rxjs';
 import { logEntry } from './logger';
+import unpackMirror from './unpackMirror';
 
-const uriDLL = new URL(URI_EU_MIRROR_7ZIP_DLL);
-const uri7z = new URL(URI_EU_MIRROR_7ZIP_EXE);
-const uriLOUD = new URL(URI_EU_MIRROR_LOUD);
+const fetchMirror = async (onComplete?: () => void) => {
+  download(URI_EU_MIRROR_7ZIP_DLL, `${BASE_URI}/7z.dll`, (_, perc, done) => {
+    logEntry(`${BASE_URI}/7z.dll: ${perc}/100 ${BASE_URI}`, 'log', [
+      'log',
+      'main',
+    ]);
+  });
+  download(URI_EU_MIRROR_7ZIP_EXE, `${BASE_URI}/7z.exe`, (_, perc, done) => {
+    logEntry(`${BASE_URI}/7z.exe: ${perc}/100 ${BASE_URI}`, 'log', [
+      'log',
+      'main',
+    ]);
+  });
+  download(URI_EU_MIRROR_LOUD, `${BASE_URI}/LOUD.7z`, (_, perc, done) => {
+    logEntry(`${BASE_URI}/LOUD.7z: ${perc}/100 ${BASE_URI}`, 'log', [
+      'log',
+      'main',
+    ]);
+    if (done && onComplete) {
+      onComplete();
+    }
+  });
+};
 
-const reqDLL = new Request(uriDLL, {
-  method: 'get',
-  mode: 'no-cors',
-});
+async function download(
+  sourceUrl: string,
+  targetFile: string,
+  progressCallback?: (
+    bytes: number,
+    perc: number | null,
+    done: boolean
+  ) => void,
+  length?: number
+) {
+  const request = new Request(sourceUrl, {
+    headers: new Headers({ 'Content-Type': 'application/octet-stream' }),
+  });
 
-const req7z = new Request(uri7z, {
-  method: 'get',
-  mode: 'no-cors',
-});
+  const response = await fetch(request);
 
-const reqLOUD = new Request(uriLOUD, {
-  method: 'get',
-  mode: 'no-cors',
-});
+  if (!response.ok) {
+    throw Error(
+      `Unable to download, server returned ${response.status} ${response.statusText} ${response.body}`
+    );
+  }
 
-const fetchMirror = () =>
-  from([fetch(reqDLL), fetch(req7z), fetch(reqLOUD)]).pipe(
-    tap((res) => {
-      logEntry(res);
-    })
-  );
+  const body = response.body;
+  if (body == null) {
+    throw Error('No response body');
+  }
+
+  const finalLength =
+    length || parseInt(response.headers.get('Content-Length') || '0', 10);
+  const reader = body.getReader();
+  const writer = fs.createWriteStream(targetFile);
+
+  writer.on('open', () => {
+    streamWithProgress(finalLength, reader, writer, (bytes, perc, done) => {
+      if (done) {
+        writer.end();
+      }
+      if (progressCallback) {
+        progressCallback(bytes, perc, done);
+      }
+    });
+  });
+}
+
+async function streamWithProgress(
+  length: number,
+  reader: ReadableStreamDefaultReader,
+  writer: WriteStream,
+  progressCallback?: (bytes: number, perc: number | null, done: boolean) => void
+) {
+  let bytesDone = 0;
+  let previousPercent = 0;
+
+  while (true) {
+    const result = await reader.read();
+    if (result.done) {
+      if (progressCallback != null) {
+        progressCallback(length, 100, true);
+      }
+      return;
+    }
+
+    const chunk = result.value;
+    if (chunk == null) {
+      throw Error('Empty chunk received during download');
+    } else {
+      writer.write(Buffer.from(chunk));
+      if (progressCallback != null) {
+        bytesDone += chunk.byteLength;
+        const percent =
+          length === 0 ? 0 : Math.floor((bytesDone / length) * 100);
+        if (percent !== previousPercent) {
+          previousPercent = percent;
+          progressCallback(bytesDone, percent, false);
+        }
+      }
+    }
+  }
+}
 
 export default fetchMirror;

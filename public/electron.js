@@ -48,6 +48,7 @@ function createWindow() {
       enableRemoteModule: true,
       nodeIntegration: true,
       contextIsolation: false,
+      webSecurity: false,
     },
   });
   require('@electron/remote/main').enable(mainWindow.webContents);
