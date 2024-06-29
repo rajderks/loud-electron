@@ -148,7 +148,7 @@ const Main: FunctionComponent = () => {
       MainLogDownloadFilePercentageStatusSubject.next(0);
       MainLogDownloadFileProgressStatusSubject.next([0, 1]);
       setUpdateStatus(UpdateStatus.Updating);
-      await fetchMirror(
+      fetchMirror(
         (_, perc) => {
           MainLogDownloadFilePercentageStatusSubject.next(perc ?? undefined);
         },
@@ -178,7 +178,20 @@ const Main: FunctionComponent = () => {
               changeEnabledItem('louddatapathlua', n);
             });
             logEntry('Finished installing clean install');
-          });
+          }).subscribe(
+            () => {},
+            (e) => {
+              checkCleanInstall().subscribe(
+                () => {
+                  setUpdateStatus(UpdateStatus.NotChecked);
+                },
+                (e) => {
+                  setUpdateStatus(UpdateStatus.CleanInstall);
+                }
+              );
+              logEntry(e, 'error', ['file', 'log', 'main']);
+            }
+          );
         }
       );
       return;

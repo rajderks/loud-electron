@@ -81,10 +81,15 @@ async function download(
       if (done) {
         writer.end();
       }
-      if (progressCallback) {
+      if (progressCallback && !done) {
         progressCallback(bytes, perc, done);
       }
     });
+  });
+  writer.on('close', () => {
+    if (progressCallback) {
+      progressCallback(0, 100, true);
+    }
   });
 }
 
