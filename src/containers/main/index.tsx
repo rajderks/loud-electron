@@ -154,31 +154,36 @@ const Main: FunctionComponent = () => {
         },
         () => {
           setUpdateStatus(UpdateStatus.Unpacking);
-          unpackMirror(() => {
-            setUpdateStatus(UpdateStatus.UpToDate);
-            openTargetCheck('datapathlua').subscribe((n) => {
-              changeEnabledItem('louddatapathlua', n);
-            });
-            openTargetCheck('loud').subscribe((n) => {
-              changeEnabledItem('run', n);
-            });
-            openTargetCheck('log').subscribe((n) => {
-              changeEnabledItem('log', n);
-            });
-            openTargetCheck('gamelog').subscribe((n) => {
-              changeEnabledItem('help-gamelog', n);
-            });
-            openTargetCheck('help').subscribe((n) => {
-              changeEnabledItem('help-help', n);
-            });
-            openTargetCheck('info').subscribe((n) => {
-              changeEnabledItem('help-info', n);
-            });
-            openTargetCheck('datapathlua').subscribe((n) => {
-              changeEnabledItem('louddatapathlua', n);
-            });
-            logEntry('Finished installing clean install');
-          }).subscribe(
+          unpackMirror(
+            (perc) => {
+              MainLogDownloadFilePercentageStatusSubject.next(perc);
+            },
+            () => {
+              setUpdateStatus(UpdateStatus.UpToDate);
+              openTargetCheck('datapathlua').subscribe((n) => {
+                changeEnabledItem('louddatapathlua', n);
+              });
+              openTargetCheck('loud').subscribe((n) => {
+                changeEnabledItem('run', n);
+              });
+              openTargetCheck('log').subscribe((n) => {
+                changeEnabledItem('log', n);
+              });
+              openTargetCheck('gamelog').subscribe((n) => {
+                changeEnabledItem('help-gamelog', n);
+              });
+              openTargetCheck('help').subscribe((n) => {
+                changeEnabledItem('help-help', n);
+              });
+              openTargetCheck('info').subscribe((n) => {
+                changeEnabledItem('help-info', n);
+              });
+              openTargetCheck('datapathlua').subscribe((n) => {
+                changeEnabledItem('louddatapathlua', n);
+              });
+              logEntry('Finished installing clean install');
+            }
+          ).subscribe(
             () => {},
             (e) => {
               checkCleanInstall().subscribe(

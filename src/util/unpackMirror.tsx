@@ -1,23 +1,21 @@
 import fs from 'fs';
 import { BASE_URI } from '../constants';
 import { from } from 'rxjs';
-import { exec } from 'child_process';
 import { logEntry } from './logger';
+//@ts-ignore
+import Seven from 'node-7z';
 
-const uri7ZDLL = `${BASE_URI}/7z.dll`;
-const uri7Z = `${BASE_URI}/7z.exe`;
 const uriLoud = `${BASE_URI}/LOUD.7z`;
-const faultySCFAUpdater = `${BASE_URI}/LOUD/SCFA_Updater.exe`;
-const uriTarget = `${BASE_URI}/`;
+const uri7Z = `${BASE_URI}/7z.exe`;
+const uri7ZDLL = `${BASE_URI}/7z.dll`;
 
-const unpackMirror = (onComplete?: () => void) =>
+const unpackMirror = (
+  onProgress: (perc: number) => void,
+  onComplete?: () => void
+) =>
   from(
     new Promise<void>((res, rej) => {
-      if (
-        !fs.statSync(uri7Z) ||
-        !fs.statSync(uri7ZDLL) ||
-        !fs.statSync(uriLoud)
-      ) {
+      if (!fs.statSync(uriLoud)) {
         logEntry('One of the mirrored downloads is missing', 'error', [
           'main',
           'log',
@@ -26,39 +24,41 @@ const unpackMirror = (onComplete?: () => void) =>
         rej();
         return;
       }
-      exec(
-        `"${uri7Z.replace(/\//g, '\\')}" x -y "${uriLoud.replace(
-          /\//g,
-          '\\'
-        )}" -o"${uriTarget.replace(/\//g, '\\')}"`,
-        (error, stdout) => {
-          if (error) {
-            logEntry(error.message, 'error', ['main', 'log', 'file']);
-            fs.unlinkSync(uri7Z);
-            fs.unlinkSync(uri7ZDLL);
-            fs.unlinkSync(uriLoud);
-            try {
-              fs.unlinkSync(faultySCFAUpdater);
-            } catch (e) {
-              logEntry(String(e), 'warn', ['log', 'file']);
-            }
-            rej();
-          } else {
-            fs.unlinkSync(uri7Z);
-            fs.unlinkSync(uri7ZDLL);
-            fs.unlinkSync(uriLoud);
-            if (onComplete) {
-              try {
-                fs.unlinkSync(faultySCFAUpdater);
-              } catch (e) {
-                logEntry(String(e), 'warn', ['log', 'file']);
-              }
-              onComplete();
-            }
-            res();
-          }
+      const seven = Seven.extractFull(
+        `${uriLoud.replace(/\//g, '\\')}`,
+        `${BASE_URI}/LOUD`,
+        {
+          $bin: uri7Z.replace(/\//g, '\\'),
+          $progress: true,
         }
       );
+      seven.on('progress', (perc: { percent: number }) => {
+        if (onProgress) {
+          onProgress(perc.percent);
+        }
+      });
+      seven.on('end', () => {
+        try {
+          fs.unlinkSync(uri7Z);
+          fs.unlinkSync(uri7ZDLL);
+          fs.unlinkSync(uriLoud);
+        } catch (e) {
+          console.warn(e);
+        }
+        if (onComplete) {
+          onComplete();
+        }
+        res();
+      });
+      seven.on('error', function (err: any) {
+        // a standard error
+        // `err.stderr` is a string that can contain extra info about the error
+        logEntry(err.stderr, 'error', ['file', 'log', 'main']);
+        if (fs.statSync(uriLoud)) {
+          // fs.unlinkSync(uriLoud);
+        }
+        rej();
+      });
     })
   );
 
