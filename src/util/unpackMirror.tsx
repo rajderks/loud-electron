@@ -26,7 +26,7 @@ const unpackMirror = (
       }
       const seven = Seven.extractFull(
         `${uriLoud.replace(/\//g, '\\')}`,
-        `${BASE_URI}/LOUD`,
+        `${BASE_URI}`,
         {
           $bin: uri7Z.replace(/\//g, '\\'),
           $progress: true,
